@@ -6,6 +6,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
+ * xml配置的启动类
+ *
  * @author littlecorgi
  * @date 2021/4/10
  */

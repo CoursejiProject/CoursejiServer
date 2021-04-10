@@ -1,5 +1,8 @@
 package com.littlecorgi.springtest.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,9 @@ import java.util.List;
  * @author littlecorgi
  * @date 2021/4/10
  */
+@Component
 public class UserService {
+    @Autowired
     private MailService mailService;
 
     public void setMailService(MailService mailService) {
@@ -56,7 +61,10 @@ public class UserService {
                 throw new RuntimeException("email exist.");
             }
         });
-        User user = new User(users.stream().mapToLong(u -> u.getId()).max().getAsLong() + 1, email, password, name);
+        User user = new User(
+                users.stream().mapToLong(u -> u.getId()).max().getAsLong() + 1,
+                email, password, name
+        );
         users.add(user);
         mailService.sendRegistrationMail(user);
         return user;
