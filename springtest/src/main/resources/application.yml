@@ -6,3 +6,10 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example?useSSL=true
     username: root
     password: jjy06185419*
+  batch:
+    job:
+      enabled: false
+
+  jasypt:
+    encryptor:
+      password: test

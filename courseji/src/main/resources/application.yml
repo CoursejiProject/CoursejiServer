@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/courseji?useSSL=true
+    username: courseji
+    password: ENC(Tr1cNnImYGvCOr/WPxpFFC8UxwrR/1H6xgdIWw7QPJzfQ5hbPtd4+JZtoZOZ1uQt)
+
+jasypt:
+  encryptor:
+    password: littlecorgi

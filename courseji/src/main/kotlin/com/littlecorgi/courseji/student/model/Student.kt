@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.model
+package com.littlecorgi.courseji.student.model
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
