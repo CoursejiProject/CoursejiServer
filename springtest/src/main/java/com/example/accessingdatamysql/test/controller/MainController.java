@@ -1,5 +1,7 @@
-package com.example.accessingdatamysql;
+package com.example.accessingdatamysql.test.controller;
 
+import com.example.accessingdatamysql.test.model.User;
+import com.example.accessingdatamysql.test.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,5 +49,12 @@ public class MainController {
     Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
+    }
+
+    @GetMapping(path = "/deleteAll")
+    public @ResponseBody
+    String deleteAllUsers() {
+        userRepository.deleteAll();
+        return "delete all success";
     }
 }

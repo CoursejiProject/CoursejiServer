@@ -1,5 +1,6 @@
-package com.example.accessingdatamysql;
+package com.example.accessingdatamysql.test.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
 
     private String email;
