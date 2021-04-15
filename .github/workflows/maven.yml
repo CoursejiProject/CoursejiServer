@@ -27,12 +27,12 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           # MYSQL_ROOT_PASSWORD - root superuser password
-          mysql root password: ${{env.security.MYSQL_ROOT_PASSWORD}} # optional, default is
+          mysql root password: ${{ security.MYSQL_ROOT_PASSWORD }} # optional, default is
           # MYSQL_DATABASE - name for the default database that is created
           mysql database: courseji # optional, default is
           # MYSQL_USER - create the specified user with superuser power for created database
           mysql user: root # optional, default is
           # MYSQL_PASSWORD - specified superuser password which user is power for created database
-          mysql password: ${{env.security.MYSQL_ROOT_PASSWORD}} # optional, default is
+          mysql password: ${{ security.MYSQL_ROOT_PASSWORD }} # optional, default is
       - name: Build with Maven
         run: mvn -B package --file courseji/pom.xml
