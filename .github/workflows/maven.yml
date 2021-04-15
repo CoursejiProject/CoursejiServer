@@ -15,11 +15,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: Build with Maven
-      run: mvn -B package --file courseji/pom.xml
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: ${{MYSQL_ROOT_PASSWORD}} # optional, default is
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: courseji # optional, default is
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root # optional, default is
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: ${{MYSQL_ROOT_PASSWORD}} # optional, default is
+      - name: Build with Maven
+        run: mvn -B package --file courseji/pom.xml
