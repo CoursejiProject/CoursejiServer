@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CoursejiServer.iml" filepath="$PROJECT_DIR$/.idea/CoursejiServer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springtest/springtest.iml" filepath="$PROJECT_DIR$/springtest/springtest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springtest/accessing-data-mysql.iml" filepath="$PROJECT_DIR$/springtest/accessing-data-mysql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/courseji/courseji.iml" filepath="$PROJECT_DIR$/courseji/courseji.iml" />
     </modules>
   </component>
 </project>
