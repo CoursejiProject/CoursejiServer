@@ -30,9 +30,5 @@ jobs:
           mysql root password: ${{ secrets.DatabasePassword }} # optional, default is
           # MYSQL_DATABASE - name for the default database that is created
           mysql database: courseji # optional, default is
-          # MYSQL_USER - create the specified user with superuser power for created database
-          mysql user: root # optional, default is
-          # MYSQL_PASSWORD - specified superuser password which user is power for created database
-          mysql password: ${{ secrets.DatabasePassword }} # optional, default is
       - name: Build with Maven
         run: mvn -B package --file courseji/pom.xml
