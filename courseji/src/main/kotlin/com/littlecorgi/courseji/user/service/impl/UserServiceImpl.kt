@@ -45,15 +45,21 @@ class UserServiceImpl : UserService {
             if (!picture.isHttpOrHttps()) {
                 throw UserInfoInvalidException("picture不是http/https链接")
             }
-            stringLengthIsInvalid(name, maxLength = UserDataConstants.NAME_MAX_LENGTH)
-            stringLengthIsInvalid(email, maxLength = UserDataConstants.EMAIL_MAX_LENGTH)
+            stringLengthIsInvalid(name, info = "姓名", maxLength = UserDataConstants.NAME_MAX_LENGTH)
+            stringLengthIsInvalid(
+                email,
+                info = "邮箱/账号",
+                maxLength = UserDataConstants.EMAIL_MAX_LENGTH
+            )
             stringLengthIsInvalid(
                 password,
+                info = "密码",
                 UserDataConstants.PASSWORD_MIN_LENGTH,
                 UserDataConstants.PASSWORD_MAX_LENGTH
             )
             stringLengthIsInvalid(
                 phone,
+                info = "手机号",
                 UserDataConstants.PHONE_LENGTH,
                 UserDataConstants.PHONE_LENGTH
             )
@@ -103,18 +109,20 @@ class UserServiceImpl : UserService {
      * 判断传入的字符串长度是否在某个区间内
      *
      * @param s 需要被判断的字符串
+     * @param info 不合法时返回的异常信息中该字段的显示名，如name-姓名
      * @param minLength 最小长度，默认0
      * @param maxLength 最大长度，默认Int.MAX_VALUE
      */
     private fun stringLengthIsInvalid(
         s: String,
+        info: String,
         minLength: Int = 0,
         maxLength: Int = Int.MAX_VALUE
     ): Boolean {
         return if (s.length in minLength..maxLength) {
             true
         } else {
-            throw UserInfoInvalidException("${s}长度不符合，最短${minLength}，最长${maxLength}")
+            throw UserInfoInvalidException("${info}长度不符合，最短${minLength}，最长${maxLength}")
         }
     }
 }
