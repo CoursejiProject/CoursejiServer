@@ -2,10 +2,10 @@ package com.littlecorgi.courseji.user.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
-import com.littlecorgi.courseji.common.exception.PasswordErrorException
-import com.littlecorgi.courseji.common.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.common.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.common.exception.UserNotFoundException
+import com.littlecorgi.courseji.user.exception.PasswordErrorException
+import com.littlecorgi.courseji.user.exception.UserAlreadyExistException
+import com.littlecorgi.courseji.user.exception.UserInfoInvalidException
+import com.littlecorgi.courseji.user.exception.UserNotFoundException
 import com.littlecorgi.courseji.user.model.User
 import com.littlecorgi.courseji.user.service.UserService
 import io.swagger.annotations.Api
