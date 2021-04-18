@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.sql.Date
 
 /**
  * UserService的实现类，具体处理业务，并抛出对应的异常
@@ -98,6 +99,24 @@ class UserServiceImpl : UserService {
             user.password = newPassword
             userRepository.save(user)
             return "更新密码成功。"
+        }
+    }
+
+    override fun getCreatedDate(id: Int): Date {
+        val user = userRepository.findById(id).orElse(null)
+        if (user == null) {
+            throw UserNotFoundException()
+        } else {
+            return user.createdDate
+        }
+    }
+
+    override fun getLastModifiedDate(id: Int): Date {
+        val user = userRepository.findById(id).orElse(null)
+        if (user == null) {
+            throw UserNotFoundException()
+        } else {
+            return user.lastModifiedDate
         }
     }
 

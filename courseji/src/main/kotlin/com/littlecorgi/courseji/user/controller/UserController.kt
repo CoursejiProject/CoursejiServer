@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.sql.Date
 
 /**
  * User相关的Controller
@@ -108,6 +109,36 @@ class UserController {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
         } catch (e: Exception) {
             logger.info("{更新密码:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+    }
+
+    @ApiOperation(value = "获取用户创建日期")
+    @GetMapping(path = ["/getCreatedDate"])
+    fun getCreatedDate(
+        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Int
+    ): ServerResponse<Date> {
+        return try {
+            ServerResponse.createBySuccess(userService.getCreatedDate(id))
+        } catch (e: UserNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
+        } catch (e: Exception) {
+            logger.info("{获取用户创建日期:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+    }
+
+    @ApiOperation(value = "获取用户最后一次信息修改日期")
+    @GetMapping(path = ["/getLastModifiedDate"])
+    fun getLastModifiedDate(
+        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Int
+    ): ServerResponse<Date> {
+        return try {
+            ServerResponse.createBySuccess(userService.getLastModifiedDate(id))
+        } catch (e: UserNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
+        } catch (e: Exception) {
+            logger.info("{获取用户创建日期:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
     }
