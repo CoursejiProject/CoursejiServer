@@ -1,11 +1,11 @@
 package com.littlecorgi.courseji.user.service.impl
 
 import com.littlecorgi.courseji.common.UserDataConstants
-import com.littlecorgi.courseji.common.exception.PasswordErrorException
-import com.littlecorgi.courseji.common.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.common.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.common.exception.UserNotFoundException
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.user.exception.PasswordErrorException
+import com.littlecorgi.courseji.user.exception.UserAlreadyExistException
+import com.littlecorgi.courseji.user.exception.UserInfoInvalidException
+import com.littlecorgi.courseji.user.exception.UserNotFoundException
 import com.littlecorgi.courseji.user.model.User
 import com.littlecorgi.courseji.user.repository.UserRepository
 import com.littlecorgi.courseji.user.service.UserService
@@ -58,11 +58,7 @@ class UserServiceImpl : UserService {
                 UserDataConstants.PHONE_LENGTH
             )
         }
-        try {
-            userRepository.save(user)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        userRepository.save(user)
         return "新建用户成功."
     }
 
@@ -85,6 +81,7 @@ class UserServiceImpl : UserService {
     }
 
     override fun updatePassword(email: String, oldPassword: String, newPassword: String): String {
+        logger.info("更新密码")
         val user = userRepository.findByEmail(email).orElse(null)
         if (user == null) {
             throw UserNotFoundException()

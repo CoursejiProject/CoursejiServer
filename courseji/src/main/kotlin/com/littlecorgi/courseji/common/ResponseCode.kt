@@ -24,5 +24,14 @@ enum class ResponseCode(val code: Int, val msg: String) {
     NO_USER(803, "用户不存在!"),
 
     // 用户信息存在问题
-    USER_INFO_INVALID(804, "用户信息错误!")
+    USER_INFO_INVALID(804, "用户信息错误!"),
+
+    // 课程已经存在
+    COURSE_HAS_EXIST(805, "课程已经存在!"),
+
+    // 课程不存在
+    NO_COURSE(806, "课程不存在!"),
+
+    // 课程信息存在问题
+    COURSE_INFO_INVALID(807, "课程信息错误!")
 }

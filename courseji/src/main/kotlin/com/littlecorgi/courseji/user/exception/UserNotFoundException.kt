@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.common.exception
+package com.littlecorgi.courseji.user.exception
 
 /**
  * 用户不存在
