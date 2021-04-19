@@ -6,6 +6,7 @@ import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -13,7 +14,6 @@ import javax.persistence.EntityListeners
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
 import javax.persistence.Table
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 /**
  * 教师数据库表
