@@ -2,12 +2,12 @@ package com.littlecorgi.courseji.student.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
+import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
+import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.service.StudentService
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
-import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -48,9 +48,9 @@ class StudentController {
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(studentService.signUp(student))
-        } catch (e: UserAlreadyExistException) {
+        } catch (e: StudentAlreadyExistException) {
             ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
-        } catch (e: UserInfoInvalidException) {
+        } catch (e: StudentInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = e.msg)
         } catch (e: Exception) {
             logger.info("{添加用户:catch}", e)
@@ -76,7 +76,7 @@ class StudentController {
     ): ServerResponse<Student> {
         return try {
             ServerResponse.createBySuccess(studentService.signIn(email, password))
-        } catch (e: UserNotFoundException) {
+        } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
@@ -101,7 +101,7 @@ class StudentController {
                     newPassword
                 )
             )
-        } catch (e: UserNotFoundException) {
+        } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
@@ -114,11 +114,11 @@ class StudentController {
     @ApiOperation(value = "获取用户创建日期")
     @GetMapping(path = ["/getCreatedDate"])
     fun getCreatedDate(
-        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
+        @ApiParam(value = "需要查询的用户的id", required = true, example = "1") @RequestParam id: Long
     ): ServerResponse<Long> {
         return try {
             ServerResponse.createBySuccess(studentService.getCreatedDate(id))
-        } catch (e: UserNotFoundException) {
+        } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)
@@ -129,11 +129,11 @@ class StudentController {
     @ApiOperation(value = "获取用户最后一次信息修改日期")
     @GetMapping(path = ["/getLastModifiedDate"])
     fun getLastModifiedDate(
-        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
+        @ApiParam(value = "需要查询的用户的id", required = true, example = "1") @RequestParam id: Long
     ): ServerResponse<Long> {
         return try {
             ServerResponse.createBySuccess(studentService.getLastModifiedDate(id))
-        } catch (e: UserNotFoundException) {
+        } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)

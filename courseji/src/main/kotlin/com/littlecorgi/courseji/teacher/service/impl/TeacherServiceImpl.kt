@@ -3,9 +3,9 @@ package com.littlecorgi.courseji.teacher.service.impl
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
-import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
+import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
+import com.littlecorgi.courseji.teacher.exception.TeacherInfoInvalidException
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import com.littlecorgi.courseji.teacher.model.Teacher
 import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import com.littlecorgi.courseji.teacher.service.TeacherService
@@ -35,7 +35,7 @@ class TeacherServiceImpl : TeacherService {
     override fun signUp(user: Teacher): String {
         logger.info("添加新用户")
         if (teacherRepository.existsUserByEmail(user.email)) {
-            throw UserAlreadyExistException()
+            throw TeacherAlreadyExistException()
         }
         user.apply {
             if (!avatar.isHttpOrHttps()) {
@@ -43,7 +43,7 @@ class TeacherServiceImpl : TeacherService {
                     "https://user-gold-cdn.xitu.io/2018/6/20/1641b2b7bbbd3323?imageView2/1/w/180/h/180/q/85/format/webp/interlace/1"
             }
             if (!picture.isHttpOrHttps()) {
-                throw UserInfoInvalidException("picture不是http/https链接")
+                throw TeacherInfoInvalidException("picture不是http/https链接")
             }
             stringLengthIsInvalid(name, info = "姓名", maxLength = UserDataConstants.NAME_MAX_LENGTH)
             stringLengthIsInvalid(
@@ -77,7 +77,7 @@ class TeacherServiceImpl : TeacherService {
         logger.info("登录")
         val user = teacherRepository.findByEmail(email).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw TeacherNotFoundException()
         } else {
             if (user.password != password) {
                 throw PasswordErrorException()
@@ -90,7 +90,7 @@ class TeacherServiceImpl : TeacherService {
         logger.info("更新密码")
         val user = teacherRepository.findByEmail(email).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw TeacherNotFoundException()
         } else {
             if (user.password != oldPassword) {
                 throw PasswordErrorException()
@@ -104,7 +104,7 @@ class TeacherServiceImpl : TeacherService {
     override fun getCreatedDate(id: Long): Long {
         val user = teacherRepository.findById(id).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw TeacherNotFoundException()
         } else {
             return user.createdTime
         }
@@ -113,7 +113,7 @@ class TeacherServiceImpl : TeacherService {
     override fun getLastModifiedDate(id: Long): Long {
         val user = teacherRepository.findById(id).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw TeacherNotFoundException()
         } else {
             return user.lastModifiedTime
         }
@@ -140,7 +140,7 @@ class TeacherServiceImpl : TeacherService {
         return if (s.length in minLength..maxLength) {
             true
         } else {
-            throw UserInfoInvalidException("${info}长度不符合，最短${minLength}，最长${maxLength}")
+            throw TeacherInfoInvalidException("${info}长度不符合，最短${minLength}，最长${maxLength}")
         }
     }
 }

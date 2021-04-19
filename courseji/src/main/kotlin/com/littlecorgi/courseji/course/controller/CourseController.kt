@@ -62,7 +62,7 @@ class CourseController {
     @ApiOperation(value = "删除课程")
     @GetMapping(path = ["/delete"])
     fun deleteCourse(
-        @ApiParam(value = "要被删除的课程的id", required = true) @RequestParam id: Long
+        @ApiParam(value = "要被删除的课程的id", required = true, example = "1") @RequestParam id: Long
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(courseService.deleteCourse(id))

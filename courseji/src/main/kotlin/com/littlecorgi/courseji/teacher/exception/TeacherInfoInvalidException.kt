@@ -1,9 +1,9 @@
 package com.littlecorgi.courseji.teacher.exception
 
 /**
- * 用户不存在
+ * 用户信息不合法
  *
  * @author littlecorgi
  * @date 2021/4/15
  */
-class UserNotFoundException : RuntimeException()
+class TeacherInfoInvalidException(val msg: String) : RuntimeException()

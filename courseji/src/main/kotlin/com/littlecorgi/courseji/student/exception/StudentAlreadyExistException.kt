@@ -5,4 +5,4 @@ package com.littlecorgi.courseji.student.exception
  * @author littlecorgi
  * @date 2021/4/15
  */
-class UserAlreadyExistException : RuntimeException()
+class StudentAlreadyExistException : RuntimeException()

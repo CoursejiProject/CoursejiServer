@@ -2,13 +2,13 @@ package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
+import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import com.littlecorgi.courseji.student.service.StudentService
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
-import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
+import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,7 +35,7 @@ class StudentServiceImpl : StudentService {
     override fun signUp(user: Student): String {
         logger.info("添加新用户")
         if (studentRepository.existsUserByEmail(user.email)) {
-            throw UserAlreadyExistException()
+            throw TeacherAlreadyExistException()
         }
         user.apply {
             if (!avatar.isHttpOrHttps()) {
@@ -43,7 +43,7 @@ class StudentServiceImpl : StudentService {
                     "https://user-gold-cdn.xitu.io/2018/6/20/1641b2b7bbbd3323?imageView2/1/w/180/h/180/q/85/format/webp/interlace/1"
             }
             if (!picture.isHttpOrHttps()) {
-                throw UserInfoInvalidException("picture不是http/https链接")
+                throw StudentInfoInvalidException("picture不是http/https链接")
             }
             stringLengthIsInvalid(name, info = "姓名", maxLength = UserDataConstants.NAME_MAX_LENGTH)
             stringLengthIsInvalid(
@@ -77,7 +77,7 @@ class StudentServiceImpl : StudentService {
         logger.info("登录")
         val user = studentRepository.findByEmail(email).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw StudentNotFoundException()
         } else {
             if (user.password != password) {
                 throw PasswordErrorException()
@@ -90,7 +90,7 @@ class StudentServiceImpl : StudentService {
         logger.info("更新密码")
         val user = studentRepository.findByEmail(email).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw StudentNotFoundException()
         } else {
             if (user.password != oldPassword) {
                 throw PasswordErrorException()
@@ -104,7 +104,7 @@ class StudentServiceImpl : StudentService {
     override fun getCreatedDate(id: Long): Long {
         val user = studentRepository.findById(id).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw StudentNotFoundException()
         } else {
             return user.createdTime
         }
@@ -113,7 +113,7 @@ class StudentServiceImpl : StudentService {
     override fun getLastModifiedDate(id: Long): Long {
         val user = studentRepository.findById(id).orElse(null)
         if (user == null) {
-            throw UserNotFoundException()
+            throw StudentNotFoundException()
         } else {
             return user.lastModifiedTime
         }
@@ -140,7 +140,7 @@ class StudentServiceImpl : StudentService {
         return if (s.length in minLength..maxLength) {
             true
         } else {
-            throw UserInfoInvalidException("${info}长度不符合，最短${minLength}，最长${maxLength}")
+            throw StudentInfoInvalidException("${info}长度不符合，最短${minLength}，最长${maxLength}")
         }
     }
 }
