@@ -9,16 +9,27 @@ import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
 /**
  * 上课信息表。
- *  主要是[com.littlecorgi.courseji.student.model.Teacher]和[com.littlecorgi.courseji.course.model.Course]的对应关系
+ *  主要是[com.littlecorgi.courseji.student.model.Student]和[com.littlecorgi.courseji.course.model.Course]的对应关系
  *
  * @author littlecorgi
  * @date 2021/4/19
  */
 @Entity
-@ApiModel(value = "课程学生绑定，用来让课程和学生对应起来，代表学生上这门课")
+@Table(
+    name = "schedule",
+    uniqueConstraints = [
+        UniqueConstraint(
+            name = "unique_schedule",
+            columnNames = ["student_id", "course_id"]
+        )
+    ]
+)
+@ApiModel(value = "Schedule对象", description = "课程学生绑定，用来让课程和学生对应起来，代表学生上这门课")
 data class Schedule(
 
     @ManyToOne(

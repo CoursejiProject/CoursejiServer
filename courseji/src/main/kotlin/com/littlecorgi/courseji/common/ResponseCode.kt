@@ -33,5 +33,8 @@ enum class ResponseCode(val code: Int, val msg: String) {
     NO_COURSE(806, "课程不存在!"),
 
     // 课程信息存在问题
-    COURSE_INFO_INVALID(807, "课程信息错误!")
+    COURSE_INFO_INVALID(807, "课程信息错误!"),
+
+    // 学生已经加入课程
+    STUDENT_HAS_JOINED_COURSE(808, "该学生已经加入此课程!")
 }

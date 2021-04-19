@@ -6,4 +6,4 @@ package com.littlecorgi.courseji.student.exception
  * @author littlecorgi
  * @date 2021/4/15
  */
-class UserInfoInvalidException(val msg: String) : RuntimeException()
+class StudentInfoInvalidException(val msg: String) : RuntimeException()
