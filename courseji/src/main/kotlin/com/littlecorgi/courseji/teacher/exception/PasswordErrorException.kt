@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.user.exception
+package com.littlecorgi.courseji.teacher.exception
 
 /**
  * 密码错误

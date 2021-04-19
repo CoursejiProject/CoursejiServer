@@ -1,6 +1,6 @@
-package com.littlecorgi.courseji.user.service
+package com.littlecorgi.courseji.student.service
 
-import com.littlecorgi.courseji.user.model.User
+import com.littlecorgi.courseji.student.model.Student
 
 /**
  * 用户相关Service
@@ -8,13 +8,13 @@ import com.littlecorgi.courseji.user.model.User
  * @author littlecorgi
  * @date 2021/4/15
  */
-interface UserService {
+interface StudentService {
     /**
      * 登录
      *
      * @return 登录后返回User对象
      */
-    fun signIn(email: String, password: String): User
+    fun signIn(email: String, password: String): Student
 
     /**
      * 注册
@@ -22,14 +22,14 @@ interface UserService {
      * @param user 注册需要的用户信息
      * @return 注册结果
      */
-    fun signUp(user: User): String
+    fun signUp(user: Student): String
 
     /**
      * 返回所有用户信息
      *
      * @return 所有用户 {@link kotlin.collections.Iterable} Iterable
      */
-    fun getAllUser(): Iterable<User>
+    fun getAllUser(): Iterable<Student>
 
     /**
      * 更新密码

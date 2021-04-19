@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.common.constants
 
 /**
- * [com.littlecorgi.courseji.user.model.User] 信息定义常量
+ * [com.littlecorgi.courseji.student.model.Teacher] 信息定义常量
  *
  * @author littlecorgi
  * @date 2021/4/19

@@ -1,10 +1,9 @@
-package com.littlecorgi.courseji.user.model
+package com.littlecorgi.courseji.student.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
-import com.littlecorgi.courseji.course.model.Course
+import com.littlecorgi.courseji.schedule.model.Schedule
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -17,7 +16,7 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 /**
- * 用户数据库表
+ * 学生数据库表
  *
  * 字段的含义就是@ApiModelProperty注解中的内容。如果后续删掉这个注解，则记得把注解中内容改到注释
  *
@@ -26,9 +25,9 @@ import javax.persistence.Table
  */
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-@Table(name = "user")
-@ApiModel(value = "User对象", description = "教师和学生用户对象")
-data class User(
+@Table(name = "student")
+@ApiModel(value = "Student对象", description = "学生用户对象")
+data class Student(
     @Column(nullable = false, length = UserDataConstants.NAME_MAX_LENGTH)
     @ApiModelProperty(value = "学生姓名，不许空", required = true)
     var name: String = "", // 学生姓名，不许空
@@ -45,11 +44,6 @@ data class User(
     @ApiModelProperty(value = "手机号，不许空，最长11字符", required = true)
     var phone: String = "", // 手机号，不许空，最长11字符
 
-    @Column(name = "is_teacher", nullable = false)
-    @ApiModelProperty(value = "是否是教师，不许空", required = true, name = "isTeacher")
-    @JsonProperty(value = "isTeacher") // Kotlin中好像不起作用
-    var isTeacher: Boolean = false, // 是否是教师，不许空
-
     @Column(nullable = false)
     @ApiModelProperty(value = "用户头像url，不许空", required = true)
     var avatar: String = "", // 用户头像url，不许空
@@ -61,14 +55,14 @@ data class User(
     @JsonIgnore
     @Column(nullable = true)
     @OneToMany(
-        mappedBy = "teacher",
+        mappedBy = "student",
         cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
         fetch = FetchType.LAZY // 延迟加载
     )
-    @ApiModelProperty(value = "用户参加的课程，和Course绑定，可为空，创建对象时不添加，导入课程时添加")
+    @ApiModelProperty(value = "学生参加的课程，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
-    // mappedBy="teacher"中的teacher是Course中的teacher属性
-    var courseList: List<Course> = ArrayList()
+    // mappedBy="student"中的student是Schedule中的student属性
+    var courseList: List<Schedule> = ArrayList()
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L

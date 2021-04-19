@@ -23,6 +23,7 @@ class CourseServiceImpl : CourseService {
 
     @Autowired
     private lateinit var courseRepository: CourseRepository
+
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**************************
@@ -50,7 +51,7 @@ class CourseServiceImpl : CourseService {
         return "保存成功。"
     }
 
-    override fun deleteCourse(id: Int): String {
+    override fun deleteCourse(id: Long): String {
         logger.info("删除课程")
         if (!courseRepository.existsById(id)) {
             throw CourseNotFoundException()
