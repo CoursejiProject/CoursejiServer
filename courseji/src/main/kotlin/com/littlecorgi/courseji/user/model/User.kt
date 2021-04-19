@@ -3,22 +3,16 @@ package com.littlecorgi.courseji.user.model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.littlecorgi.courseji.common.UserDataConstants
-import com.littlecorgi.courseji.course.module.Course
+import com.littlecorgi.courseji.common.base.BaseModel
+import com.littlecorgi.courseji.course.model.Course
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import org.springframework.format.annotation.DateTimeFormat
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.MappedSuperclass
 import javax.persistence.OneToMany
 import javax.persistence.Table
 
@@ -35,26 +29,6 @@ import javax.persistence.Table
 @Table(name = "user")
 @ApiModel(value = "User对象", description = "教师和学生用户对象")
 data class User(
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    @ApiModelProperty(value = "学生用户ID，主键，自增，不为空")
-    var id: Long = 0, // 学生用户ID，主键，自增，不为空
-
-    @CreatedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
-    @Column(name = "create_time", nullable = false)
-    @ApiModelProperty(value = "账号创建时间，为时间戳，自动创建，不为空")
-    var createdTime: Long = 0L,  // 账号创建时间，自动创建，不为空
-
-    @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
-    @Column(name = "last_modified_Time", nullable = false)
-    @ApiModelProperty(value = "用户信息最近修改时间，为时间戳，自动创建，不为空")
-    var lastModifiedTime: Long = 0L,  // 用户信息最近修改时间，自动创建，不为空
-
     @Column(nullable = false, length = UserDataConstants.NAME_MAX_LENGTH)
     @ApiModelProperty(value = "学生姓名，不许空", required = true)
     var name: String = "", // 学生姓名，不许空
@@ -95,7 +69,7 @@ data class User(
     //拥有mappedBy注解的实体类为关系被维护端
     //mappedBy="teacher"中的teacher是Course中的teacher属性
     var courseList: List<Course> = ArrayList()
-) {
+) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L
     }

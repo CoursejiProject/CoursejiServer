@@ -3,7 +3,7 @@ package com.littlecorgi.courseji.course.service.impl
 import com.littlecorgi.courseji.course.exception.CourseAlreadyExistException
 import com.littlecorgi.courseji.course.exception.CourseInfoInvalidException
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
-import com.littlecorgi.courseji.course.module.Course
+import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.course.repository.CourseRepository
 import com.littlecorgi.courseji.course.service.CourseService
 import lombok.extern.slf4j.Slf4j
