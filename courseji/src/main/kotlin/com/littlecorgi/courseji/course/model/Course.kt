@@ -1,20 +1,13 @@
 package com.littlecorgi.courseji.course.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.utils.twoArrayIntersect
 import com.littlecorgi.courseji.user.model.User
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.format.annotation.DateTimeFormat
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
@@ -31,10 +24,12 @@ import javax.persistence.UniqueConstraint
 @Entity
 @Table(
     name = "course",
-    uniqueConstraints = [UniqueConstraint(
-        name = "unique_course",
-        columnNames = ["room", "start_node", "step", "start_week", "end_week", "type"]
-    )]
+    uniqueConstraints = [
+        UniqueConstraint(
+            name = "unique_course",
+            columnNames = ["room", "start_node", "step", "start_week", "end_week", "type"]
+        )
+    ]
 )
 @ApiModel(value = "Course对象", description = "课程信息对象")
 data class Course(
@@ -75,8 +70,8 @@ data class Course(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新
         optional = false
     )
-    //可选属性optional=false,表示author不能为空。删除文章，不影响用户
-    @JoinColumn(name = "teacher_id")//设置在article表中的关联字段(外键)
+    // 可选属性optional=false,表示author不能为空。删除文章，不影响用户
+    @JoinColumn(name = "teacher_id") // 设置在article表中的关联字段(外键)
     var teacher: User = User()
 ) : BaseModel() {
     companion object {

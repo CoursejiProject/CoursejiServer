@@ -2,7 +2,7 @@ package com.littlecorgi.courseji.course.repository
 
 import com.littlecorgi.courseji.course.model.Course
 import org.springframework.data.repository.CrudRepository
-import java.util.*
+import java.util.Optional
 
 /**
  * 课程信息的Repository

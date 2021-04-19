@@ -68,7 +68,6 @@ class UserController {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 
-
     @ApiOperation(value = "根据email和password登录")
     @GetMapping(path = ["/signIn"])
     fun signIn(

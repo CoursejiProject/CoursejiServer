@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.user.service.impl
 
-import com.littlecorgi.courseji.common.UserDataConstants
+import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
 import com.littlecorgi.courseji.user.exception.PasswordErrorException
 import com.littlecorgi.courseji.user.exception.UserAlreadyExistException
@@ -144,4 +144,3 @@ class UserServiceImpl : UserService {
         }
     }
 }
-

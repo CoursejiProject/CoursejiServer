@@ -1,7 +1,6 @@
 package com.littlecorgi.courseji.user.service
 
 import com.littlecorgi.courseji.user.model.User
-import java.util.Date
 
 /**
  * 用户相关Service

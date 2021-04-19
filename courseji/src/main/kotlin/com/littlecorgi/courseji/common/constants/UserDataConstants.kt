@@ -1,10 +1,10 @@
-package com.littlecorgi.courseji.common
+package com.littlecorgi.courseji.common.constants
 
 /**
- * 所有的常量
+ * [com.littlecorgi.courseji.user.model.User] 信息定义常量
  *
  * @author littlecorgi
- * @date 2021/4/15
+ * @date 2021/4/19
  */
 object UserDataConstants {
     /**

@@ -2,8 +2,8 @@ package com.littlecorgi.courseji.user.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.littlecorgi.courseji.common.UserDataConstants
 import com.littlecorgi.courseji.common.base.BaseModel
+import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
@@ -66,8 +66,8 @@ data class User(
         fetch = FetchType.LAZY // 延迟加载
     )
     @ApiModelProperty(value = "用户参加的课程，和Course绑定，可为空，创建对象时不添加，导入课程时添加")
-    //拥有mappedBy注解的实体类为关系被维护端
-    //mappedBy="teacher"中的teacher是Course中的teacher属性
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="teacher"中的teacher是Course中的teacher属性
     var courseList: List<Course> = ArrayList()
 ) : BaseModel() {
     companion object {

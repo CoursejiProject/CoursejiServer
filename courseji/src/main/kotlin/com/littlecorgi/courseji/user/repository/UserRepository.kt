@@ -2,7 +2,7 @@ package com.littlecorgi.courseji.user.repository
 
 import com.littlecorgi.courseji.user.model.User
 import org.springframework.data.repository.CrudRepository
-import java.util.*
+import java.util.Optional
 
 /**
  * 将会由Spring自动实现
