@@ -1,7 +1,6 @@
 package com.littlecorgi.courseji.student.repository
 
 import com.littlecorgi.courseji.student.model.Student
-import com.littlecorgi.courseji.teacher.model.Teacher
 import org.springframework.data.repository.CrudRepository
 import java.util.Optional
 

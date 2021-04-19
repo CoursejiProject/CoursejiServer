@@ -1,11 +1,9 @@
 package com.littlecorgi.courseji.teacher.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course
-import com.littlecorgi.courseji.schedule.model.Schedule
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.persistence.CascadeType

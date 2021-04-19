@@ -2,11 +2,11 @@ package com.littlecorgi.courseji.teacher.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
-import com.littlecorgi.courseji.teacher.model.Teacher
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
 import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
+import com.littlecorgi.courseji.teacher.model.Teacher
 import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import com.littlecorgi.courseji.teacher.service.TeacherService
 import lombok.extern.slf4j.Slf4j

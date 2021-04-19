@@ -43,7 +43,7 @@ data class Course(
     var name: String = "",
 
     @Column(nullable = false, length = 1)
-    @ApiModelProperty(value = "周几，不为空")
+    @ApiModelProperty(value = "周几，不为空", example = "1")
     var day: Int = 0,
 
     @Column(nullable = false, unique = true)
@@ -51,23 +51,23 @@ data class Course(
     var room: String = "",
 
     @Column(name = "start_node", nullable = false, unique = true)
-    @ApiModelProperty(value = "第几节开始，不为空，不唯一")
+    @ApiModelProperty(value = "第几节开始，不为空，不唯一", example = "1")
     var startNode: Int = 0,
 
     @Column(nullable = false, unique = true)
-    @ApiModelProperty(value = "共几节，不为空，不唯一")
+    @ApiModelProperty(value = "共几节，不为空，不唯一", example = "1")
     var step: Int = 0,
 
     @Column(name = "start_week", nullable = false, unique = true)
-    @ApiModelProperty(value = "第几周开始，不为空，不唯一")
+    @ApiModelProperty(value = "第几周开始，不为空，不唯一", example = "1")
     var startWeek: Int = 0,
 
     @Column(name = "end_week", nullable = false, unique = true)
-    @ApiModelProperty(value = "第几周结束，不为空，不唯一")
+    @ApiModelProperty(value = "第几周结束，不为空，不唯一", example = "1")
     var endWeek: Int = 0,
 
     @Column(nullable = false, unique = true)
-    @ApiModelProperty(value = "单周/双周，0每周，1单周，2双周，不为空")
+    @ApiModelProperty(value = "单周/双周，0每周，1单周，2双周，不为空", example = "0")
     var type: Int = 0,
 
     @ManyToOne(
