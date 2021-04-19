@@ -25,8 +25,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
  */
 @Entity
 @EntityListeners(AuditingEntityListener::class)
-@Table(name = "user")
-@ApiModel(value = "User对象", description = "教师和学生用户对象")
+@Table(name = "student")
+@ApiModel(value = "Student对象", description = "学生用户对象")
 data class Student(
     @Column(nullable = false, length = UserDataConstants.NAME_MAX_LENGTH)
     @ApiModelProperty(value = "学生姓名，不许空", required = true)

@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.student.repository
 
+import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.teacher.model.Teacher
 import org.springframework.data.repository.CrudRepository
 import java.util.Optional
@@ -10,17 +11,17 @@ import java.util.Optional
  * @author littlecorgi
  * @date 2021/4/13
  */
-interface StudentRepository : CrudRepository<Teacher, Long> {
+interface StudentRepository : CrudRepository<Student, Long> {
 
     /**
      * 根据email和password获取user对象
      */
-    fun findByEmailAndPassword(email: String, password: String): Optional<Teacher>
+    fun findByEmailAndPassword(email: String, password: String): Optional<Student>
 
     /**
      * 根据email获取user对象
      */
-    fun findByEmail(email: String): Optional<Teacher>
+    fun findByEmail(email: String): Optional<Student>
 
     /**
      * 根据email判断用户是否已经存在

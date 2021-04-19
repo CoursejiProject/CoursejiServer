@@ -2,20 +2,20 @@ package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.student.model.Student
+import com.littlecorgi.courseji.student.repository.StudentRepository
 import com.littlecorgi.courseji.student.service.StudentService
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
 import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
-import com.littlecorgi.courseji.teacher.model.Teacher
-import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
- * UserService的实现类，具体处理业务，并抛出对应的异常
+ * StudentService的实现类，具体处理业务，并抛出对应的异常
  *
  * @author littlecorgi
  * @date 2021/4/15
@@ -25,16 +25,16 @@ import org.springframework.stereotype.Service
 class StudentServiceImpl : StudentService {
 
     @Autowired
-    private lateinit var userRepository: TeacherRepository
+    private lateinit var studentRepository: StudentRepository
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**************************
      * 重写方法
      *************************/
 
-    override fun signUp(user: Teacher): String {
+    override fun signUp(user: Student): String {
         logger.info("添加新用户")
-        if (userRepository.existsUserByEmail(user.email)) {
+        if (studentRepository.existsUserByEmail(user.email)) {
             throw UserAlreadyExistException()
         }
         user.apply {
@@ -64,18 +64,18 @@ class StudentServiceImpl : StudentService {
                 UserDataConstants.PHONE_LENGTH
             )
         }
-        userRepository.save(user)
+        studentRepository.save(user)
         return "新建用户成功."
     }
 
-    override fun getAllUser(): Iterable<Teacher> {
+    override fun getAllUser(): Iterable<Student> {
         logger.info("获取所有用户")
-        return userRepository.findAll()
+        return studentRepository.findAll()
     }
 
-    override fun signIn(email: String, password: String): Teacher {
+    override fun signIn(email: String, password: String): Student {
         logger.info("登录")
-        val user = userRepository.findByEmail(email).orElse(null)
+        val user = studentRepository.findByEmail(email).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -88,7 +88,7 @@ class StudentServiceImpl : StudentService {
 
     override fun updatePassword(email: String, oldPassword: String, newPassword: String): String {
         logger.info("更新密码")
-        val user = userRepository.findByEmail(email).orElse(null)
+        val user = studentRepository.findByEmail(email).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -96,13 +96,13 @@ class StudentServiceImpl : StudentService {
                 throw PasswordErrorException()
             }
             user.password = newPassword
-            userRepository.save(user)
+            studentRepository.save(user)
             return "更新密码成功。"
         }
     }
 
     override fun getCreatedDate(id: Long): Long {
-        val user = userRepository.findById(id).orElse(null)
+        val user = studentRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -111,7 +111,7 @@ class StudentServiceImpl : StudentService {
     }
 
     override fun getLastModifiedDate(id: Long): Long {
-        val user = userRepository.findById(id).orElse(null)
+        val user = studentRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {

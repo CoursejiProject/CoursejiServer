@@ -2,12 +2,12 @@ package com.littlecorgi.courseji.student.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.service.StudentService
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
 import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
-import com.littlecorgi.courseji.teacher.model.Teacher
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -44,10 +44,10 @@ class StudentController {
     @ApiOperation(value = "注册")
     @PostMapping(path = ["/signUp"])
     fun signUp(
-        @ApiParam(value = "注册用户信息", required = true) @RequestBody user: Teacher
+        @ApiParam(value = "注册用户信息", required = true) @RequestBody student: Student
     ): ServerResponse<String> {
         return try {
-            ServerResponse.createBySuccess(studentService.signUp(user))
+            ServerResponse.createBySuccess(studentService.signUp(student))
         } catch (e: UserAlreadyExistException) {
             ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
         } catch (e: UserInfoInvalidException) {
@@ -60,7 +60,7 @@ class StudentController {
 
     @ApiOperation(value = "获取所有用户")
     @GetMapping(path = ["/getAllUser"])
-    fun getAllUser(): ServerResponse<Iterable<Teacher>> =
+    fun getAllUser(): ServerResponse<Iterable<Student>> =
         try {
             ServerResponse.createBySuccess(studentService.getAllUser())
         } catch (e: Exception) {
@@ -73,7 +73,7 @@ class StudentController {
     fun signIn(
         @ApiParam(value = "用户账号/邮箱", required = true) @RequestParam email: String,
         @ApiParam(value = "用户密码", required = true) @RequestParam password: String
-    ): ServerResponse<Teacher> {
+    ): ServerResponse<Student> {
         return try {
             ServerResponse.createBySuccess(studentService.signIn(email, password))
         } catch (e: UserNotFoundException) {

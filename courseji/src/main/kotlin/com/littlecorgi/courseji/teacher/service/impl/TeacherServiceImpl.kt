@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service
 class TeacherServiceImpl : TeacherService {
 
     @Autowired
-    private lateinit var userRepository: TeacherRepository
+    private lateinit var teacherRepository: TeacherRepository
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**************************
@@ -34,7 +34,7 @@ class TeacherServiceImpl : TeacherService {
 
     override fun signUp(user: Teacher): String {
         logger.info("添加新用户")
-        if (userRepository.existsUserByEmail(user.email)) {
+        if (teacherRepository.existsUserByEmail(user.email)) {
             throw UserAlreadyExistException()
         }
         user.apply {
@@ -64,18 +64,18 @@ class TeacherServiceImpl : TeacherService {
                 UserDataConstants.PHONE_LENGTH
             )
         }
-        userRepository.save(user)
+        teacherRepository.save(user)
         return "新建用户成功."
     }
 
     override fun getAllUser(): Iterable<Teacher> {
         logger.info("获取所有用户")
-        return userRepository.findAll()
+        return teacherRepository.findAll()
     }
 
     override fun signIn(email: String, password: String): Teacher {
         logger.info("登录")
-        val user = userRepository.findByEmail(email).orElse(null)
+        val user = teacherRepository.findByEmail(email).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -88,7 +88,7 @@ class TeacherServiceImpl : TeacherService {
 
     override fun updatePassword(email: String, oldPassword: String, newPassword: String): String {
         logger.info("更新密码")
-        val user = userRepository.findByEmail(email).orElse(null)
+        val user = teacherRepository.findByEmail(email).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -96,13 +96,13 @@ class TeacherServiceImpl : TeacherService {
                 throw PasswordErrorException()
             }
             user.password = newPassword
-            userRepository.save(user)
+            teacherRepository.save(user)
             return "更新密码成功。"
         }
     }
 
     override fun getCreatedDate(id: Long): Long {
-        val user = userRepository.findById(id).orElse(null)
+        val user = teacherRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
@@ -111,7 +111,7 @@ class TeacherServiceImpl : TeacherService {
     }
 
     override fun getLastModifiedDate(id: Long): Long {
-        val user = userRepository.findById(id).orElse(null)
+        val user = teacherRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
