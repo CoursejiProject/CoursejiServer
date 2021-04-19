@@ -10,7 +10,7 @@ import java.util.*
  * @author littlecorgi
  * @date 2021/4/13
  */
-interface UserRepository : CrudRepository<User, Int> {
+interface UserRepository : CrudRepository<User, Long> {
 
     /**
      * 根据email和password获取user对象

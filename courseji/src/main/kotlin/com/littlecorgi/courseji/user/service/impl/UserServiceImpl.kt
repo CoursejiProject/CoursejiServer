@@ -102,7 +102,7 @@ class UserServiceImpl : UserService {
         }
     }
 
-    override fun getCreatedDate(id: Int): Date {
+    override fun getCreatedDate(id: Long): Date {
         val user = userRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
@@ -111,7 +111,7 @@ class UserServiceImpl : UserService {
         }
     }
 
-    override fun getLastModifiedDate(id: Int): Date {
+    override fun getLastModifiedDate(id: Long): Date {
         val user = userRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()

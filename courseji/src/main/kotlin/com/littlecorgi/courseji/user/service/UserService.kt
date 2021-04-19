@@ -47,7 +47,7 @@ interface UserService {
      * @param id 用户id
      * @return 用户创建日期
      */
-    fun getCreatedDate(id: Int): Date
+    fun getCreatedDate(id: Long): Date
 
     /**
      * 获取用户最后一次修改信息日期
@@ -55,5 +55,5 @@ interface UserService {
      * @param id 用户id
      * @return 用户最后一次修改信息日期
      */
-    fun getLastModifiedDate(id: Int): Date
+    fun getLastModifiedDate(id: Long): Date
 }

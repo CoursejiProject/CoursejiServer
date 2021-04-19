@@ -116,7 +116,7 @@ class UserController {
     @ApiOperation(value = "获取用户创建日期")
     @GetMapping(path = ["/getCreatedDate"])
     fun getCreatedDate(
-        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Int
+        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
     ): ServerResponse<Date> {
         return try {
             ServerResponse.createBySuccess(userService.getCreatedDate(id))
@@ -131,7 +131,7 @@ class UserController {
     @ApiOperation(value = "获取用户最后一次信息修改日期")
     @GetMapping(path = ["/getLastModifiedDate"])
     fun getLastModifiedDate(
-        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Int
+        @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
     ): ServerResponse<Date> {
         return try {
             ServerResponse.createBySuccess(userService.getLastModifiedDate(id))
