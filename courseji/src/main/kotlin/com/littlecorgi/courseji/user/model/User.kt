@@ -8,14 +8,17 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
-import java.sql.Date
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import org.springframework.format.annotation.DateTimeFormat
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EntityListeners
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.MappedSuperclass
 import javax.persistence.OneToMany
 import javax.persistence.Table
 
@@ -28,6 +31,7 @@ import javax.persistence.Table
  * @date 2021/4/12
  */
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 @Table(name = "user")
 @ApiModel(value = "User对象", description = "教师和学生用户对象")
 data class User(
@@ -38,16 +42,18 @@ data class User(
     var id: Long = 0, // 学生用户ID，主键，自增，不为空
 
     @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonIgnore
-    @Column(name = "create_date", nullable = false)
-    @ApiModelProperty(value = "账号创建时间，自动创建，不为空")
-    var createdDate: Date = Date.valueOf("2021-01-01"),  // 账号创建时间，自动创建，不为空
+    @Column(name = "create_time", nullable = false)
+    @ApiModelProperty(value = "账号创建时间，为时间戳，自动创建，不为空")
+    var createdTime: Long = 0L,  // 账号创建时间，自动创建，不为空
 
     @LastModifiedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonIgnore
-    @Column(name = "last_modified_date", nullable = false)
-    @ApiModelProperty(value = "用户信息最近修改时间，自动创建，不为空")
-    var lastModifiedDate: Date = Date.valueOf("2021-01-01"),  // 用户信息最近修改时间，自动创建，不为空
+    @Column(name = "last_modified_Time", nullable = false)
+    @ApiModelProperty(value = "用户信息最近修改时间，为时间戳，自动创建，不为空")
+    var lastModifiedTime: Long = 0L,  // 用户信息最近修改时间，自动创建，不为空
 
     @Column(nullable = false, length = UserDataConstants.NAME_MAX_LENGTH)
     @ApiModelProperty(value = "学生姓名，不许空", required = true)

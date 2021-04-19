@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.format.annotation.DateTimeFormat
 import java.sql.Date
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -44,16 +45,18 @@ data class Course(
     var id: Long = 0,
 
     @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonIgnore
-    @Column(name = "create_date", nullable = false)
-    @ApiModelProperty(value = "课程创建时间，自动创建，不为空")
-    var createDate: Date = Date.valueOf("2021-01-01"),
+    @Column(name = "create_time", nullable = false)
+    @ApiModelProperty(value = "账号创建时间，为时间戳，自动创建，不为空")
+    var createdTime: Long = 0L,  // 账号创建时间，自动创建，不为空
 
     @LastModifiedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonIgnore
-    @Column(name = "last_modified_date", nullable = false)
-    @ApiModelProperty(value = "信息最近修改时间，自动更新，不为空")
-    var lastModifiedDate: Date = Date.valueOf("2021-01-01"),
+    @Column(name = "last_modified_Time", nullable = false)
+    @ApiModelProperty(value = "用户信息最近修改时间，为时间戳，自动创建，不为空")
+    var lastModifiedTime: Long = 0L,  // 用户信息最近修改时间，自动创建，不为空
 
     @Column(nullable = false)
     @ApiModelProperty(value = "课程名，不为空")

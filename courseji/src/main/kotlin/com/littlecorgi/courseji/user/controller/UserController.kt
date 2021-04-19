@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.sql.Date
 
 /**
  * User相关的Controller
@@ -117,7 +116,7 @@ class UserController {
     @GetMapping(path = ["/getCreatedDate"])
     fun getCreatedDate(
         @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
-    ): ServerResponse<Date> {
+    ): ServerResponse<Long> {
         return try {
             ServerResponse.createBySuccess(userService.getCreatedDate(id))
         } catch (e: UserNotFoundException) {
@@ -132,7 +131,7 @@ class UserController {
     @GetMapping(path = ["/getLastModifiedDate"])
     fun getLastModifiedDate(
         @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
-    ): ServerResponse<Date> {
+    ): ServerResponse<Long> {
         return try {
             ServerResponse.createBySuccess(userService.getLastModifiedDate(id))
         } catch (e: UserNotFoundException) {

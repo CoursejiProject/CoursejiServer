@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.sql.Date
 
 /**
  * UserService的实现类，具体处理业务，并抛出对应的异常
@@ -102,21 +101,21 @@ class UserServiceImpl : UserService {
         }
     }
 
-    override fun getCreatedDate(id: Long): Date {
+    override fun getCreatedDate(id: Long): Long {
         val user = userRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
-            return user.createdDate
+            return user.createdTime
         }
     }
 
-    override fun getLastModifiedDate(id: Long): Date {
+    override fun getLastModifiedDate(id: Long): Long {
         val user = userRepository.findById(id).orElse(null)
         if (user == null) {
             throw UserNotFoundException()
         } else {
-            return user.lastModifiedDate
+            return user.lastModifiedTime
         }
     }
 

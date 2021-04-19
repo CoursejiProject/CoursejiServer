@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.user.service
 
 import com.littlecorgi.courseji.user.model.User
-import java.sql.Date
+import java.util.Date
 
 /**
  * 用户相关Service
@@ -47,7 +47,7 @@ interface UserService {
      * @param id 用户id
      * @return 用户创建日期
      */
-    fun getCreatedDate(id: Long): Date
+    fun getCreatedDate(id: Long): Long
 
     /**
      * 获取用户最后一次修改信息日期
@@ -55,5 +55,5 @@ interface UserService {
      * @param id 用户id
      * @return 用户最后一次修改信息日期
      */
-    fun getLastModifiedDate(id: Long): Date
+    fun getLastModifiedDate(id: Long): Long
 }
