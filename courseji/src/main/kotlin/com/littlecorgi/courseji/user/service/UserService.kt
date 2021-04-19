@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.user.service
 
 import com.littlecorgi.courseji.user.model.User
+import java.sql.Date
 
 /**
  * 用户相关Service
@@ -39,4 +40,20 @@ interface UserService {
      * @param newPassword 新密码
      */
     fun updatePassword(email: String, oldPassword: String, newPassword: String): String
+
+    /**
+     * 获取用户创建日期
+     *
+     * @param id 用户id
+     * @return 用户创建日期
+     */
+    fun getCreatedDate(id: Int): Date
+
+    /**
+     * 获取用户最后一次修改信息日期
+     *
+     * @param id 用户id
+     * @return 用户最后一次修改信息日期
+     */
+    fun getLastModifiedDate(id: Int): Date
 }
