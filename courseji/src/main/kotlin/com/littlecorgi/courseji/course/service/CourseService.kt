@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.course.service
 
-import com.littlecorgi.courseji.course.module.Course
+import com.littlecorgi.courseji.course.model.Course
 
 /**
  * 课程信息的Service
@@ -13,7 +13,7 @@ interface CourseService {
     /**
      * 添加新课程
      *
-     * @param course 课程[com.littlecorgi.courseji.course.module.Course]对象
+     * @param course 课程[com.littlecorgi.courseji.course.model.Course]对象
      * @return 添加成功
      */
     fun addNewCourse(course: Course): String

@@ -5,7 +5,7 @@ import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.course.exception.CourseAlreadyExistException
 import com.littlecorgi.courseji.course.exception.CourseInfoInvalidException
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
-import com.littlecorgi.courseji.course.module.Course
+import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.course.service.CourseService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation

@@ -1,6 +1,7 @@
-package com.littlecorgi.courseji.course.module
+package com.littlecorgi.courseji.course.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.utils.twoArrayIntersect
 import com.littlecorgi.courseji.user.model.User
 import io.swagger.annotations.ApiModel
@@ -8,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.format.annotation.DateTimeFormat
-import java.sql.Date
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -38,25 +38,6 @@ import javax.persistence.UniqueConstraint
 )
 @ApiModel(value = "Course对象", description = "课程信息对象")
 data class Course(
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    @ApiModelProperty(value = "课程ID，主键，自增，不为空")
-    var id: Long = 0,
-
-    @CreatedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
-    @Column(name = "create_time", nullable = false)
-    @ApiModelProperty(value = "账号创建时间，为时间戳，自动创建，不为空")
-    var createdTime: Long = 0L,  // 账号创建时间，自动创建，不为空
-
-    @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
-    @Column(name = "last_modified_Time", nullable = false)
-    @ApiModelProperty(value = "用户信息最近修改时间，为时间戳，自动创建，不为空")
-    var lastModifiedTime: Long = 0L,  // 用户信息最近修改时间，自动创建，不为空
 
     @Column(nullable = false)
     @ApiModelProperty(value = "课程名，不为空")
@@ -97,7 +78,7 @@ data class Course(
     //可选属性optional=false,表示author不能为空。删除文章，不影响用户
     @JoinColumn(name = "teacher_id")//设置在article表中的关联字段(外键)
     var teacher: User = User()
-) {
+) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237751L
     }
