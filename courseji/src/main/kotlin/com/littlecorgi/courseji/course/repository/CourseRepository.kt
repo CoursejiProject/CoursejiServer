@@ -10,7 +10,7 @@ import java.util.Optional
  * @author littlecorgi
  * @date 2021/4/18
  */
-interface CourseRepository : CrudRepository<Course, Int> {
+interface CourseRepository : CrudRepository<Course, Long> {
 
     /**
      * 根据教室、开始节数、总节数、开始周数、节数周数以及单双周来判断Course表中是否存在此数据

@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.user.exception
+package com.littlecorgi.courseji.teacher.exception
 
 /**
  * 用户已经存在

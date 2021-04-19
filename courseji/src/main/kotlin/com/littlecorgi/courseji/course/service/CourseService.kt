@@ -24,5 +24,5 @@ interface CourseService {
      * @param id 课程id [com.littlecorgi.courseji.course.module.Course#id]，Course表的主键
      * @return 删除成功
      */
-    fun deleteCourse(id: Int): String
+    fun deleteCourse(id: Long): String
 }

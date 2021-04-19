@@ -1,15 +1,19 @@
 package com.littlecorgi.courseji.course.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.utils.twoArrayIntersect
-import com.littlecorgi.courseji.user.model.User
+import com.littlecorgi.courseji.schedule.model.Schedule
+import com.littlecorgi.courseji.teacher.model.Teacher
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.persistence.UniqueConstraint
 
@@ -72,7 +76,18 @@ data class Course(
     )
     // 可选属性optional=false,表示author不能为空。删除文章，不影响用户
     @JoinColumn(name = "teacher_id") // 设置在article表中的关联字段(外键)
-    var teacher: User = User()
+    var teacher: Teacher = Teacher(),
+
+    @JsonIgnore
+    @OneToMany(
+        mappedBy = "course",
+        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
+        fetch = FetchType.LAZY // 延迟加载
+    )
+    @ApiModelProperty(value = "参与课程的学生，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="course"中的course是Schedule中的course属性
+    var studentList: List<Schedule> = ArrayList()
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237751L

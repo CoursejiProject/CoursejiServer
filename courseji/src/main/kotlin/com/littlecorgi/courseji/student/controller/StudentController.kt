@@ -1,13 +1,13 @@
-package com.littlecorgi.courseji.user.controller
+package com.littlecorgi.courseji.student.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
-import com.littlecorgi.courseji.user.exception.PasswordErrorException
-import com.littlecorgi.courseji.user.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.user.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.user.exception.UserNotFoundException
-import com.littlecorgi.courseji.user.model.User
-import com.littlecorgi.courseji.user.service.UserService
+import com.littlecorgi.courseji.student.service.StudentService
+import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
+import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
+import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
+import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
+import com.littlecorgi.courseji.teacher.model.Teacher
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -31,11 +31,11 @@ import org.springframework.web.bind.annotation.RestController
 @Api
 @Slf4j
 @RestController
-@RequestMapping(path = ["/user"])
-class UserController {
+@RequestMapping(path = ["/student"])
+class StudentController {
 
     @Autowired
-    private lateinit var userService: UserService
+    private lateinit var studentService: StudentService
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**
@@ -44,10 +44,10 @@ class UserController {
     @ApiOperation(value = "注册")
     @PostMapping(path = ["/signUp"])
     fun signUp(
-        @ApiParam(value = "注册用户信息", required = true) @RequestBody user: User
+        @ApiParam(value = "注册用户信息", required = true) @RequestBody user: Teacher
     ): ServerResponse<String> {
         return try {
-            ServerResponse.createBySuccess(userService.signUp(user))
+            ServerResponse.createBySuccess(studentService.signUp(user))
         } catch (e: UserAlreadyExistException) {
             ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
         } catch (e: UserInfoInvalidException) {
@@ -60,9 +60,9 @@ class UserController {
 
     @ApiOperation(value = "获取所有用户")
     @GetMapping(path = ["/getAllUser"])
-    fun getAllUser(): ServerResponse<Iterable<User>> =
+    fun getAllUser(): ServerResponse<Iterable<Teacher>> =
         try {
-            ServerResponse.createBySuccess(userService.getAllUser())
+            ServerResponse.createBySuccess(studentService.getAllUser())
         } catch (e: Exception) {
             logger.info("{获取所有用户:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
@@ -73,9 +73,9 @@ class UserController {
     fun signIn(
         @ApiParam(value = "用户账号/邮箱", required = true) @RequestParam email: String,
         @ApiParam(value = "用户密码", required = true) @RequestParam password: String
-    ): ServerResponse<User> {
+    ): ServerResponse<Teacher> {
         return try {
-            ServerResponse.createBySuccess(userService.signIn(email, password))
+            ServerResponse.createBySuccess(studentService.signIn(email, password))
         } catch (e: UserNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
@@ -95,7 +95,7 @@ class UserController {
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(
-                userService.updatePassword(
+                studentService.updatePassword(
                     email,
                     oldPassword,
                     newPassword
@@ -117,7 +117,7 @@ class UserController {
         @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
     ): ServerResponse<Long> {
         return try {
-            ServerResponse.createBySuccess(userService.getCreatedDate(id))
+            ServerResponse.createBySuccess(studentService.getCreatedDate(id))
         } catch (e: UserNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
@@ -132,7 +132,7 @@ class UserController {
         @ApiParam(value = "需要查询的用户的id", required = true) @RequestParam id: Long
     ): ServerResponse<Long> {
         return try {
-            ServerResponse.createBySuccess(userService.getLastModifiedDate(id))
+            ServerResponse.createBySuccess(studentService.getLastModifiedDate(id))
         } catch (e: UserNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {

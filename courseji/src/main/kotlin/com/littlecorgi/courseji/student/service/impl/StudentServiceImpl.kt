@@ -1,14 +1,14 @@
-package com.littlecorgi.courseji.user.service.impl
+package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
-import com.littlecorgi.courseji.user.exception.PasswordErrorException
-import com.littlecorgi.courseji.user.exception.UserAlreadyExistException
-import com.littlecorgi.courseji.user.exception.UserInfoInvalidException
-import com.littlecorgi.courseji.user.exception.UserNotFoundException
-import com.littlecorgi.courseji.user.model.User
-import com.littlecorgi.courseji.user.repository.UserRepository
-import com.littlecorgi.courseji.user.service.UserService
+import com.littlecorgi.courseji.student.service.StudentService
+import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
+import com.littlecorgi.courseji.teacher.exception.UserAlreadyExistException
+import com.littlecorgi.courseji.teacher.exception.UserInfoInvalidException
+import com.littlecorgi.courseji.teacher.exception.UserNotFoundException
+import com.littlecorgi.courseji.teacher.model.Teacher
+import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,17 +22,17 @@ import org.springframework.stereotype.Service
  */
 @Slf4j
 @Service
-class UserServiceImpl : UserService {
+class StudentServiceImpl : StudentService {
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    private lateinit var userRepository: TeacherRepository
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /**************************
      * 重写方法
      *************************/
 
-    override fun signUp(user: User): String {
+    override fun signUp(user: Teacher): String {
         logger.info("添加新用户")
         if (userRepository.existsUserByEmail(user.email)) {
             throw UserAlreadyExistException()
@@ -68,12 +68,12 @@ class UserServiceImpl : UserService {
         return "新建用户成功."
     }
 
-    override fun getAllUser(): Iterable<User> {
+    override fun getAllUser(): Iterable<Teacher> {
         logger.info("获取所有用户")
         return userRepository.findAll()
     }
 
-    override fun signIn(email: String, password: String): User {
+    override fun signIn(email: String, password: String): Teacher {
         logger.info("登录")
         val user = userRepository.findByEmail(email).orElse(null)
         if (user == null) {
