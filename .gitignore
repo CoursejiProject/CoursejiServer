@@ -1,1 +1,4 @@
 /springtest/target
+
+### 忽略本地log文件
+courseji.log

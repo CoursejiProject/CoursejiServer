@@ -14,3 +14,10 @@ spring:
 jasypt:
   encryptor:
     password: littlecorgi
+
+logging:
+  file:
+    name: courseji.log
+    path: logs/config/
+server:
+  port: 10800
