@@ -7,9 +7,10 @@
         - kotlin
             - com.littlecorgi.courseji
                 - attendance 考勤信息，包含教师创建这个考勤所需要的信息
+                - checkon 签到信息，包含student和attendance对应关系，表示某位学生参与了某个签到
                 - common 公共基础库
                 - course 课程信息，包含这个课程的基础信息
-                - schedule 上课信息，包含student和course对应关系，表示某为学生加入了某门课
+                - schedule 上课信息，包含student和course对应关系，表示某位学生加入了某门课
                 - student 学生信息
                 - teacher 教师信息
         - resources 资源文件夹

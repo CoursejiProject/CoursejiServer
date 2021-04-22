@@ -76,7 +76,7 @@ data class Course(
         optional = false
     )
     // 可选属性optional=false,表示author不能为空。删除文章，不影响用户
-    @JoinColumn(name = "teacher_id") // 设置在article表中的关联字段(外键)
+    @JoinColumn(name = "teacher_id") // 设置在course表中的关联字段(外键)
     var teacher: Teacher = Teacher(),
 
     @JsonIgnore

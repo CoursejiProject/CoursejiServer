@@ -2,13 +2,13 @@ package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import com.littlecorgi.courseji.student.service.StudentService
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
-import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,10 +32,23 @@ class StudentServiceImpl : StudentService {
      * 重写方法
      *************************/
 
+    override fun signIn(email: String, password: String): Student {
+        logger.info("登录")
+        val student = studentRepository.findByEmail(email).orElse(null)
+        if (student == null) {
+            throw StudentNotFoundException()
+        } else {
+            if (student.password != password) {
+                throw PasswordErrorException()
+            }
+            return student
+        }
+    }
+
     override fun signUp(user: Student): String {
         logger.info("添加新用户")
         if (studentRepository.existsUserByEmail(user.email)) {
-            throw TeacherAlreadyExistException()
+            throw StudentAlreadyExistException()
         }
         user.apply {
             if (!avatar.isHttpOrHttps()) {
@@ -73,49 +86,45 @@ class StudentServiceImpl : StudentService {
         return studentRepository.findAll()
     }
 
-    override fun signIn(email: String, password: String): Student {
-        logger.info("登录")
-        val user = studentRepository.findByEmail(email).orElse(null)
-        if (user == null) {
-            throw StudentNotFoundException()
-        } else {
-            if (user.password != password) {
-                throw PasswordErrorException()
-            }
-            return user
-        }
-    }
-
     override fun updatePassword(email: String, oldPassword: String, newPassword: String): String {
         logger.info("更新密码")
-        val user = studentRepository.findByEmail(email).orElse(null)
-        if (user == null) {
+        val student = studentRepository.findByEmail(email).orElse(null)
+        if (student == null) {
             throw StudentNotFoundException()
         } else {
-            if (user.password != oldPassword) {
+            if (student.password != oldPassword) {
                 throw PasswordErrorException()
             }
-            user.password = newPassword
-            studentRepository.save(user)
+            student.password = newPassword
+            studentRepository.save(student)
             return "更新密码成功。"
         }
     }
 
     override fun getCreatedDate(id: Long): Long {
-        val user = studentRepository.findById(id).orElse(null)
-        if (user == null) {
+        val student = studentRepository.findById(id).orElse(null)
+        if (student == null) {
             throw StudentNotFoundException()
         } else {
-            return user.createdTime
+            return student.createdTime
         }
     }
 
     override fun getLastModifiedDate(id: Long): Long {
-        val user = studentRepository.findById(id).orElse(null)
-        if (user == null) {
+        val student = studentRepository.findById(id).orElse(null)
+        if (student == null) {
             throw StudentNotFoundException()
         } else {
-            return user.lastModifiedTime
+            return student.lastModifiedTime
+        }
+    }
+
+    override fun findByStudentId(studentId: Long): Student {
+        val student = studentRepository.findById(studentId).orElse(null)
+        if (student == null) {
+            throw StudentNotFoundException()
+        } else {
+            return student
         }
     }
 

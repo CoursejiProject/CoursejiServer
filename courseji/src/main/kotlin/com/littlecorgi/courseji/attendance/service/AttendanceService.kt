@@ -10,7 +10,7 @@ import com.littlecorgi.courseji.attendance.model.Attendance
 interface AttendanceService {
 
     /**
-     * 创建一个新的签到
+     * 创建一个新的签到。并在创建时将所有学生的签到纪录存放到CheckOn表中，并设置为未签到
      *
      * @param teacherId 教师ID [com.littlecorgi.courseji.teacher.model.Teacher#id]
      * @param courseId 课程ID [com.littlecorgi.courseji.course.model.Course#id]
