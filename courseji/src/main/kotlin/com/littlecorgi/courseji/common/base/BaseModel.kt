@@ -23,7 +23,7 @@ open class BaseModel(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     @ApiModelProperty(value = "数据ID，主键，自增，不为空", example = "1")
-    var id: Long = 0,
+    var id: Long = 0L,
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

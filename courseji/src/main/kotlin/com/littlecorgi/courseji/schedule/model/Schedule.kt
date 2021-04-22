@@ -37,7 +37,7 @@ data class Schedule(
         optional = false
     )
     // 可选属性optional=false,表示student不能为空。删除关联信息，不影响用户
-    @JoinColumn(name = "student_id") // 设置在user表中的关联字段(外键)
+    @JoinColumn(name = "student_id") // 设置在schedule表中的关联字段(外键)
     @ApiModelProperty(value = "学生主键ID")
     var student: Student = Student(),
 
@@ -46,7 +46,7 @@ data class Schedule(
         optional = false
     )
     // 可选属性optional=false,表示course不能为空。删除管理信息，不影响课程
-    @JoinColumn(name = "course_id") // 设置在course表中的关联字段(外键)
+    @JoinColumn(name = "course_id") // 设置在schedule表中的关联字段(外键)
     @ApiModelProperty(value = "课程主键ID")
     var course: Course = Course()
 ) : BaseModel()
