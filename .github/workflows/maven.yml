@@ -38,8 +38,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "/courseji/target/courseji-0.0.1-SNAPSHOT.jar"
-          target: "/root/CoursejiServer/"
+          source: "./courseji/target/courseji-0.0.1-SNAPSHOT.jar"
+          target: "/root/CoursejiServer"
           port: 22
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
