@@ -47,5 +47,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             whoami
+            pkill -9 -f courseji
             nohup java -jar /root/CoursejiServer/courseji/target/courseji-0.0.1-SNAPSHOT.jar > /root/CoursejiServer/courseji.txt &
     
