@@ -34,3 +34,22 @@ jobs:
           mysql database: courseji # optional, default is
       - name: Build with Maven
         run: mvn -B package --file courseji/pom.xml
+      - name: SCP Files
+        # You may pin to the exact commit or the version.
+        # uses: appleboy/scp-action@b476d5806f2a4c1ed5902a87fa91b0623cac7258
+        uses: appleboy/scp-action@v0.0.1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.PSERVER_ASSWORD }}
+          source: "./courseji/target/courseji-0.0.1-SNAPSHOT.jar"
+          target: "/root/CoursejiServer/"
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.PSERVER_ASSWORD }}
+          script: |
+            whoami
+            nohup java -jar /root/CoursejiServer/courseji-0.0.1-SNAPSHOT.jar > courseji.txt &
