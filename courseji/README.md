@@ -1,5 +1,9 @@
 # 课记-后台
 
+> 如果升级版本，请务必更新GitHub Action中的配置！！！  
+> 如果升级版本，请务必更新GitHub Action中的配置！！！  
+> 如果升级版本，请务必更新GitHub Action中的配置！！！
+
 ## 项目结构
 
 - src
@@ -21,6 +25,8 @@
 
 - org.springframework.spring-context   
   Spring上下文
+- org.springframework.boot.spring-boot-starter-actuator  
+  Spring远程查看log日志
 - org.springframework.boot.spring-boot-starter-web  
   SpringMVC框架
 - org.springframework.boot.spring-boot-starter-data-jpa Spring-JPA组件
