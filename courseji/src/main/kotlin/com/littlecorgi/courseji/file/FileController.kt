@@ -21,7 +21,7 @@ class FileController {
     @GetMapping(path = ["/coursejiLog"])
     fun getLogger(): ServerResponse<String> =
         try {
-            val br = BufferedReader(FileReader("/root/CoursejiServer/courseji.txt"))
+            val br = BufferedReader(FileReader("~/CoursejiServer/courseji.txt"))
             val sb = StringBuffer()
             var str: String? = null
             while (br.readLine().also { str = it } != null) sb.append(str)
