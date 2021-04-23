@@ -1,5 +1,5 @@
 /springtest/target
 
 ### 忽略本地log文件
-log
+/log
 log.*.gz
