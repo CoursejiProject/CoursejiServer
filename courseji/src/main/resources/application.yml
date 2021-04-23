@@ -17,3 +17,13 @@ jasypt:
 
 server:
   port: 10800
+
+logging:
+  file:
+    name: log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
