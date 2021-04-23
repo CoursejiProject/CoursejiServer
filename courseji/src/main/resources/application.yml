@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/courseji?useSSL=true&serverTimezone=Asia/Shanghai
     username: root
-    password: ENC(SG7OHlPc4jAfHAr6VbQcgYCf7/BJ2l4hBNdVToqRsizLW+VPggCnZMqdX4nFnM+U)
+    password: ENC(LsjOGvs/THMPdc5JHoN11jkyLMLFk30RoJZpm9REA/T2LpcYjqE7dHd0nyD1V+rY)
 
 jasypt:
   encryptor:
