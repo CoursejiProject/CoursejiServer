@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.attendance.controller
 
+import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.common.ResponseCode
@@ -39,6 +40,8 @@ class AttendanceController {
     ): ServerResponse<Attendance> =
         try {
             ServerResponse.createBySuccess(attendanceService.createNewAttendance(teacherId, courseId, attendance))
+        } catch (e: AttendanceInfoInvalidException) {
+            ServerResponse.createByFailure(ResponseCode.ATTENDANCE_INFO_INVALID, errorMsg = e.msg)
         } catch (e: Exception) {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
@@ -54,6 +57,8 @@ class AttendanceController {
     ): ServerResponse<Attendance> =
         try {
             ServerResponse.createBySuccess(attendanceService.updateAttendanceInfo(attendanceId, attendance))
+        } catch (e: AttendanceInfoInvalidException) {
+            ServerResponse.createByFailure(ResponseCode.ATTENDANCE_INFO_INVALID, errorMsg = e.msg)
         } catch (e: Exception) {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
