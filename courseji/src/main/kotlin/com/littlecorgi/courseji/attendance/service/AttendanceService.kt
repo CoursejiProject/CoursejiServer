@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.attendance.service
 
+import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 
 /**
@@ -16,6 +17,7 @@ interface AttendanceService {
      * @param courseId 课程ID [com.littlecorgi.courseji.course.model.Course#id]
      * @param attendance 签到信息 [com.littlecorgi.courseji.attendance.model.Attendance]
      * @return 创建好的attendance [com.littlecorgi.courseji.attendance.model.Attendance]
+     * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      */
     fun createNewAttendance(
         teacherId: Long,
@@ -29,6 +31,7 @@ interface AttendanceService {
      * @param attendanceId 要修改数据的Attendance数据的主键ID [com.littlecorgi.courseji.attendance.model.Attendance#id]
      * @param attendance 携带要更新的数据的[com.littlecorgi.courseji.attendance.model.Attendance]对象
      * @return 更新后的[com.littlecorgi.courseji.attendance.model.Attendance]
+     * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      */
     fun updateAttendanceInfo(attendanceId: Long, attendance: Attendance): Attendance
 }

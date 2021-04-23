@@ -32,6 +32,19 @@ class TeacherServiceImpl : TeacherService {
      * 重写方法
      *************************/
 
+    override fun signIn(email: String, password: String): Teacher {
+        logger.info("登录")
+        val teacher = teacherRepository.findByEmail(email).orElse(null)
+        if (teacher == null) {
+            throw TeacherNotFoundException()
+        } else {
+            if (teacher.password != password) {
+                throw PasswordErrorException()
+            }
+            return teacher
+        }
+    }
+
     override fun signUp(user: Teacher): String {
         logger.info("添加新用户")
         if (teacherRepository.existsUserByEmail(user.email)) {
@@ -73,49 +86,45 @@ class TeacherServiceImpl : TeacherService {
         return teacherRepository.findAll()
     }
 
-    override fun signIn(email: String, password: String): Teacher {
-        logger.info("登录")
-        val user = teacherRepository.findByEmail(email).orElse(null)
-        if (user == null) {
-            throw TeacherNotFoundException()
-        } else {
-            if (user.password != password) {
-                throw PasswordErrorException()
-            }
-            return user
-        }
-    }
-
     override fun updatePassword(email: String, oldPassword: String, newPassword: String): String {
         logger.info("更新密码")
-        val user = teacherRepository.findByEmail(email).orElse(null)
-        if (user == null) {
+        val teacher = teacherRepository.findByEmail(email).orElse(null)
+        if (teacher == null) {
             throw TeacherNotFoundException()
         } else {
-            if (user.password != oldPassword) {
+            if (teacher.password != oldPassword) {
                 throw PasswordErrorException()
             }
-            user.password = newPassword
-            teacherRepository.save(user)
+            teacher.password = newPassword
+            teacherRepository.save(teacher)
             return "更新密码成功。"
         }
     }
 
     override fun getCreatedDate(id: Long): Long {
-        val user = teacherRepository.findById(id).orElse(null)
-        if (user == null) {
+        val teacher = teacherRepository.findById(id).orElse(null)
+        if (teacher == null) {
             throw TeacherNotFoundException()
         } else {
-            return user.createdTime
+            return teacher.createdTime
         }
     }
 
     override fun getLastModifiedDate(id: Long): Long {
-        val user = teacherRepository.findById(id).orElse(null)
-        if (user == null) {
+        val teacher = teacherRepository.findById(id).orElse(null)
+        if (teacher == null) {
             throw TeacherNotFoundException()
         } else {
-            return user.lastModifiedTime
+            return teacher.lastModifiedTime
+        }
+    }
+
+    override fun findByTeacherId(teacherId: Long): Teacher {
+        val teacher = teacherRepository.findById(teacherId).orElse(null)
+        if (teacher == null) {
+            throw TeacherNotFoundException()
+        } else {
+            return teacher
         }
     }
 
