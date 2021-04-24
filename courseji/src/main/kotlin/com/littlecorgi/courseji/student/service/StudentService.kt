@@ -35,9 +35,9 @@ interface StudentService {
     /**
      * 返回所有用户信息
      *
-     * @return 所有用户 {@link kotlin.collections.Iterable} Iterable
+     * @return 所有用户 [kotlin.collections.List]
      */
-    fun getAllUser(): Iterable<Student>
+    fun getAllUser(): List<Student>
 
     /**
      * 更新密码

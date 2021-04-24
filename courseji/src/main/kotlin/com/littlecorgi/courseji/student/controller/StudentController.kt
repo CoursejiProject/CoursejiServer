@@ -60,7 +60,7 @@ class StudentController {
 
     @ApiOperation(value = "获取所有用户")
     @GetMapping(path = ["/getAllUser"])
-    fun getAllUser(): ServerResponse<Iterable<Student>> =
+    fun getAllUser(): ServerResponse<List<Student>> =
         try {
             ServerResponse.createBySuccess(studentService.getAllUser())
         } catch (e: Exception) {
