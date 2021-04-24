@@ -21,9 +21,8 @@ import javax.persistence.MappedSuperclass
 open class BaseModel(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    @ApiModelProperty(value = "数据ID，主键，自增，不为空", example = "1")
-    var id: Long = 0L,
+    @ApiModelProperty(value = "数据ID，主键，自增", example = "1")
+    var id: Long? = null,
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

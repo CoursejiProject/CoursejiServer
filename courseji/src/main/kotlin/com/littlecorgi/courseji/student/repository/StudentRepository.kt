@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.student.repository
 
 import com.littlecorgi.courseji.student.model.Student
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
 /**
@@ -10,7 +10,7 @@ import java.util.Optional
  * @author littlecorgi
  * @date 2021/4/13
  */
-interface StudentRepository : CrudRepository<Student, Long> {
+interface StudentRepository : JpaRepository<Student, Long> {
 
     /**
      * 根据email和password获取user对象

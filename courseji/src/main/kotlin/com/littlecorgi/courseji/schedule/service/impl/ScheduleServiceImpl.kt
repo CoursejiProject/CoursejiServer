@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.schedule.service.impl
 
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
+import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.course.repository.CourseRepository
 import com.littlecorgi.courseji.schedule.exception.StudentAlreadyJoinedException
 import com.littlecorgi.courseji.schedule.model.Schedule
@@ -35,17 +36,23 @@ class ScheduleServiceImpl : ScheduleService {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     override fun joinCourse(studentId: Long, courseId: Long): Schedule {
-        if (!courseRepository.existsById(courseId)) {
-            throw CourseNotFoundException()
-        }
-        if (!studentRepository.existsById(studentId)) {
-            throw StudentNotFoundException()
-        }
-        val student = studentRepository.findById(studentId).get()
-        val course = courseRepository.findById(courseId).get()
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
         if (!scheduleRepository.existsByStudentAndCourse(student, course)) {
             throw StudentAlreadyJoinedException()
         }
         return scheduleRepository.save(Schedule(student, course))
+    }
+
+    override fun getAllCourse(studentId: Long): List<Course> {
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        val scheduleList = scheduleRepository.findAllByStudent(student)
+        return scheduleList.map { it.course }
+    }
+
+    override fun getAllCourseFromStudentAndCourse(studentId: Long, courseId: Long): List<Course> {
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
+        return scheduleRepository.findAllByStudentAndCourse(student, course).map { it.course }
     }
 }

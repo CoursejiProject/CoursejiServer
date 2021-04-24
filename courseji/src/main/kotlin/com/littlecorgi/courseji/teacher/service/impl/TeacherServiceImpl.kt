@@ -34,15 +34,11 @@ class TeacherServiceImpl : TeacherService {
 
     override fun signIn(email: String, password: String): Teacher {
         logger.info("登录")
-        val teacher = teacherRepository.findByEmail(email).orElse(null)
-        if (teacher == null) {
-            throw TeacherNotFoundException()
-        } else {
-            if (teacher.password != password) {
-                throw PasswordErrorException()
-            }
-            return teacher
+        val teacher = teacherRepository.findByEmail(email).orElseThrow { TeacherNotFoundException() }
+        if (teacher.password != password) {
+            throw PasswordErrorException()
         }
+        return teacher
     }
 
     override fun signUp(user: Teacher): String {
@@ -81,7 +77,7 @@ class TeacherServiceImpl : TeacherService {
         return "新建用户成功."
     }
 
-    override fun getAllUser(): Iterable<Teacher> {
+    override fun getAllUser(): List<Teacher> {
         logger.info("获取所有用户")
         return teacherRepository.findAll()
     }
@@ -111,21 +107,12 @@ class TeacherServiceImpl : TeacherService {
     }
 
     override fun getLastModifiedDate(id: Long): Long {
-        val teacher = teacherRepository.findById(id).orElse(null)
-        if (teacher == null) {
-            throw TeacherNotFoundException()
-        } else {
-            return teacher.lastModifiedTime
-        }
+        val teacher = teacherRepository.findById(id).orElseThrow { TeacherNotFoundException() }
+        return teacher.lastModifiedTime
     }
 
     override fun findByTeacherId(teacherId: Long): Teacher {
-        val teacher = teacherRepository.findById(teacherId).orElse(null)
-        if (teacher == null) {
-            throw TeacherNotFoundException()
-        } else {
-            return teacher
-        }
+        return teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
     }
 
     /**************************

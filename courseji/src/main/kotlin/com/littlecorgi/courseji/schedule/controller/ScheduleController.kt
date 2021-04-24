@@ -3,6 +3,7 @@ package com.littlecorgi.courseji.schedule.controller
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
+import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.schedule.exception.StudentAlreadyJoinedException
 import com.littlecorgi.courseji.schedule.model.Schedule
 import com.littlecorgi.courseji.schedule.service.ScheduleService
@@ -56,4 +57,19 @@ class ScheduleController {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
     }
+
+    /**
+     * 获取学生加入的所有课程
+     */
+    @ApiOperation(value = "获取学生加入的所有课程")
+    @GetMapping(path = ["/getAllCourse"])
+    fun getAllCourse(
+        @ApiParam(value = "查询的学生的id", required = true, example = "0") @RequestParam studentId: Long
+    ): ServerResponse<List<Course>> =
+        try {
+            ServerResponse.createBySuccess(scheduleService.getAllCourse(studentId))
+        } catch (e: Exception) {
+            logger.error("{获取所有课程:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
 }

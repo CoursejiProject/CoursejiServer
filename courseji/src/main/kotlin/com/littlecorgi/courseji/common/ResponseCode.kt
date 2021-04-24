@@ -40,4 +40,13 @@ enum class ResponseCode(val code: Int, val msg: String) {
 
     // 考勤信息存在问题
     ATTENDANCE_INFO_INVALID(809, "考勤信息错误!"),
+
+    // 请假不存在
+    NO_LEAVE(810, "请假不存在！"),
+
+    // 请假信息存在问题
+    LEAVE_INFO_INVALID(811, "请假信息错误!"),
+
+    // 请假已经存在
+    LEAVE_HAS_EXIST(812, "请假已经存在!"),
 }
