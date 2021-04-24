@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="594fbbf8-200f-4aa9-bf60-31a9bb23dc29" name="阿里云 宝塔 centos7 SFTP" url="http://47.103.81.77">
+        <fileTransfer rootFolder="/root" accessType="SFTP" host="47.103.81.77" port="22" sshConfigId="b94ebfc2-3dcf-4c26-ae3a-1381d1985574" sshConfig="root@47.103.81.77:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

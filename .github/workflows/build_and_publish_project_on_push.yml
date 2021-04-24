@@ -46,7 +46,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            whoami
-            pkill -9 -f "java -jar /root/CoursejiServer/courseji/target/courseji-0.0.1-SNAPSHOT.jar"
+            ps -ef|grep "courseji-0.0.1-SNAPSHOT.jar" |grep -v grep|cut -c 9-15|xargs kill -9
             nohup java -jar /root/CoursejiServer/courseji/target/courseji-0.0.1-SNAPSHOT.jar > /root/CoursejiServer/courseji.txt &
     
