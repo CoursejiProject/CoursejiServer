@@ -23,7 +23,7 @@ class FileController {
         try {
             val br = BufferedReader(FileReader("~/CoursejiServer/courseji.txt"))
             val sb = StringBuffer()
-            var str: String? = null
+            var str: String?
             while (br.readLine().also { str = it } != null) sb.append(str)
             ServerResponse.createBySuccess(sb.toString())
         } catch (e: Exception) {
