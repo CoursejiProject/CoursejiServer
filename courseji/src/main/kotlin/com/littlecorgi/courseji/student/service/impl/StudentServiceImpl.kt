@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.student.exception.PasswordErrorException
 import com.littlecorgi.courseji.student.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
@@ -9,7 +10,6 @@ import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import com.littlecorgi.courseji.student.service.StudentService
-import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
