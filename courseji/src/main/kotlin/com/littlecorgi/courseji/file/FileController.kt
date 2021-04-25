@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.file
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.file.exception.FileIsEmptyException
 import com.qiniu.common.QiniuException
 import com.qiniu.http.Response
 import io.swagger.annotations.Api
@@ -51,6 +52,8 @@ class FileController {
     ): ServerResponse<String> =
         try {
             ServerResponse.createBySuccess(fileService.uploadPicture(picFile))
+        } catch (e: FileIsEmptyException) {
+            ServerResponse.createByFailure(ResponseCode.FILE_IS_EMPTY, errorMsg = e.message)
         } catch (ex: QiniuException) {
             val r: Response = ex.response
             try {

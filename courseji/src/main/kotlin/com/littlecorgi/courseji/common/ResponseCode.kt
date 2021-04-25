@@ -25,6 +25,9 @@ enum class ResponseCode(val code: Int, val msg: String) {
     // 七牛云错误
     QINIU_FAILURE(FAILURE_CODE + 1, "七牛云错误!"),
 
+    // 文件是空的
+    FILE_IS_EMPTY(FAILURE_CODE + 2, "文件是空的!"),
+
     /***********************
      * 用户相关
      **********************/

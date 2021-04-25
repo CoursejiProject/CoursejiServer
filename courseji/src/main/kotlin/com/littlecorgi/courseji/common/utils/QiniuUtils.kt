@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.common.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.littlecorgi.courseji.file.exception.FileIsEmptyException
 import com.qiniu.http.Response
 import com.qiniu.storage.Configuration
 import com.qiniu.storage.Region
@@ -57,6 +58,7 @@ object QiniuUtils {
      * @return 上传后的api
      */
     fun uploadPic(picFile: MultipartFile): String {
+        if (picFile.isEmpty) throw FileIsEmptyException()
         // 默认不指定key的情况下，以文件内容的hash值作为文件名
         // 文件名设置为courseji/pic前缀并加上文件的hashCode
         val key = "courseji/pic/${picFile.hashCode()}"
@@ -65,6 +67,6 @@ object QiniuUtils {
         val objectMapper = ObjectMapper()
         val putRet = objectMapper.readValue(response.bodyString(), DefaultPutRet::class.java)
         // 拼接上阿里云CDN域名
-        return "https://cdn.littlecorgi.top.${putRet.hash}"
+        return "https://cdn.littlecorgi.top/${putRet.hash}"
     }
 }
