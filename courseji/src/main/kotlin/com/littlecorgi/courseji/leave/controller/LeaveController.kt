@@ -8,6 +8,7 @@ import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.leave.service.LeaveService
+import com.littlecorgi.courseji.schedule.exception.ScheduleNotFoundException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -51,6 +52,8 @@ class LeaveController {
             ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: CourseNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_COURSE, errorMsg = e.message)
+        } catch (e: ScheduleNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_SCHEDULE, errorMsg = e.message)
         } catch (e: LeaveAlreadyExistException) {
             ServerResponse.createByFailure(ResponseCode.LEAVE_HAS_EXIST, errorMsg = e.message)
         } catch (e: LeaveInfoInvalidException) {

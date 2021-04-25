@@ -1,8 +1,7 @@
 package com.littlecorgi.courseji.leave.repository
 
-import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.leave.model.Leave
-import com.littlecorgi.courseji.student.model.Student
+import com.littlecorgi.courseji.schedule.model.Schedule
 import org.springframework.data.jpa.repository.JpaRepository
 
 /**
@@ -13,10 +12,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface LeaveRepository : JpaRepository<Leave, Long> {
 
     /**
-     * 根据Student和Course判断是否已经存在
+     * 根据schedule判断是否已经存在
      *
-     * @param student [com.littlecorgi.courseji.student.model.Student] 学生
-     * @param course [com.littlecorgi.courseji.course.model.Course] 课程
+     * @param schedule [com.littlecorgi.courseji.schedule.model.Schedule] 学生和课程的对应关系
      */
-    fun existsByStudentAndCourse(student: Student, course: Course): Boolean
+    fun existsBySchedule(schedule: Schedule): Boolean
 }

@@ -8,6 +8,7 @@ import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.leave.repository.LeaveRepository
 import com.littlecorgi.courseji.leave.service.LeaveService
+import com.littlecorgi.courseji.schedule.exception.ScheduleNotFoundException
 import com.littlecorgi.courseji.schedule.repository.ScheduleRepository
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.repository.StudentRepository
@@ -45,10 +46,11 @@ class LeaveServiceImpl : LeaveService {
     override fun createLeave(studentId: Long, courseId: Long, leave: Leave): Leave {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
-        if (leaveRepository.existsByStudentAndCourse(student, course)) throw LeaveAlreadyExistException()
+        val schedule =
+            scheduleRepository.findByStudentAndCourse(student, course).orElseThrow { ScheduleNotFoundException() }
+        if (leaveRepository.existsBySchedule(schedule)) throw LeaveAlreadyExistException()
         leave.apply {
-            this.student = student
-            this.course = course
+            this.schedule = schedule
             this.states = 0
             if (this.title.isEmpty()) {
                 throw LeaveInfoInvalidException("标题不能为空")
@@ -59,16 +61,7 @@ class LeaveServiceImpl : LeaveService {
             if (week !in course.startWeek..course.endWeek) {
                 throw LeaveInfoInvalidException("请假的周数不在课程上课周数内")
             }
-            val scheduleList = scheduleRepository.findAllByStudentAndCourse(student, course)
-            var noDay = true
-            for (schedule in scheduleList) {
-                if (day in schedule.course.startWeek..schedule.course.endWeek) {
-                    noDay = false
-                }
-            }
-            if (noDay) {
-                throw LeaveInfoInvalidException("请假这天此节课并没有上课")
-            }
+            if (day != schedule.course.day) throw LeaveInfoInvalidException("请假这天此节课并没有上课")
         }
         return leaveRepository.save(leave)
     }

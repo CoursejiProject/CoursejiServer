@@ -11,6 +11,7 @@ object ResponseCodeConstants {
     const val FAILURE_CODE = 900
     const val USER_ERROR_CODE = 1000
     const val COURSE_ERROR_CODE = 1100
-    const val ATTENDANCE_ERROR_CODE = 1200
-    const val LEAVE_ERROR_CODE = 1300
+    const val SCHEDULE_ERROR_CODE = 1200
+    const val ATTENDANCE_ERROR_CODE = 1300
+    const val LEAVE_ERROR_CODE = 1400
 }

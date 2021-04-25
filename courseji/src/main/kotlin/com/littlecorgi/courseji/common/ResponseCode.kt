@@ -4,6 +4,7 @@ import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.ATTENDANC
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.COURSE_ERROR_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.FAILURE_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.LEAVE_ERROR_CODE
+import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.SCHEDULE_ERROR_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.SUCCESS_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.USER_ERROR_CODE
 
@@ -38,7 +39,7 @@ enum class ResponseCode(val code: Int, val msg: String) {
     USER_INFO_INVALID(USER_ERROR_CODE + 3, "用户信息错误!"),
 
     /***********************
-     * 课程相关
+     * 课程详情相关
      **********************/
 
     // 课程已经存在
@@ -52,6 +53,13 @@ enum class ResponseCode(val code: Int, val msg: String) {
 
     // 学生已经加入课程
     STUDENT_HAS_JOINED_COURSE(COURSE_ERROR_CODE + 3, "该学生已经加入此课程!"),
+
+    /***********************
+     * 学生课程对应关系相关
+     **********************/
+
+    // 学生上课对应关系不存在
+    NO_SCHEDULE(SCHEDULE_ERROR_CODE, "学生上课对应关系不存在!"),
 
     /***********************
      * 考勤相关

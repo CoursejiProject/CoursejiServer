@@ -6,11 +6,9 @@ import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.EntityListeners
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
 import javax.persistence.Table
@@ -24,7 +22,7 @@ import javax.persistence.Table
  * @date 2021/4/12
  */
 @Entity
-@EntityListeners(AuditingEntityListener::class)
+
 @Table(name = "teacher")
 @ApiModel(value = "Teacher对象", description = "教师用户对象")
 data class Teacher(

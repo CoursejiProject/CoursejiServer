@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import org.springframework.format.annotation.DateTimeFormat
 import javax.persistence.Column
+import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -18,6 +20,7 @@ import javax.persistence.MappedSuperclass
  * @date 2021/4/19
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener::class)
 open class BaseModel(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
