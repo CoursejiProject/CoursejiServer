@@ -46,10 +46,6 @@ data class Teacher(
     @ApiModelProperty(value = "用户头像url，不许空", required = true)
     var avatar: String = "", // 用户头像url，不许空
 
-    @Column(nullable = false)
-    @ApiModelProperty(value = "用户照片，用于人脸识别，不许空", required = true)
-    var picture: String = "", // 用户照片，用于人脸识别，不许空
-
     @JsonIgnore
     @Column(nullable = true)
     @OneToMany(
