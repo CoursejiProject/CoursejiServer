@@ -4,6 +4,7 @@ import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.schedule.model.Schedule
 import com.littlecorgi.courseji.student.model.Student
 import org.springframework.data.jpa.repository.JpaRepository
+import java.util.Optional
 
 /**
  *
@@ -20,6 +21,14 @@ interface ScheduleRepository : JpaRepository<Schedule, Long> {
      * @return 如果存在，返回true
      */
     fun existsByStudentAndCourse(student: Student, course: Course): Boolean
+
+    /**
+     * 根据Course和Student对象返回Schedule对象
+     *
+     * @param student [com.littlecorgi.courseji.student.model.Student]对象
+     * @param course [com.littlecorgi.courseji.course.model.Course]对象
+     */
+    fun findByStudentAndCourse(student: Student, course: Course): Optional<Schedule>
 
     /**
      * 根据Student获取加入的所有的课程

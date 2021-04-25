@@ -28,7 +28,7 @@ import javax.persistence.UniqueConstraint
  */
 @Entity
 @Table(
-    name = "course",
+    name = "`course`",
     uniqueConstraints = [
         UniqueConstraint(
             name = "unique_course",

@@ -22,7 +22,7 @@ import javax.persistence.Table
  * @date 2021/4/21
  */
 @Entity
-@Table(name = "attendance")
+@Table(name = "`attendance`")
 @ApiModel(value = "Attendance对象", description = "考勤信息对象")
 data class Attendance(
 
