@@ -27,3 +27,8 @@ management:
     web:
       exposure:
         include: "*"
+
+qiniu:
+  accessKey: ENC(I1HIg7i22MyTKUFJiILBE25XwMWTF70y9JWYEFuvVfl92zSquZkPZDkxc2E0cqNsngBahl8/ZgJ8LxEtS5wvEae3yxTfui45orYJaoYhLdU=)
+  secretKey: ENC(OJcJ102vSe7Fr2ic34Tz38jaBHeUgsaCxm4T1NdfJhqWHKnpaAgnGaOypr/QlfzMB67Ms+NoV7RqMNQaQOp1CldcZTA0nOTwRyhJ8SgrWrI=)
+  bucket: ENC(AukX9J7TsDGcySt+mxUmQV1k+ijby4O3CCTjZ1/wZwM7LK3QxvyvBB8BycYfEcWG)

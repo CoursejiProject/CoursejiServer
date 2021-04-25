@@ -3,3 +3,5 @@
 ### 忽略本地log文件
 /log
 log.*.gz
+
+/courseji/src/main/kotlin/com/littlecorgi/courseji/Jasypt.txt
