@@ -69,6 +69,8 @@ object QiniuUtils {
         val objectMapper = ObjectMapper()
         val putRet = objectMapper.readValue(response.bodyString(), DefaultPutRet::class.java)
         // 拼接上阿里云CDN域名
-        return "https://cdn.littlecorgi.top/${putRet.hash}"
+        logger.info("hash= ${putRet.hash}")
+        logger.info("key= ${putRet.key}")
+        return "https://cdn.littlecorgi.top/${putRet.key}"
     }
 }
