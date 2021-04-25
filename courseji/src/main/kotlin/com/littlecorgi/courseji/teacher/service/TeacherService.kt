@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.teacher.service
 
+import com.littlecorgi.courseji.student.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.model.Teacher
 
@@ -26,6 +27,7 @@ interface TeacherService {
      * @return 注册结果
      * @throws TeacherAlreadyExistException 添加用户时发现用户已经存在抛出此异常
      * @throws TeacherInfoInvalidException 用户信息不合法时抛出此异常
+     * @throws PhoneAlreadyExistException 手机号已经存在时抛出此异常
      */
     fun signUp(user: Teacher): String
 

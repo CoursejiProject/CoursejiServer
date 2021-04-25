@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.student.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.student.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -43,9 +44,8 @@ class StudentServiceImpl : StudentService {
 
     override fun signUp(user: Student): String {
         logger.info("添加新用户")
-        if (studentRepository.existsUserByEmail(user.email)) {
-            throw StudentAlreadyExistException()
-        }
+        if (studentRepository.existsUserByEmail(user.email)) throw StudentAlreadyExistException()
+        if (studentRepository.existsByPhone(user.phone)) throw PhoneAlreadyExistException()
         user.apply {
             if (!avatar.isHttpOrHttps()) {
                 avatar =

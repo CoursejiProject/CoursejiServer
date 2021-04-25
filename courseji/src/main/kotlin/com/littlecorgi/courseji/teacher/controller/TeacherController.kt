@@ -3,6 +3,7 @@ package com.littlecorgi.courseji.teacher.controller
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
+import com.littlecorgi.courseji.teacher.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.TeacherInfoInvalidException
 import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
@@ -50,6 +51,8 @@ class TeacherController {
             ServerResponse.createBySuccess(teacherService.signUp(user))
         } catch (e: TeacherAlreadyExistException) {
             ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
+        } catch (e: PhoneAlreadyExistException) {
+            ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = "手机号已经注册过!")
         } catch (e: TeacherInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = e.msg)
         } catch (e: Exception) {

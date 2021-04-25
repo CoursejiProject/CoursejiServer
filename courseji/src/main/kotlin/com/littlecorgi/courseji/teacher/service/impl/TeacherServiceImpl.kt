@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.teacher.service.impl
 
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.common.utils.isHttpOrHttps
+import com.littlecorgi.courseji.teacher.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.TeacherInfoInvalidException
@@ -43,9 +44,8 @@ class TeacherServiceImpl : TeacherService {
 
     override fun signUp(user: Teacher): String {
         logger.info("添加新用户")
-        if (teacherRepository.existsUserByEmail(user.email)) {
-            throw TeacherAlreadyExistException()
-        }
+        if (teacherRepository.existsUserByEmail(user.email)) throw TeacherAlreadyExistException()
+        if (teacherRepository.existsByPhone(user.phone)) throw PhoneAlreadyExistException()
         user.apply {
             if (!avatar.isHttpOrHttps()) {
                 avatar =

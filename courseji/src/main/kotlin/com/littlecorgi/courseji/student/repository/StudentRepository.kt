@@ -26,4 +26,9 @@ interface StudentRepository : JpaRepository<Student, Long> {
      * 根据email判断用户是否已经存在
      */
     fun existsUserByEmail(email: String): Boolean
+
+    /**
+     * 根据phone判断用户是否已经存在
+     */
+    fun existsByPhone(phone: String): Boolean
 }

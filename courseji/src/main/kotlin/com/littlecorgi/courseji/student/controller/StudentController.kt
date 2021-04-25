@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.student.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.student.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -52,6 +53,8 @@ class StudentController {
             ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
         } catch (e: StudentInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = e.msg)
+        } catch (e: PhoneAlreadyExistException) {
+            ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = "手机号已经注册过!")
         } catch (e: Exception) {
             logger.info("{添加用户:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)

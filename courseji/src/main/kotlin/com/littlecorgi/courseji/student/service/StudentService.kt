@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.student.service
 
+import com.littlecorgi.courseji.student.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentAlreadyExistException
 import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -29,6 +30,7 @@ interface StudentService {
      * @return 注册结果
      * @throws StudentAlreadyExistException 添加用户时发现用户已经存在抛出此异常
      * @throws StudentInfoInvalidException 用户信息不合法时抛出此异常
+     * @throws PhoneAlreadyExistException 手机号已经存在时抛出此异常
      */
     fun signUp(user: Student): String
 
