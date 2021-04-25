@@ -61,7 +61,9 @@ object QiniuUtils {
         if (picFile.isEmpty) throw FileIsEmptyException()
         // 默认不指定key的情况下，以文件内容的hash值作为文件名
         // 文件名设置为courseji/pic前缀并加上文件的hashCode
-        val key = "courseji/pic/${picFile.hashCode()}"
+        if (picFile.contentType == null) throw FileIsEmptyException()
+        val type = picFile.contentType!!.split("/").last()
+        val key = "courseji/pic/${picFile.hashCode()}.$type"
         val response: Response = uploadManager.put(picFile.bytes, key, upToken)
         // 解析上传成功的结果
         val objectMapper = ObjectMapper()
