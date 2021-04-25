@@ -44,10 +44,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!--文件上传-->
+        <!--七牛云文件上传-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.5.0, 7.5.99]</version>
         </dependency>
         <!--数据加密库-->
         <dependency>

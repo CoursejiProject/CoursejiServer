@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.JpaRepository
  * @author littlecorgi
  * @date 2021/4/21
  */
-interface AttendanceRepository : JpaRepository<Attendance, Long> {
-}
+interface AttendanceRepository : JpaRepository<Attendance, Long>

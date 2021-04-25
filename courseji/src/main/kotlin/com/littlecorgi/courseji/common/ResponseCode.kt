@@ -22,6 +22,9 @@ enum class ResponseCode(val code: Int, val msg: String) {
     // 失败
     FAILURE(FAILURE_CODE, "失败!"),
 
+    // 七牛云错误
+    QINIU_FAILURE(FAILURE_CODE + 1, "七牛云错误!"),
+
     /***********************
      * 用户相关
      **********************/
