@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -62,7 +61,7 @@ class CourseController {
     @ApiOperation(value = "删除课程")
     @GetMapping(path = ["/delete"])
     fun deleteCourse(
-        @ApiParam(value = "要被删除的课程的id", required = true, example = "1") @RequestParam id: Long
+        @ApiParam(value = "要被删除的课程的id", required = true, example = "1") @RequestBody id: Long
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(courseService.deleteCourse(id))

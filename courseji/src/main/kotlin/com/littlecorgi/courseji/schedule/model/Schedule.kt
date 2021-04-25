@@ -65,5 +65,5 @@ data class Schedule(
     @ApiModelProperty(value = "学生申请的请假，和Leave绑定，可为空，创建对象时不添加，创建请假时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="student"中的schedule是Leave中的schedule属性
-    var leaveList: List<Leave> = ArrayList()
+    var leaveList: List<Leave>? = null
 ) : BaseModel()

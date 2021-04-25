@@ -5,6 +5,8 @@ import com.littlecorgi.courseji.checkon.service.CheckOnService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,17 +37,18 @@ class CheckOnController {
      * 参加签到
      *
      * @param studentId 学生id
-     * @param scheduleId 考勤数据id
+     * @param attendanceId 考勤数据id
      * @param checkOn 签到数据
      */
+    @ApiOperation(value = "参加签到")
     @PostMapping(path = ["/checkIn"])
     fun checkIn(
-        @RequestParam studentId: Long,
-        @RequestParam scheduleId: Long,
-        @RequestBody checkOn: CheckOn
+        @ApiParam(value = "学生id", required = true, example = "1") @RequestParam studentId: Long,
+        @ApiParam(value = "考勤信息id", required = true, example = "1") @RequestParam attendanceId: Long,
+        @ApiParam(value = "参与签到的数据", required = true) @RequestBody checkOn: CheckOn
     ): ServerResponse<CheckOn> =
         try {
-            ServerResponse.createBySuccess(checkOnService.checkIn(studentId, scheduleId, checkOn))
+            ServerResponse.createBySuccess(checkOnService.checkIn(studentId, attendanceId, checkOn))
         } catch (e: Exception) {
             logger.info("{参加签到:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
@@ -57,10 +60,11 @@ class CheckOnController {
      * @param studentId 学生id
      * @param courseId 课程id
      */
+    @ApiOperation(value = "获取这名学生这门课的签到纪录")
     @GetMapping(path = ["/getTheStudentCheckInInfoForTheClass"])
     fun getTheStudentCheckInInfoForTheClass(
-        @RequestParam studentId: Long,
-        @RequestParam courseId: Long
+        @ApiParam(value = "学生id", required = true) @RequestBody studentId: Long,
+        @ApiParam(value = "学生课程对应信息id", required = true) @RequestBody courseId: Long
     ): ServerResponse<List<CheckOn>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getTheStudentCheckInInfoForTheClass(studentId, courseId))
@@ -74,9 +78,10 @@ class CheckOnController {
      *
      * @param studentId 学生id
      */
+    @ApiOperation(value = "获取这名学生所有课的签到纪录")
     @GetMapping(path = ["/getTheStudentAllCheckInInfo"])
     fun getTheStudentAllCheckInInfo(
-        @RequestParam studentId: Long
+        @ApiParam(value = "学生id", required = true) @RequestBody studentId: Long
     ): ServerResponse<List<CheckOn>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getTheStudentAllCheckInInfo(studentId))
@@ -90,9 +95,10 @@ class CheckOnController {
      *
      * @param checkOnId 签到纪录id
      */
+    @ApiOperation(value = "获取签到时间")
     @GetMapping(path = ["/getCheckInTime"])
     fun getCheckInTime(
-        @RequestParam checkOnId: Long
+        @ApiParam(value = "签到id", required = true) @RequestBody checkOnId: Long
     ): ServerResponse<Long> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInTime(checkOnId))
@@ -106,9 +112,10 @@ class CheckOnController {
      *
      * @param checkOnId 签到纪录id
      */
+    @ApiOperation(value = "获取签到地点")
     @GetMapping(path = ["/getCheckInLocation"])
     fun getCheckInLocation(
-        @RequestParam checkOnId: Long
+        @ApiParam(value = "签到id", required = true) @RequestBody checkOnId: Long
     ): ServerResponse<Pair<Float, Float>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInLocation(checkOnId))

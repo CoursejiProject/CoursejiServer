@@ -27,7 +27,7 @@ class AttendanceServiceImpl : AttendanceService {
         verifyInfoValid(attendance)
         // 创建签到时，顺便将所有学生的签到信息添加到CheckOn里去
         val a = attendanceRepository.save(attendance)
-        for (student in a.course.studentList) {
+        for (student in a.course.studentList!!) {
             // 都直接使用默认参数
             val checkOn = CheckOn()
             checkOnRepository.save(checkOn)

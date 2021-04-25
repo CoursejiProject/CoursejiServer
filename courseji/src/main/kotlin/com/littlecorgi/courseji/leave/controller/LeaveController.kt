@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -42,8 +43,8 @@ class LeaveController {
     @ApiOperation(value = "创建新的请假")
     @PostMapping(path = ["/createLeave"])
     fun createLeave(
-        @ApiParam(value = "学生id", required = true, example = "0") @RequestBody studentId: Long,
-        @ApiParam(value = "课程id", required = true, example = "0") @RequestBody courseId: Long,
+        @ApiParam(value = "学生id", required = true, example = "0") @RequestParam studentId: Long,
+        @ApiParam(value = "课程id", required = true, example = "0") @RequestParam courseId: Long,
         @ApiParam(value = "请假信息", required = true, example = "0") @RequestBody leave: Leave
     ): ServerResponse<Leave> =
         try {
@@ -69,7 +70,7 @@ class LeaveController {
     @ApiOperation(value = "删除请假")
     @PostMapping(path = ["/deleteLeave"])
     fun deleteLeave(
-        leaveId: Long
+        @ApiParam(value = "请假id", required = true, example = "0") @RequestBody leaveId: Long
     ): ServerResponse<String> =
         try {
             ServerResponse.createBySuccess(leaveService.deleteLeave(leaveId))
@@ -86,7 +87,7 @@ class LeaveController {
     @ApiOperation(value = "获取请假信息")
     @PostMapping(path = ["/getLeave"])
     fun getLeave(
-        leaveId: Long
+        @ApiParam(value = "请假id", required = true, example = "0") @RequestBody leaveId: Long
     ): ServerResponse<Leave> =
         try {
             ServerResponse.createBySuccess(leaveService.getLeave(leaveId))
@@ -103,9 +104,9 @@ class LeaveController {
     @ApiOperation(value = "教师审批请假")
     @PostMapping(path = ["/approvalTheLeave"])
     fun approvalTheLeave(
-        leaveId: Long,
-        approvalState: Int,
-        approval: String
+        @ApiParam(value = "请假id", required = true, example = "0") @RequestParam leaveId: Long,
+        @ApiParam(value = "审批状态", required = true, example = "0") @RequestBody approvalState: Int,
+        @ApiParam(value = "审批详情", required = true) @RequestBody approval: String
     ): ServerResponse<Leave> =
         try {
             ServerResponse.createBySuccess(leaveService.approvalTheLeave(leaveId, approvalState, approval))

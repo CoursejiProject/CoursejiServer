@@ -33,8 +33,8 @@ class CourseServiceImpl : CourseService {
     override fun addNewCourse(course: Course): String {
         logger.info("添加新课程")
         course.apply {
-            if (courseRepository.existsCourseByRoomAndStartNodeAndStepAndStartWeekAndEndWeekAndType(
-                    room, startNode, step, startWeek, endWeek, type
+            if (courseRepository.existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndType(
+                    room, startNode, endNode, startWeek, endWeek, type
                 )
             ) {
                 // 根据信息查询如果存在，则抛出异常

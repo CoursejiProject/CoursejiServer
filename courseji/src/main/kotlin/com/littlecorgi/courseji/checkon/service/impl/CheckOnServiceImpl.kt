@@ -62,12 +62,12 @@ class CheckOnServiceImpl : CheckOnService {
         val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         val attendanceList = course.attendanceList
-        if (attendanceList.isEmpty()) {
+        if (attendanceList!!.isEmpty()) {
             throw CourseNoAttendanceException()
         }
         val checkOnList = ArrayList<CheckOn>()
         for (attendance in attendanceList) {
-            checkOnList.addAll(attendance.checkOnList)
+            checkOnList.addAll(attendance.checkOnList!!)
         }
         return checkOnList.filter {
             it.student == student
@@ -76,7 +76,7 @@ class CheckOnServiceImpl : CheckOnService {
 
     override fun getTheStudentAllCheckInInfo(studentId: Long): List<CheckOn> {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        return student.checkOnList
+        return student.checkOnList!!
     }
 
     override fun getCheckInTime(checkOnId: Long): Long {

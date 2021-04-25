@@ -17,16 +17,16 @@ interface CourseRepository : JpaRepository<Course, Long> {
      *
      * @param room 教室
      * @param startNode 开始节数
-     * @param step 总节数
+     * @param endNode 结束节数
      * @param startWeek 开始周数
      * @param endWeek 结束周数
      * @param type 单双周
      * @return 存在返回true，否则false
      */
-    fun existsCourseByRoomAndStartNodeAndStepAndStartWeekAndEndWeekAndType(
+    fun existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndType(
         room: String,
         startNode: Int,
-        step: Int,
+        endNode: Int,
         startWeek: Int,
         endWeek: Int,
         type: Int
@@ -37,16 +37,16 @@ interface CourseRepository : JpaRepository<Course, Long> {
      *
      * @param room 教室
      * @param startNode 开始节数
-     * @param step 总节数
+     * @param endNode 结束节数
      * @param startWeek 开始周数
      * @param endWeek 结束周数
      * @param type 单双周
      * @return 如果存在返回数据
      */
-    fun findCourseByRoomAndStartNodeAndStepAndStartWeekAndEndWeekAndType(
+    fun findCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndType(
         room: String,
         startNode: Int,
-        step: Int,
+        endNode: Int,
         startWeek: Int,
         endWeek: Int,
         type: Int

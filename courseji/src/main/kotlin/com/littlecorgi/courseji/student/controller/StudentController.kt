@@ -72,7 +72,7 @@ class StudentController {
     @GetMapping(path = ["/signIn"])
     fun signIn(
         @ApiParam(value = "用户账号/邮箱", required = true) @RequestParam email: String,
-        @ApiParam(value = "用户密码", required = true) @RequestParam password: String
+        @ApiParam(value = "用户密码", required = true) @RequestBody password: String
     ): ServerResponse<Student> {
         return try {
             ServerResponse.createBySuccess(studentService.signIn(email, password))
@@ -90,8 +90,8 @@ class StudentController {
     @GetMapping(path = ["/updatePassword"])
     fun updatePassword(
         @ApiParam(value = "用户名/邮箱", required = true) @RequestParam email: String,
-        @ApiParam(value = "旧密码", required = true) @RequestParam oldPassword: String,
-        @ApiParam(value = "新密码", required = true) @RequestParam newPassword: String
+        @ApiParam(value = "旧密码", required = true) @RequestBody oldPassword: String,
+        @ApiParam(value = "新密码", required = true) @RequestBody newPassword: String
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(

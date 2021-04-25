@@ -61,7 +61,7 @@ data class Student(
     @ApiModelProperty(value = "学生参加的课程，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="student"中的student是Schedule中的student属性
-    var courseList: List<Schedule> = ArrayList(),
+    var courseList: List<Schedule>? = null,
 
     @JsonIgnore
     @Column(nullable = true)
@@ -73,7 +73,7 @@ data class Student(
     @ApiModelProperty(value = "学生参加的签到，和Attendance绑定，可为空，创建对象时不添加，参加签到时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="student"中的student是CheckOn中的student属性
-    var checkOnList: List<CheckOn> = ArrayList()
+    var checkOnList: List<CheckOn>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L

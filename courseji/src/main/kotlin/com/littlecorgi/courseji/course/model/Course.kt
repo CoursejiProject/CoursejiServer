@@ -32,7 +32,7 @@ import javax.persistence.UniqueConstraint
     uniqueConstraints = [
         UniqueConstraint(
             name = "unique_course",
-            columnNames = ["room", "start_node", "step", "start_week", "end_week", "type"]
+            columnNames = ["room", "start_node", "end_node", "start_week", "end_week", "type"]
         )
     ]
 )
@@ -55,9 +55,9 @@ data class Course(
     @ApiModelProperty(value = "第几节开始，不为空，不唯一", example = "1")
     var startNode: Int = 0,
 
-    @Column(nullable = false, unique = true)
-    @ApiModelProperty(value = "共几节，不为空，不唯一", example = "1")
-    var step: Int = 0,
+    @Column(name = "end_node", nullable = false, unique = true)
+    @ApiModelProperty(value = "第几节结束，不为空，不唯一", example = "1")
+    var endNode: Int = 0,
 
     @Column(name = "start_week", nullable = false, unique = true)
     @ApiModelProperty(value = "第几周开始，不为空，不唯一", example = "1")
@@ -88,7 +88,7 @@ data class Course(
     @ApiModelProperty(value = "参与课程的学生对应的表，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="course"中的course是Schedule中的course属性
-    var studentList: List<Schedule> = ArrayList(),
+    var studentList: List<Schedule>? = null,
 
     @JsonIgnore
     @OneToMany(
@@ -99,7 +99,7 @@ data class Course(
     @ApiModelProperty(value = "该课程的签到，和Attendance绑定，可为空，创建对象时不添加，添加签到时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="course"中的course是Attendance中的course属性
-    var attendanceList: List<Attendance> = ArrayList()
+    var attendanceList: List<Attendance>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237751L
@@ -117,8 +117,8 @@ data class Course(
                     other.startWeek, this.endWeek - this.startWeek
                 )
                 val nodeIntersect = twoArrayIntersect(
-                    this.startNode, this.step,
-                    other.startNode, other.step
+                    this.startNode, this.endNode - this.startNode,
+                    other.startNode, this.endNode - this.startNode
                 )
                 !weekIntersect && !nodeIntersect
             } else {
@@ -135,7 +135,7 @@ data class Course(
         result = 31 * result + day
         result = 31 * result + room.hashCode()
         result = 31 * result + startNode
-        result = 31 * result + step
+        result = 31 * result + endNode
         result = 31 * result + startWeek
         result = 31 * result + endWeek
         result = 31 * result + type

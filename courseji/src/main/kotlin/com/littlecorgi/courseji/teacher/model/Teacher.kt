@@ -56,7 +56,7 @@ data class Teacher(
     @ApiModelProperty(value = "教师参加的课程，和Course绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="teacher"中的teacher是Course中的teacher属性
-    var teachCourseList: List<Course> = ArrayList()
+    var teachCourseList: List<Course>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L

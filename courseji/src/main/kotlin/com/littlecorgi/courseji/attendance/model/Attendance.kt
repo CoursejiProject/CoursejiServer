@@ -67,5 +67,5 @@ data class Attendance(
     @ApiModelProperty(value = "该签到的签到纪录，和CheckOn绑定，可为空，创建对象时不添加，需要签到时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="attendance"中的attendance是CheckOn中的attendance属性
-    var checkOnList: List<CheckOn> = ArrayList()
+    var checkOnList: List<CheckOn>? = null
 ) : BaseModel()

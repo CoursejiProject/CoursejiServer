@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -41,8 +42,8 @@ class ScheduleController {
     @ApiOperation(value = "加入课程")
     @GetMapping(path = ["/join"])
     fun joinCourse(
-        @ApiParam(value = "加入课程的学生的id", required = true, example = "1") @RequestParam studentId: Long,
-        @ApiParam(value = "课程的id", required = true, example = "1") @RequestParam courseId: Long
+        @ApiParam(value = "加入课程的学生的id", required = true, example = "1") @RequestBody studentId: Long,
+        @ApiParam(value = "课程的id", required = true, example = "1") @RequestBody courseId: Long
     ): ServerResponse<Schedule> {
         return try {
             ServerResponse.createBySuccess(scheduleService.joinCourse(studentId, courseId))
