@@ -3,6 +3,7 @@ package com.littlecorgi.courseji.leave.controller
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
+import com.littlecorgi.courseji.leave.dto.ApprovalStateAndDescriptionDTO
 import com.littlecorgi.courseji.leave.exception.LeaveAlreadyExistException
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
@@ -105,11 +106,20 @@ class LeaveController {
     @PostMapping(path = ["/approvalTheLeave"])
     fun approvalTheLeave(
         @ApiParam(value = "请假id", required = true, example = "0") @RequestParam leaveId: Long,
-        @ApiParam(value = "审批状态", required = true, example = "0") @RequestBody approvalState: Int,
-        @ApiParam(value = "审批详情", required = true) @RequestBody approval: String
+        @ApiParam(
+            value = "审批状态",
+            required = true,
+            example = "0"
+        ) @RequestBody approvalStateAndDescription: ApprovalStateAndDescriptionDTO
     ): ServerResponse<Leave> =
         try {
-            ServerResponse.createBySuccess(leaveService.approvalTheLeave(leaveId, approvalState, approval))
+            ServerResponse.createBySuccess(
+                leaveService.approvalTheLeave(
+                    leaveId,
+                    approvalStateAndDescription.state,
+                    approvalStateAndDescription.description
+                )
+            )
         } catch (e: LeaveNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_LEAVE, errorMsg = e.message)
         } catch (e: LeaveInfoInvalidException) {

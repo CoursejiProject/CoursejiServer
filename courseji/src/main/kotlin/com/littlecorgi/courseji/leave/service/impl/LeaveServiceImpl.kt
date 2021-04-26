@@ -77,7 +77,7 @@ class LeaveServiceImpl : LeaveService {
     }
 
     override fun approvalTheLeave(leaveId: Long, approvalState: Int, approval: String): Leave {
-        if (approvalState !in 1..2) throw LeaveInfoInvalidException("教师审批状态必须是1(拒绝)或者2(同意)")
+        if (approvalState !in 0..1) throw LeaveInfoInvalidException("教师审批状态必须是1(同意)或者0(拒绝)")
         val leave = leaveRepository.findById(leaveId).orElseThrow { LeaveNotFoundException() }
         leave.apply {
             id = leaveId // 其实这块没必要多此一举，但是。。。写一下吧
