@@ -38,7 +38,7 @@ class ScheduleServiceImpl : ScheduleService {
     override fun joinCourse(studentId: Long, courseId: Long): Schedule {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
-        if (!scheduleRepository.existsByStudentAndCourse(student, course)) {
+        if (scheduleRepository.existsByStudentAndCourse(student, course)) {
             throw StudentAlreadyJoinedException()
         }
         return scheduleRepository.save(Schedule(student, course))
