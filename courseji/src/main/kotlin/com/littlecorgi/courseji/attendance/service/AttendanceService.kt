@@ -15,14 +15,14 @@ interface AttendanceService {
      *
      * @param teacherId 教师ID [com.littlecorgi.courseji.teacher.model.Teacher#id]
      * @param courseId 课程ID [com.littlecorgi.courseji.course.model.Course#id]
-     * @param attendance 签到信息 [com.littlecorgi.courseji.attendance.model.Attendance]
+     * @param attendanceInfo 签到信息 [com.littlecorgi.courseji.attendance.model.Attendance]
      * @return 创建好的attendance [com.littlecorgi.courseji.attendance.model.Attendance]
      * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      */
     fun createNewAttendance(
         teacherId: Long,
         courseId: Long,
-        attendance: Attendance
+        attendanceInfo: Attendance
     ): Attendance
 
     /**

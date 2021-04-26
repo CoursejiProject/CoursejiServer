@@ -6,6 +6,7 @@ import com.littlecorgi.courseji.course.exception.CourseNotFoundException
 import com.littlecorgi.courseji.course.model.Course
 import com.littlecorgi.courseji.course.repository.CourseRepository
 import com.littlecorgi.courseji.course.service.CourseService
+import com.littlecorgi.courseji.schedule.repository.ScheduleRepository
 import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import lombok.extern.slf4j.Slf4j
@@ -28,6 +29,9 @@ class CourseServiceImpl : CourseService {
 
     @Autowired
     private lateinit var teacherRepository: TeacherRepository
+
+    @Autowired
+    private lateinit var scheduleRepository: ScheduleRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -66,8 +70,10 @@ class CourseServiceImpl : CourseService {
 
     override fun deleteCourse(id: Long): String {
         logger.info("删除课程")
-        if (!courseRepository.existsById(id)) {
-            throw CourseNotFoundException()
+        val course = courseRepository.findById(id).orElseThrow { CourseNotFoundException() }
+        // 先移除所有的schedule，再进行删除
+        course.scheduleList?.forEach {
+            scheduleRepository.deleteById(it.id!!)
         }
         courseRepository.deleteById(id)
         return "删除成功。"

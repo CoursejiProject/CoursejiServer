@@ -23,16 +23,18 @@ class AttendanceServiceImpl : AttendanceService {
     @Autowired
     private lateinit var checkOnRepository: CheckOnRepository
 
-    override fun createNewAttendance(teacherId: Long, courseId: Long, attendance: Attendance): Attendance {
-        verifyInfoValid(attendance)
+    override fun createNewAttendance(teacherId: Long, courseId: Long, attendanceInfo: Attendance): Attendance {
+        verifyInfoValid(attendanceInfo)
         // 创建签到时，顺便将所有学生的签到信息添加到CheckOn里去
-        val a = attendanceRepository.save(attendance)
-        for (student in a.course.studentList!!) {
+        val attendance = attendanceRepository.save(attendanceInfo)
+        for (schedule in attendance.course.scheduleList!!) {
             // 都直接使用默认参数
             val checkOn = CheckOn()
+            checkOn.student = schedule.student
+            checkOn.attendance = attendance
             checkOnRepository.save(checkOn)
         }
-        return a
+        return attendance
     }
 
     override fun updateAttendanceInfo(attendanceId: Long, attendance: Attendance): Attendance {

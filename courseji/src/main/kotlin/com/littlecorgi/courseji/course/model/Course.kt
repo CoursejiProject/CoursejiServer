@@ -88,7 +88,7 @@ data class Course(
     @ApiModelProperty(value = "参与课程的学生对应的表，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="course"中的course是Schedule中的course属性
-    var studentList: List<Schedule>? = null,
+    var scheduleList: List<Schedule>? = null,
 
     @JsonIgnore
     @OneToMany(
