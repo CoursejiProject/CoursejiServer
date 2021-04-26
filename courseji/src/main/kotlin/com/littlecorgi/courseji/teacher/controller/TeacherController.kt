@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.teacher.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.teacher.dto.UpdatePasswordDTO
 import com.littlecorgi.courseji.teacher.exception.PasswordErrorException
 import com.littlecorgi.courseji.teacher.exception.PhoneAlreadyExistException
 import com.littlecorgi.courseji.teacher.exception.TeacherAlreadyExistException
@@ -93,15 +94,14 @@ class TeacherController {
     @GetMapping(path = ["/updatePassword"])
     fun updatePassword(
         @ApiParam(value = "用户名/邮箱", required = true) @RequestParam email: String,
-        @ApiParam(value = "旧密码", required = true) @RequestBody oldPassword: String,
-        @ApiParam(value = "新密码", required = true) @RequestBody newPassword: String
+        @ApiParam(value = "密码包装类，里面包含旧密码和新密码", required = true) @RequestBody passwordDTO: UpdatePasswordDTO
     ): ServerResponse<String> {
         return try {
             ServerResponse.createBySuccess(
                 teacherService.updatePassword(
                     email,
-                    oldPassword,
-                    newPassword
+                    passwordDTO.oldPassword,
+                    passwordDTO.newPassword
                 )
             )
         } catch (e: TeacherNotFoundException) {
