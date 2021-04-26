@@ -4,6 +4,7 @@ import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
 import com.littlecorgi.courseji.course.model.Course
+import com.littlecorgi.courseji.schedule.dto.JoinCourseDTO
 import com.littlecorgi.courseji.schedule.exception.StudentAlreadyJoinedException
 import com.littlecorgi.courseji.schedule.model.Schedule
 import com.littlecorgi.courseji.schedule.service.ScheduleService
@@ -42,11 +43,10 @@ class ScheduleController {
     @ApiOperation(value = "加入课程")
     @GetMapping(path = ["/join"])
     fun joinCourse(
-        @ApiParam(value = "加入课程的学生的id", required = true, example = "1") @RequestBody studentId: Long,
-        @ApiParam(value = "课程的id", required = true, example = "1") @RequestBody courseId: Long
+        @ApiParam(value = "加入课程的学生的id", required = true, example = "1") @RequestBody joinCourseDTO: JoinCourseDTO
     ): ServerResponse<Schedule> {
         return try {
-            ServerResponse.createBySuccess(scheduleService.joinCourse(studentId, courseId))
+            ServerResponse.createBySuccess(scheduleService.joinCourse(joinCourseDTO.studentId, joinCourseDTO.courseId))
         } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: CourseNotFoundException) {
