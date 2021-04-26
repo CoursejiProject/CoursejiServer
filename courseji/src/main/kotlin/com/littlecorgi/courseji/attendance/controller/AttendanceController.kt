@@ -5,6 +5,7 @@ import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
  * @author littlecorgi
  * @date 2021/4/21
  */
+@Api
 @Slf4j
 @RestController
 @RequestMapping(path = ["/attendance"])
@@ -34,8 +36,8 @@ class AttendanceController {
     @ApiOperation(value = "创建签到")
     @PostMapping(path = ["/createAttendance"])
     fun createNewAttendance(
-        @ApiParam(value = "发起签到教师id", required = true) @RequestParam teacherId: Long,
-        @ApiParam(value = "签到的课程id", required = true) @RequestParam courseId: Long,
+        @ApiParam(value = "发起签到教师id", required = true, example = "1") @RequestParam teacherId: Long,
+        @ApiParam(value = "签到的课程id", required = true, example = "1") @RequestParam courseId: Long,
         @ApiParam(value = "签到信息", required = true) @RequestBody attendance: Attendance
     ): ServerResponse<Attendance> =
         try {
@@ -52,7 +54,7 @@ class AttendanceController {
     @ApiOperation(value = "修改签到")
     @PostMapping(path = ["/updateAttendanceInfo"])
     fun updateAttendanceInfo(
-        @ApiParam(value = "要被修改的签到id", required = true) @RequestParam attendanceId: Long,
+        @ApiParam(value = "要被修改的签到id", required = true, example = "1") @RequestParam attendanceId: Long,
         @ApiParam(value = "修改后的签到信息", required = true) @RequestBody attendance: Attendance
     ): ServerResponse<Attendance> =
         try {
