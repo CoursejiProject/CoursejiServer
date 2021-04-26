@@ -21,15 +21,11 @@ interface CourseRepository : JpaRepository<Course, Long> {
      * @param startWeek 开始周数
      * @param endWeek 结束周数
      * @param type 单双周
+     * @param day 周几上课
      * @return 存在返回true，否则false
      */
-    fun existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndType(
-        room: String,
-        startNode: Int,
-        endNode: Int,
-        startWeek: Int,
-        endWeek: Int,
-        type: Int
+    fun existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndTypeAndDay(
+        room: String, startNode: Int, endNode: Int, startWeek: Int, endWeek: Int, type: Int, day: Int
     ): Boolean
 
     /**

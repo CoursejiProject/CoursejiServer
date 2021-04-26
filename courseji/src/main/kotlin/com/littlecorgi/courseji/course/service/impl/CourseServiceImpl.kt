@@ -39,8 +39,8 @@ class CourseServiceImpl : CourseService {
         logger.info("添加新课程")
         val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
         course.apply {
-            if (courseRepository.existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndType(
-                    room, startNode, endNode, startWeek, endWeek, type
+            if (courseRepository.existsCourseByRoomAndStartNodeAndEndNodeAndStartWeekAndEndWeekAndTypeAndDay(
+                    room, startNode, endNode, startWeek, endWeek, type, day
                 )
             ) {
                 // 根据信息查询如果存在，则抛出异常
@@ -51,6 +51,12 @@ class CourseServiceImpl : CourseService {
             }
             if (type !in 0..3) {
                 throw CourseInfoInvalidException("单双周类型值必须是0/1/2")
+            }
+            if (endWeek < startWeek) {
+                throw CourseInfoInvalidException("结束周小于开始周")
+            }
+            if (endNode < startNode) {
+                throw CourseInfoInvalidException("结束节数小于开始节数")
             }
             this.teacher = teacher
         }
