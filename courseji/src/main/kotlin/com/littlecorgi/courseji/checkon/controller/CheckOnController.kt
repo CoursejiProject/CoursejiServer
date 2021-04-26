@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.checkon.controller
 
+import com.littlecorgi.courseji.checkon.dto.StudentAndCourseDTO
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.service.CheckOnService
 import com.littlecorgi.courseji.common.ResponseCode
@@ -57,17 +58,20 @@ class CheckOnController {
     /**
      * 获取这名学生这门课的签到纪录
      *
-     * @param studentId 学生id
-     * @param courseId 课程id
+     * @param studentAndCourseDTO 学生id和课程id数据类 [com.littlecorgi.courseji.checkon.dto.StudentAndCourseDTO]
      */
     @ApiOperation(value = "获取这名学生这门课的签到纪录")
     @GetMapping(path = ["/getTheStudentCheckInInfoForTheClass"])
     fun getTheStudentCheckInInfoForTheClass(
-        @ApiParam(value = "学生id", required = true) @RequestBody studentId: Long,
-        @ApiParam(value = "学生课程对应信息id", required = true) @RequestBody courseId: Long
+        @ApiParam(value = "学生id和课程id", required = true) @RequestBody studentAndCourseDTO: StudentAndCourseDTO
     ): ServerResponse<List<CheckOn>> =
         try {
-            ServerResponse.createBySuccess(checkOnService.getTheStudentCheckInInfoForTheClass(studentId, courseId))
+            ServerResponse.createBySuccess(
+                checkOnService.getTheStudentCheckInInfoForTheClass(
+                    studentAndCourseDTO.studentId,
+                    studentAndCourseDTO.courseId
+                )
+            )
         } catch (e: Exception) {
             logger.info("{获取这名学生这门课的签到纪录:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
