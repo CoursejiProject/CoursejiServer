@@ -6,6 +6,8 @@ import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
+import com.littlecorgi.courseji.course.exception.CourseNotFoundException
+import com.littlecorgi.courseji.course.repository.CourseRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -23,8 +25,13 @@ class AttendanceServiceImpl : AttendanceService {
     @Autowired
     private lateinit var checkOnRepository: CheckOnRepository
 
-    override fun createNewAttendance(teacherId: Long, courseId: Long, attendanceInfo: Attendance): Attendance {
+    @Autowired
+    private lateinit var courseRepository: CourseRepository
+
+    override fun createNewAttendance(courseId: Long, attendanceInfo: Attendance): Attendance {
         verifyInfoValid(attendanceInfo)
+        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
+        attendanceInfo.course = course
         // 创建签到时，顺便将所有学生的签到信息添加到CheckOn里去
         val attendance = attendanceRepository.save(attendanceInfo)
         for (schedule in attendance.course.scheduleList!!) {

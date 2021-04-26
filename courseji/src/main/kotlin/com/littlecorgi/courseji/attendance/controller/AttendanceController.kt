@@ -5,6 +5,7 @@ import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.course.exception.CourseNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -36,12 +37,13 @@ class AttendanceController {
     @ApiOperation(value = "创建签到")
     @PostMapping(path = ["/createAttendance"])
     fun createNewAttendance(
-        @ApiParam(value = "发起签到教师id", required = true, example = "1") @RequestParam teacherId: Long,
         @ApiParam(value = "签到的课程id", required = true, example = "1") @RequestParam courseId: Long,
         @ApiParam(value = "签到信息", required = true) @RequestBody attendance: Attendance
     ): ServerResponse<Attendance> =
         try {
-            ServerResponse.createBySuccess(attendanceService.createNewAttendance(teacherId, courseId, attendance))
+            ServerResponse.createBySuccess(attendanceService.createNewAttendance(courseId, attendance))
+        } catch (e: CourseNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_COURSE, errorMsg = e.message)
         } catch (e: AttendanceInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.ATTENDANCE_INFO_INVALID, errorMsg = e.msg)
         } catch (e: Exception) {
