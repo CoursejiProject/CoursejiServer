@@ -52,7 +52,13 @@ class StudentController {
         return try {
             ServerResponse.createBySuccess(studentService.signUp(student))
         } catch (e: StudentAlreadyExistException) {
-            ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
+            if (e.msg.isEmpty()) {
+                ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.message)
+            } else {
+                // 如果存在msg信息，则显示msg信息。
+                // 例如 StudentServiceImpl.signUp中如果腾讯云存在相似的人脸，则抛出此异常
+                ServerResponse.createByFailure(ResponseCode.USER_HAS_EXIST, errorMsg = e.msg)
+            }
         } catch (e: StudentInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.USER_INFO_INVALID, errorMsg = e.msg)
         } catch (e: PhoneAlreadyExistException) {
