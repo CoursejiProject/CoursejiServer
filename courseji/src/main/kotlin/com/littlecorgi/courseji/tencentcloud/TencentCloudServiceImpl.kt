@@ -26,27 +26,50 @@ class TencentCloudServiceImpl : TencentCloudService {
      * 继承方法
      ********************/
 
-    override fun compareFaceFromFile(studentId: Long, picFile: MultipartFile): String {
+    override fun compareFaceFromFile(studentId: Long, detectLiveFace: Boolean, picFile: MultipartFile): Float {
         val userFacePicUrl = fileService.uploadPicture(picFile)
+        detectLiveFace(detectLiveFace, userFacePicUrl)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
 
         return TencentCloudUtil.compareFace(userFacePicUrl, student.picture)
     }
 
-    override fun compareFaceFromURL(studentId: Long, picURL: String): String {
+    override fun compareFaceFromURL(studentId: Long, detectLiveFace: Boolean, picURL: String): Float {
+        detectLiveFace(detectLiveFace, picURL)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         return TencentCloudUtil.compareFace(picURL, student.picture)
     }
 
-    override fun compareMaskFaceFromFile(studentId: Long, picFile: MultipartFile): String {
+    override fun compareMaskFaceFromFile(studentId: Long, detectLiveFace: Boolean, picFile: MultipartFile): Float {
         val userFacePicUrl = fileService.uploadPicture(picFile)
+        detectLiveFace(detectLiveFace, userFacePicUrl)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
 
         return TencentCloudUtil.compareMaskFace(userFacePicUrl, student.picture)
     }
 
-    override fun compareMaskFaceFromURL(studentId: Long, picURL: String): String {
+    override fun compareMaskFaceFromURL(studentId: Long, detectLiveFace: Boolean, picURL: String): Float {
+        detectLiveFace(detectLiveFace, picURL)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         return TencentCloudUtil.compareMaskFace(picURL, student.picture)
+    }
+
+    /*********************
+     * 私有方法
+     ********************/
+
+    /**
+     * 是否进行活体检测
+     *
+     * @param doDetect 是否进行活体检测
+     * @param picURL 图片URL
+     * @throws DetectLiveFaceException 如果活体检测得分小于40，则抛出异常
+     */
+    private fun detectLiveFace(doDetect: Boolean, picURL: String) {
+        if (doDetect) {
+            if (TencentCloudUtil.detectLiveFaceAccurate(picURL) < 40) {
+                throw DetectLiveFaceException()
+            }
+        }
     }
 }

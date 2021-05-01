@@ -28,7 +28,11 @@ enum class ResponseCode(val code: Int, val msg: String) {
     // 文件是空的
     FILE_IS_EMPTY(FAILURE_CODE + 2, "文件是空的!"),
 
+    // 腾讯云报错
     TENCENT_CLOUD_EXCEPTION(FAILURE_CODE + 3, "腾讯云错误信息"),
+
+    // 活体检测失败
+    DETECT_LIVE_FACE_FAILURE(FAILURE_CODE + 4, "活体检测失败"),
 
     /***********************
      * 用户相关
