@@ -43,7 +43,7 @@ class ScheduleController {
     @ApiOperation(value = "加入课程")
     @GetMapping(path = ["/join"])
     fun joinCourse(
-        @ApiParam(value = "加入课程的学生的id", required = true, example = "1") @RequestBody joinCourseDTO: JoinCourseDTO
+        @ApiParam(value = "加入课程的学生的id", required = true) @RequestBody joinCourseDTO: JoinCourseDTO
     ): ServerResponse<Schedule> {
         return try {
             ServerResponse.createBySuccess(scheduleService.joinCourse(joinCourseDTO.studentId, joinCourseDTO.courseId))
