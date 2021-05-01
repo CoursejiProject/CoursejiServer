@@ -46,7 +46,7 @@ class LeaveController {
     fun createLeave(
         @ApiParam(value = "学生id", required = true, example = "0") @RequestParam studentId: Long,
         @ApiParam(value = "课程id", required = true, example = "0") @RequestParam courseId: Long,
-        @ApiParam(value = "请假信息", required = true, example = "0") @RequestBody leave: Leave
+        @ApiParam(value = "请假信息", required = true) @RequestBody leave: Leave
     ): ServerResponse<Leave> =
         try {
             ServerResponse.createBySuccess(leaveService.createLeave(studentId, courseId, leave))

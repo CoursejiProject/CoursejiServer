@@ -32,3 +32,7 @@ qiniu:
   accessKey: ENC(I1HIg7i22MyTKUFJiILBE25XwMWTF70y9JWYEFuvVfl92zSquZkPZDkxc2E0cqNsngBahl8/ZgJ8LxEtS5wvEae3yxTfui45orYJaoYhLdU=)
   secretKey: ENC(OJcJ102vSe7Fr2ic34Tz38jaBHeUgsaCxm4T1NdfJhqWHKnpaAgnGaOypr/QlfzMB67Ms+NoV7RqMNQaQOp1CldcZTA0nOTwRyhJ8SgrWrI=)
   bucket: ENC(AukX9J7TsDGcySt+mxUmQV1k+ijby4O3CCTjZ1/wZwM7LK3QxvyvBB8BycYfEcWG)
+
+tencent-cloud:
+  secret-id: ENC(BhZDNqB0jpSTh06UJcGEEh2RsOilYk6E0pzPHO1aV6ddqM/SDYfngF+HCGZo3wlvx9f/CkqX9HYjqll/WSwFNtwhDUiVst2p71Y5GlZ0iao=)
+  secret-key: ENC(YYGJ8LOqv4iqrQs8b9efuXM/ckC8H8XrQ/3+phNHXr5DUWvdtI+Qsv0ZhR0ru9fi3c+OLr2PZnw/nXJCsJVQthoELkoaT9krtL0LT6BykBg=)

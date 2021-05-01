@@ -19,6 +19,8 @@ import javax.persistence.Table
  *
  * 字段的含义就是@ApiModelProperty注解中的内容。如果后续删掉这个注解，则记得把注解中内容改到注释
  *
+ * 此库中主键id兼任腾讯云人脸识别人员库中的PersonID
+ *
  * @author littlecorgi
  * @date 2021/4/12
  */

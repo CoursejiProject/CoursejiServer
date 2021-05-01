@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji
 
 import com.littlecorgi.courseji.common.utils.QiniuUtils
+import com.littlecorgi.courseji.common.utils.TencentCloudUtil
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +25,10 @@ open class InitConfig {
     @Bean
     open fun init() {
         logger.info("✨开始初始化")
-        QiniuUtils.setAppCtxAndInit(appCtx)
+        with(appCtx) {
+            QiniuUtils.setAppCtxAndInit(this)
+            TencentCloudUtil.setAppCtxAndInit(this)
+        }
         logger.info("✨完成初始化")
     }
 }
