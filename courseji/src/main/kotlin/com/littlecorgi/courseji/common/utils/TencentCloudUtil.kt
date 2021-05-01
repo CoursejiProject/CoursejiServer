@@ -148,7 +148,7 @@ object TencentCloudUtil {
     }
 
     /**
-     * 创建人员库人员信息
+     * 人脸验证
      * [代码来源](https://console.cloud.tencent.com/api/explorer?Product=iai&Version=2020-03-03&Action=VerifyFace)
      *
      * @param studentId 学生信息ID [com.littlecorgi.courseji.student.model.Student.id]

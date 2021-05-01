@@ -74,8 +74,14 @@ class StudentServiceImpl : StudentService {
                 UserDataConstants.PHONE_LENGTH
             )
         }
-        studentRepository.save(user)
-        TencentCloudUtil.createPerson(user)
+        val userTemp = studentRepository.save(user)
+        val createPersonResponse = TencentCloudUtil.createPerson(user)
+        // 有id则人脸已存在
+        if (createPersonResponse.similarPersonId.isNotEmpty()) {
+            // 因为刚刚取出来，所以此处绝不为空
+            studentRepository.deleteById(userTemp.id!!)
+            throw StudentAlreadyExistException("人脸识别显示人脸已存在，如有误请联系我们")
+        }
         return "新建用户成功."
     }
 
