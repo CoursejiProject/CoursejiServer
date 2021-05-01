@@ -53,7 +53,7 @@ class TencentCloudController {
                 )
             )
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER)
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: FileIsEmptyException) {
             ServerResponse.createByFailure(ResponseCode.FILE_IS_EMPTY, errorMsg = e.message)
         } catch (e: TencentCloudSDKException) {
@@ -84,7 +84,7 @@ class TencentCloudController {
                 )
             )
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER)
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: DetectLiveFaceException) {
             ServerResponse.createByFailure(ResponseCode.DETECT_LIVE_FACE_FAILURE, errorMsg = e.message)
         } catch (e: TencentCloudSDKException) {
@@ -113,7 +113,7 @@ class TencentCloudController {
                 )
             )
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER)
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: FileIsEmptyException) {
             ServerResponse.createByFailure(ResponseCode.FILE_IS_EMPTY, errorMsg = e.message)
         } catch (e: DetectLiveFaceException) {
@@ -144,7 +144,7 @@ class TencentCloudController {
                 )
             )
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER)
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
         } catch (e: DetectLiveFaceException) {
             ServerResponse.createByFailure(ResponseCode.DETECT_LIVE_FACE_FAILURE, errorMsg = e.message)
         } catch (e: TencentCloudSDKException) {
