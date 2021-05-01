@@ -81,7 +81,7 @@ class TeacherController {
         return try {
             ServerResponse.createBySuccess(teacherService.signIn(email, password))
         } catch (e: TeacherNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
         } catch (e: Exception) {
@@ -105,7 +105,7 @@ class TeacherController {
                 )
             )
         } catch (e: TeacherNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
         } catch (e: Exception) {
@@ -122,7 +122,7 @@ class TeacherController {
         return try {
             ServerResponse.createBySuccess(teacherService.getCreatedDate(id))
         } catch (e: TeacherNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
@@ -137,7 +137,7 @@ class TeacherController {
         return try {
             ServerResponse.createBySuccess(teacherService.getLastModifiedDate(id))
         } catch (e: TeacherNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)

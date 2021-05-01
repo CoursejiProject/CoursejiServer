@@ -24,14 +24,13 @@ interface StudentService {
     fun signIn(email: String, password: String): Student
 
     /**
-     * 注册。同时会创建腾讯云人员库中studentId对应的PersonID数据
+     * 注册
      *
      * @param user 注册需要的用户信息
      * @return 注册结果
      * @throws StudentAlreadyExistException 添加用户时发现用户已经存在抛出此异常
      * @throws StudentInfoInvalidException 用户信息不合法时抛出此异常
      * @throws PhoneAlreadyExistException 手机号已经存在时抛出此异常
-     * @throws [com.tencentcloudapi.common.exception.TencentCloudSDKException] 腾讯云异常信息
      */
     fun signUp(user: Student): String
 
@@ -79,14 +78,4 @@ interface StudentService {
      * @throws StudentNotFoundException 根据id找不到数据时就抛出此异常
      */
     fun findByStudentId(studentId: Long): Student
-
-    /**
-     * 删除用户。同时会从腾讯云人员库中将studentId对应的PersonID数据删除
-     *
-     * @param studentId 学生id
-     * @return 注册结果
-     * @throws StudentNotFoundException 根据id找不到数据时就抛出此异常
-     * @throws [com.tencentcloudapi.common.exception.TencentCloudSDKException] 腾讯云异常信息
-     */
-    fun deleteStudent(studentId: Long): String
 }

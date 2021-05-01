@@ -10,7 +10,6 @@ import com.littlecorgi.courseji.student.exception.StudentInfoInvalidException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.service.StudentService
-import com.tencentcloudapi.common.exception.TencentCloudSDKException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -82,7 +81,7 @@ class StudentController {
         return try {
             ServerResponse.createBySuccess(studentService.signIn(email, password))
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
         } catch (e: Exception) {
@@ -106,7 +105,7 @@ class StudentController {
                 )
             )
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: PasswordErrorException) {
             ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR)
         } catch (e: Exception) {
@@ -123,7 +122,7 @@ class StudentController {
         return try {
             ServerResponse.createBySuccess(studentService.getCreatedDate(id))
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
@@ -138,31 +137,9 @@ class StudentController {
         return try {
             ServerResponse.createBySuccess(studentService.getLastModifiedDate(id))
         } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             logger.info("{获取用户创建日期:catch}", e)
-            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
-        }
-    }
-
-    @ApiOperation(value = "删除用户")
-    @GetMapping(path = ["/deleteStudent"])
-    fun deleteStudent(
-        @ApiParam(value = "需要删除的用户的id", required = true, example = "1") @RequestParam id: Long,
-        @ApiParam(value = "token密码", required = true) @RequestBody password: String
-    ): ServerResponse<String> {
-        return try {
-            if (password == "67673") {
-                ServerResponse.createBySuccess(studentService.deleteStudent(id))
-            } else {
-                ServerResponse.createByFailure(ResponseCode.PASSWORD_ERROR, errorMsg = "密码错误")
-            }
-        } catch (e: StudentNotFoundException) {
-            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
-        } catch (e: TencentCloudSDKException) {
-            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
-        } catch (e: Exception) {
-            logger.info("{删除用户:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
     }
