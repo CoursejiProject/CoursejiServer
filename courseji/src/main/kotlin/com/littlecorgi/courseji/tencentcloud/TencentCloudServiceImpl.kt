@@ -37,4 +37,16 @@ class TencentCloudServiceImpl : TencentCloudService {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         return TencentCloudUtil.compareFace(picURL, student.picture)
     }
+
+    override fun compareMaskFaceFromFile(studentId: Long, picFile: MultipartFile): String {
+        val userFacePicUrl = fileService.uploadPicture(picFile)
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+
+        return TencentCloudUtil.compareMaskFace(userFacePicUrl, student.picture)
+    }
+
+    override fun compareMaskFaceFromURL(studentId: Long, picURL: String): String {
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        return TencentCloudUtil.compareMaskFace(picURL, student.picture)
+    }
 }
