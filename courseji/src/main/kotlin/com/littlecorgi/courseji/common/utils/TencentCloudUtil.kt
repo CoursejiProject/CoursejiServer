@@ -151,15 +151,15 @@ object TencentCloudUtil {
      * 创建人员库人员信息
      * [代码来源](https://console.cloud.tencent.com/api/explorer?Product=iai&Version=2020-03-03&Action=VerifyFace)
      *
-     * @param student 学生信息 [com.littlecorgi.courseji.student.model.Student]
+     * @param studentId 学生信息ID [com.littlecorgi.courseji.student.model.Student.id]
      * @param picUrl 人脸图片URL
      * @return [com.tencentcloudapi.iai.v20200303.models.VerifyFaceResponse] 人脸验证结果
      * @throws [com.tencentcloudapi.common.exception.TencentCloudSDKException] 腾讯云异常信息
      */
-    fun verifyFace(student: Student, picUrl: String): VerifyFaceResponse {
+    fun verifyFace(studentId: Long, picUrl: String): VerifyFaceResponse {
         val req = VerifyFaceRequest()
         req.url = picUrl
-        req.personId = student.id.toString()
+        req.personId = studentId.toString()
         return getRequestClient(REGION_GUANGZHOU).VerifyFace(req)
     }
 }

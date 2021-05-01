@@ -26,32 +26,67 @@ class TencentCloudServiceImpl : TencentCloudService {
      * 继承方法
      ********************/
 
-    override fun compareFaceFromFile(studentId: Long, detectLiveFace: Boolean, picFile: MultipartFile): Float {
+    override fun compareFaceFromFile(
+        studentId: Long,
+        detectLiveFace: Boolean,
+        usePersonGroup: Boolean,
+        picFile: MultipartFile
+    ): Float {
         val userFacePicUrl = fileService.uploadPicture(picFile)
         detectLiveFace(detectLiveFace, userFacePicUrl)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
 
-        return TencentCloudUtil.compareFace(userFacePicUrl, student.picture).score
+        return if (usePersonGroup) {
+            TencentCloudUtil.verifyFace(student.id!!, userFacePicUrl).score
+        } else {
+            TencentCloudUtil.compareFace(userFacePicUrl, student.picture).score
+        }
     }
 
-    override fun compareFaceFromURL(studentId: Long, detectLiveFace: Boolean, picURL: String): Float {
+    override fun compareFaceFromURL(
+        studentId: Long,
+        detectLiveFace: Boolean,
+        usePersonGroup: Boolean,
+        picURL: String
+    ): Float {
         detectLiveFace(detectLiveFace, picURL)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        return TencentCloudUtil.compareFace(picURL, student.picture).score
+        return if (usePersonGroup) {
+            TencentCloudUtil.verifyFace(student.id!!, picURL).score
+        } else {
+            TencentCloudUtil.compareFace(picURL, student.picture).score
+        }
     }
 
-    override fun compareMaskFaceFromFile(studentId: Long, detectLiveFace: Boolean, picFile: MultipartFile): Float {
+    override fun compareMaskFaceFromFile(
+        studentId: Long,
+        detectLiveFace: Boolean,
+        usePersonGroup: Boolean,
+        picFile: MultipartFile
+    ): Float {
         val userFacePicUrl = fileService.uploadPicture(picFile)
         detectLiveFace(detectLiveFace, userFacePicUrl)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-
-        return TencentCloudUtil.compareMaskFace(userFacePicUrl, student.picture).score
+        return if (usePersonGroup) {
+            TencentCloudUtil.verifyFace(student.id!!, userFacePicUrl).score
+        } else {
+            TencentCloudUtil.compareMaskFace(userFacePicUrl, student.picture).score
+        }
     }
 
-    override fun compareMaskFaceFromURL(studentId: Long, detectLiveFace: Boolean, picURL: String): Float {
+    override fun compareMaskFaceFromURL(
+        studentId: Long,
+        detectLiveFace: Boolean,
+        usePersonGroup: Boolean,
+        picURL: String
+    ): Float {
         detectLiveFace(detectLiveFace, picURL)
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        return TencentCloudUtil.compareMaskFace(picURL, student.picture).score
+        return if (usePersonGroup) {
+            TencentCloudUtil.verifyFace(student.id!!, picURL).score
+        } else {
+            TencentCloudUtil.compareMaskFace(picURL, student.picture).score
+        }
     }
 
     /*********************

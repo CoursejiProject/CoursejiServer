@@ -39,11 +39,19 @@ class TencentCloudController {
     @ApiOperation(value = "腾讯云/人脸对比，传输文件")
     fun compareFaceFromFile(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,
-        @ApiParam(value = "是否人脸检测", required = true, defaultValue = "1") @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否活体检测", required = true) @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否使用腾讯云人员库", required = true) @RequestParam usePersonGroup: Boolean,
         @ApiParam(value = "用户上传的人脸图片的文件", required = true) @RequestBody picFile: MultipartFile
     ): ServerResponse<Float> =
         try {
-            ServerResponse.createBySuccess(tencentCloudService.compareFaceFromFile(studentId, detectLiveFace, picFile))
+            ServerResponse.createBySuccess(
+                tencentCloudService.compareFaceFromFile(
+                    studentId,
+                    detectLiveFace,
+                    usePersonGroup,
+                    picFile
+                )
+            )
         } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: FileIsEmptyException) {
@@ -62,11 +70,19 @@ class TencentCloudController {
     @ApiOperation(value = "腾讯云/人脸对比，传输图片URL")
     fun compareFaceFromURL(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,
-        @ApiParam(value = "是否人脸检测", required = true, defaultValue = "1") @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否活体检测", required = true) @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否使用腾讯云人员库", required = true) @RequestParam usePersonGroup: Boolean,
         @ApiParam(value = "用户上传的人脸图片的URL", required = true) @RequestBody picURL: String
     ): ServerResponse<Float> =
         try {
-            ServerResponse.createBySuccess(tencentCloudService.compareFaceFromURL(studentId, detectLiveFace, picURL))
+            ServerResponse.createBySuccess(
+                tencentCloudService.compareFaceFromURL(
+                    studentId,
+                    detectLiveFace,
+                    usePersonGroup,
+                    picURL
+                )
+            )
         } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: DetectLiveFaceException) {
@@ -83,7 +99,8 @@ class TencentCloudController {
     @ApiOperation(value = "腾讯云/人脸对比（戴口罩），传输文件")
     fun compareMaskFaceFromFile(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,
-        @ApiParam(value = "是否人脸检测", required = true, defaultValue = "1") @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否活体检测", required = true) @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否使用腾讯云人员库", required = true) @RequestParam usePersonGroup: Boolean,
         @ApiParam(value = "用户上传的人脸图片的文件", required = true) @RequestBody picFile: MultipartFile
     ): ServerResponse<Float> =
         try {
@@ -91,6 +108,7 @@ class TencentCloudController {
                 tencentCloudService.compareMaskFaceFromFile(
                     studentId,
                     detectLiveFace,
+                    usePersonGroup,
                     picFile
                 )
             )
@@ -112,7 +130,8 @@ class TencentCloudController {
     @ApiOperation(value = "腾讯云/人脸对比（戴口罩），传输图片URL")
     fun compareMaskFaceFromURL(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,
-        @ApiParam(value = "是否人脸检测", required = true, defaultValue = "1") @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否活体检测", required = true) @RequestParam detectLiveFace: Boolean,
+        @ApiParam(value = "是否使用腾讯云人员库", required = true) @RequestParam usePersonGroup: Boolean,
         @ApiParam(value = "用户上传的人脸图片的URL", required = true) @RequestBody picURL: String
     ): ServerResponse<Float> =
         try {
@@ -120,6 +139,7 @@ class TencentCloudController {
                 tencentCloudService.compareMaskFaceFromURL(
                     studentId,
                     detectLiveFace,
+                    usePersonGroup,
                     picURL
                 )
             )
