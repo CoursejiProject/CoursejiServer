@@ -36,6 +36,9 @@ object QiniuUtils {
     private lateinit var secretKey: String
     private lateinit var bucket: String
 
+    // 上次获取token时的时间
+    private var tokenTime = System.currentTimeMillis()
+
     private lateinit var auth: Auth
     private lateinit var upToken: String
 
@@ -52,12 +55,24 @@ object QiniuUtils {
     }
 
     /**
+     * 定期更新Token 按照一小时间隔
+     */
+    private fun generateNewToken() {
+        if (System.currentTimeMillis() - tokenTime >= 3600) {
+            auth = Auth.create(accessKey, secretKey)
+            upToken = auth.uploadToken(bucket)
+            tokenTime = System.currentTimeMillis()
+        }
+    }
+
+    /**
      * 上传图片
      *
      * @param picFile 图片文件
      * @return 上传后的api
      */
     fun uploadPic(picFile: MultipartFile): String {
+        generateNewToken()
         if (picFile.isEmpty) throw FileIsEmptyException()
         // 默认不指定key的情况下，以文件内容的hash值作为文件名
         // 文件名设置为courseji/pic前缀并加上文件的hashCode

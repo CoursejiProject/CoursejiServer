@@ -55,6 +55,7 @@ class FileController {
         } catch (e: FileIsEmptyException) {
             ServerResponse.createByFailure(ResponseCode.FILE_IS_EMPTY, errorMsg = e.message)
         } catch (ex: QiniuException) {
+            ex.printStackTrace()
             val r: Response = ex.response
             try {
                 ServerResponse.createByFailure(ResponseCode.QINIU_FAILURE, errorMsg = r.bodyString())

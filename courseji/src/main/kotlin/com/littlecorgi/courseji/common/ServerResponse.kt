@@ -3,7 +3,7 @@ package com.littlecorgi.courseji.common
 import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
- * 服务器响应数据，此类必须是Java
+ * 服务器响应数据
  *
  * @author littlecorgi
  * @date 2021/4/14
