@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -41,7 +42,7 @@ class ScheduleController {
      * 加入课程
      */
     @ApiOperation(value = "加入课程")
-    @GetMapping(path = ["/join"])
+    @PostMapping(path = ["/join"])
     fun joinCourse(
         @ApiParam(value = "加入课程的学生的id", required = true) @RequestBody joinCourseDTO: JoinCourseDTO
     ): ServerResponse<Schedule> {

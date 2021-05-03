@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -66,7 +65,7 @@ class TencentCloudController {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 
-    @GetMapping(path = ["/compareFaceFromURL"])
+    @PostMapping(path = ["/compareFaceFromURL"])
     @ApiOperation(value = "腾讯云/人脸对比，传输图片URL")
     fun compareFaceFromURL(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,
@@ -126,7 +125,7 @@ class TencentCloudController {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 
-    @GetMapping(path = ["/compareMaskFaceFromURL"])
+    @PostMapping(path = ["/compareMaskFaceFromURL"])
     @ApiOperation(value = "腾讯云/人脸对比（戴口罩），传输图片URL")
     fun compareMaskFaceFromURL(
         @ApiParam(value = "用户id", required = true, defaultValue = "1") @RequestParam studentId: Long,

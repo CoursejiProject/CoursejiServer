@@ -14,7 +14,6 @@ import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -64,7 +63,7 @@ class CourseController {
      * 删除课程
      */
     @ApiOperation(value = "删除课程")
-    @GetMapping(path = ["/delete"])
+    @PostMapping(path = ["/delete"])
     fun deleteCourse(
         @ApiParam(value = "要被删除的课程的id", required = true, example = "1") @RequestBody id: Long
     ): ServerResponse<String> {

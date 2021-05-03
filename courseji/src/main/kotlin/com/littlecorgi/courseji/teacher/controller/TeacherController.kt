@@ -73,7 +73,7 @@ class TeacherController {
         }
 
     @ApiOperation(value = "根据email和password登录")
-    @GetMapping(path = ["/signIn"])
+    @PostMapping(path = ["/signIn"])
     fun signIn(
         @ApiParam(value = "用户账号/邮箱", required = true) @RequestParam email: String,
         @ApiParam(value = "用户密码", required = true) @RequestBody password: String
@@ -91,7 +91,7 @@ class TeacherController {
     }
 
     @ApiOperation(value = "更新密码")
-    @GetMapping(path = ["/updatePassword"])
+    @PostMapping(path = ["/updatePassword"])
     fun updatePassword(
         @ApiParam(value = "用户名/邮箱", required = true) @RequestParam email: String,
         @ApiParam(value = "密码包装类，里面包含旧密码和新密码", required = true) @RequestBody passwordDTO: UpdatePasswordDTO

@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -61,7 +60,7 @@ class CheckOnController {
      * @param studentAndCourseDTO 学生id和课程id数据类 [com.littlecorgi.courseji.checkon.dto.StudentAndCourseDTO]
      */
     @ApiOperation(value = "获取这名学生这门课的签到纪录")
-    @GetMapping(path = ["/getTheStudentCheckInInfoForTheClass"])
+    @PostMapping(path = ["/getTheStudentCheckInInfoForTheClass"])
     fun getTheStudentCheckInInfoForTheClass(
         @ApiParam(value = "学生id和课程id", required = true) @RequestBody studentAndCourseDTO: StudentAndCourseDTO
     ): ServerResponse<List<CheckOn>> =
@@ -83,7 +82,7 @@ class CheckOnController {
      * @param studentId 学生id
      */
     @ApiOperation(value = "获取这名学生所有课的签到纪录")
-    @GetMapping(path = ["/getTheStudentAllCheckInInfo"])
+    @PostMapping(path = ["/getTheStudentAllCheckInInfo"])
     fun getTheStudentAllCheckInInfo(
         @ApiParam(value = "学生id", required = true, example = "1") @RequestBody studentId: Long
     ): ServerResponse<List<CheckOn>> =
@@ -100,7 +99,7 @@ class CheckOnController {
      * @param checkOnId 签到纪录id
      */
     @ApiOperation(value = "获取签到时间")
-    @GetMapping(path = ["/getCheckInTime"])
+    @PostMapping(path = ["/getCheckInTime"])
     fun getCheckInTime(
         @ApiParam(value = "签到id", required = true, example = "1") @RequestBody checkOnId: Long
     ): ServerResponse<Long> =
@@ -117,7 +116,7 @@ class CheckOnController {
      * @param checkOnId 签到纪录id
      */
     @ApiOperation(value = "获取签到地点")
-    @GetMapping(path = ["/getCheckInLocation"])
+    @PostMapping(path = ["/getCheckInLocation"])
     fun getCheckInLocation(
         @ApiParam(value = "签到id", required = true, example = "1") @RequestBody checkOnId: Long
     ): ServerResponse<Pair<Float, Float>> =
