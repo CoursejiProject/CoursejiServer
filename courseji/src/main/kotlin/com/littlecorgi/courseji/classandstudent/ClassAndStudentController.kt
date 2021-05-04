@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.classandstudent
 
+import com.littlecorgi.courseji.`class`.Class
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -56,6 +57,19 @@ class ClassAndStudentController {
         ServerResponse.createBySuccess(classAndStudentService.getAllStudentInTheClass(classId))
     } catch (e: ClassNotFoundException) {
         ServerResponse.createByFailure(ResponseCode.NO_CLASS)
+    } catch (e: Exception) {
+        logger.info("获取这个班级的所有学生:{}", e.message)
+        ServerResponse.createByFailure(ResponseCode.FAILURE)
+    }
+
+    @ApiOperation("获取这个学生加入的所有班级")
+    @GetMapping("/getAllClassFromTheStudent")
+    fun getAllClassFromTheStudent(
+        @ApiParam(value = "学生id", example = "0") @RequestParam studentId: Long
+    ): ServerResponse<List<Class>> = try {
+        ServerResponse.createBySuccess(classAndStudentService.getAllClassFromTheStudent(studentId))
+    } catch (e: StudentNotFoundException) {
+        ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "没有此学生")
     } catch (e: Exception) {
         logger.info("获取这个班级的所有学生:{}", e.message)
         ServerResponse.createByFailure(ResponseCode.FAILURE)

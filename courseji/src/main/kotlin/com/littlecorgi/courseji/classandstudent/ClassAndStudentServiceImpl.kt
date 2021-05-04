@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.classandstudent
 
+import com.littlecorgi.courseji.`class`.Class
 import com.littlecorgi.courseji.`class`.ClassNotFoundException
 import com.littlecorgi.courseji.`class`.ClassRepository
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -39,6 +40,13 @@ class ClassAndStudentServiceImpl : ClassAndStudentService {
         val theClass = classRepository.findById(classId).orElseThrow { ClassNotFoundException() }
         return classAndStudentRepository.findAllByClassDetail(theClass).map {
             it.student
+        }
+    }
+
+    override fun getAllClassFromTheStudent(studentId: Long): List<Class> {
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        return classAndStudentRepository.findAllByStudent(student).map {
+            it.classDetail
         }
     }
 }
