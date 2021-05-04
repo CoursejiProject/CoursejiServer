@@ -86,6 +86,7 @@ class StudentController {
         @ApiParam(value = "用户密码", required = true) @RequestBody password: String
     ): ServerResponse<Student> {
         return try {
+            logger.info("登录：email={}, password={}", email, password)
             ServerResponse.createBySuccess(studentService.signIn(email, password))
         } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER)

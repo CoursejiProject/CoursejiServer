@@ -11,6 +11,7 @@ import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import com.littlecorgi.courseji.student.service.StudentService
+import com.tencentcloudapi.common.exception.TencentCloudSDKException
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -81,6 +82,12 @@ class StudentServiceImpl : StudentService {
             // 因为刚刚取出来，所以此处绝不为空
             studentRepository.deleteById(userTemp.id!!)
             throw StudentAlreadyExistException("人脸识别显示人脸已存在，如有误请联系我们")
+        }
+        // 如果照片没有人脸，则不faceRect为null
+        if (createPersonResponse.faceRect == null) {
+            // 因为刚刚取出来，所以此处绝不为空
+            studentRepository.deleteById(userTemp.id!!)
+            throw TencentCloudSDKException("图片中没有人脸")
         }
         return "新建用户成功."
     }
