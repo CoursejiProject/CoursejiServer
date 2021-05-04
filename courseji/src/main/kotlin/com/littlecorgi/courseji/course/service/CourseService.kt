@@ -24,7 +24,7 @@ interface CourseService {
      * @throws CourseAlreadyExistException 课程已经存在时抛出此异常
      * @throws CourseInfoInvalidException 课程信息不合法时抛出此异常
      */
-    fun addNewCourse(teacherId: Long, course: Course): String
+    fun addNewCourse(teacherId: Long, course: Course): Long
 
     /**
      * 删除课程

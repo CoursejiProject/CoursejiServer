@@ -44,7 +44,7 @@ class CourseController {
     fun signUp(
         @ApiParam(value = "教师id", required = true, example = "1") @RequestParam teacherId: Long,
         @ApiParam(value = "添加的课程信息", required = true) @RequestBody course: Course
-    ): ServerResponse<String> {
+    ): ServerResponse<Long> {
         return try {
             ServerResponse.createBySuccess(courseService.addNewCourse(teacherId, course))
         } catch (e: TeacherNotFoundException) {

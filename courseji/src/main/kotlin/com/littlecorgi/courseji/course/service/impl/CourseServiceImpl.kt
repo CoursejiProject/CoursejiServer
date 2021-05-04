@@ -43,7 +43,7 @@ class CourseServiceImpl : CourseService {
      * 重写方法
      *************************/
 
-    override fun addNewCourse(teacherId: Long, course: Course): String {
+    override fun addNewCourse(teacherId: Long, course: Course): Long {
         logger.info("添加新课程")
         val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
         course.apply {
@@ -68,8 +68,8 @@ class CourseServiceImpl : CourseService {
             }
             this.teacher = teacher
         }
-        courseRepository.save(course)
-        return "保存成功。"
+        val courseTemp = courseRepository.save(course)
+        return courseTemp.id!!
     }
 
     override fun deleteCourse(id: Long): String {
