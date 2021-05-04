@@ -37,11 +37,11 @@ class AttendanceController {
     @ApiOperation(value = "创建签到")
     @PostMapping(path = ["/createAttendance"])
     fun createNewAttendance(
-        @ApiParam(value = "签到的课程id", required = true, example = "1") @RequestParam courseId: Long,
+        @ApiParam(value = "签到的班级id", required = true, example = "1") @RequestParam classId: Long,
         @ApiParam(value = "签到信息", required = true) @RequestBody attendance: Attendance
     ): ServerResponse<Attendance> =
         try {
-            ServerResponse.createBySuccess(attendanceService.createNewAttendance(courseId, attendance))
+            ServerResponse.createBySuccess(attendanceService.createNewAttendance(classId, attendance))
         } catch (e: CourseNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_COURSE, errorMsg = e.message)
         } catch (e: AttendanceInfoInvalidException) {
