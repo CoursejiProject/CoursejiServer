@@ -84,7 +84,7 @@ class CheckOnController {
     @ApiOperation(value = "获取这名学生所有课的签到纪录")
     @PostMapping(path = ["/getTheStudentAllCheckInInfo"])
     fun getTheStudentAllCheckInInfo(
-        @ApiParam(value = "学生id", required = true, example = "1") @RequestBody studentId: Long
+        @ApiParam(value = "学生id", required = true, example = "1") @RequestParam studentId: Long
     ): ServerResponse<List<CheckOn>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getTheStudentAllCheckInInfo(studentId))
@@ -101,7 +101,7 @@ class CheckOnController {
     @ApiOperation(value = "获取签到时间")
     @PostMapping(path = ["/getCheckInTime"])
     fun getCheckInTime(
-        @ApiParam(value = "签到id", required = true, example = "1") @RequestBody checkOnId: Long
+        @ApiParam(value = "签到id", required = true, example = "1") @RequestParam checkOnId: Long
     ): ServerResponse<Long> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInTime(checkOnId))
@@ -118,7 +118,7 @@ class CheckOnController {
     @ApiOperation(value = "获取签到地点")
     @PostMapping(path = ["/getCheckInLocation"])
     fun getCheckInLocation(
-        @ApiParam(value = "签到id", required = true, example = "1") @RequestBody checkOnId: Long
+        @ApiParam(value = "签到id", required = true, example = "1") @RequestParam checkOnId: Long
     ): ServerResponse<Pair<Float, Float>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInLocation(checkOnId))
