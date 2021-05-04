@@ -6,4 +6,4 @@ package com.littlecorgi.courseji.attendance.exception
  * @author littlecorgi
  * @date 2021/4/22
  */
-class CourseNoAttendanceException : RuntimeException()
+class ClassNoAttendanceException : RuntimeException()

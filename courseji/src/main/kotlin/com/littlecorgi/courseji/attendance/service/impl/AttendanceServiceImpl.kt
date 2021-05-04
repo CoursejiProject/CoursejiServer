@@ -1,13 +1,12 @@
 package com.littlecorgi.courseji.attendance.service.impl
 
+import com.littlecorgi.courseji.`class`.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
-import com.littlecorgi.courseji.course.exception.CourseNotFoundException
-import com.littlecorgi.courseji.course.repository.CourseRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -26,18 +25,18 @@ class AttendanceServiceImpl : AttendanceService {
     private lateinit var checkOnRepository: CheckOnRepository
 
     @Autowired
-    private lateinit var courseRepository: CourseRepository
+    private lateinit var classRepository: ClassRepository
 
-    override fun createNewAttendance(courseId: Long, attendanceInfo: Attendance): Attendance {
+    override fun createNewAttendance(classId: Long, attendanceInfo: Attendance): Attendance {
         verifyInfoValid(attendanceInfo)
-        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
-        attendanceInfo.course = course
+        val theClass = classRepository.findById(classId).orElseThrow { ClassNotFoundException() }
+        attendanceInfo.classDetail = theClass
         // 创建签到时，顺便将所有学生的签到信息添加到CheckOn里去
         val attendance = attendanceRepository.save(attendanceInfo)
-        for (schedule in attendance.course.scheduleList!!) {
+        for (classAndStudent in attendance.classDetail.classAndStudentList!!) {
             // 都直接使用默认参数
             val checkOn = CheckOn()
-            checkOn.student = schedule.student
+            checkOn.student = classAndStudent.student
             checkOn.attendance = attendance
             checkOnRepository.save(checkOn)
         }

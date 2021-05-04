@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.checkon.service
 
 import com.littlecorgi.courseji.attendance.exception.AttendanceNotFoundException
-import com.littlecorgi.courseji.attendance.exception.CourseNoAttendanceException
+import com.littlecorgi.courseji.attendance.exception.ClassNoAttendanceException
 import com.littlecorgi.courseji.checkon.exception.CheckOnNotFoundException
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
@@ -31,15 +31,15 @@ interface CheckOnService {
     fun checkIn(studentId: Long, attendanceId: Long, checkOnInfo: CheckOn): CheckOn
 
     /**
-     * 获取这名学生这门课的所有签到纪录
+     * 获取这名学生在这个班级的所有签到纪录
      *
      * @param studentId 学生id [com.littlecorgi.courseji.student.model.Student.id]
-     * @param courseId 课程id [com.littlecorgi.courseji.course.model.Course.id]
+     * @param classId 班级id [com.littlecorgi.courseji.`class`.Class.id]
      * @throws StudentNotFoundException 当根据studentId找不到Student数据时抛出此异常
      * @throws CourseNotFoundException 当根据curseId找不到Course数据时抛出此异常
-     * @throws CourseNoAttendanceException 当课程没有考勤信息时就抛出此异常
+     * @throws ClassNoAttendanceException 当课程没有考勤信息时就抛出此异常
      */
-    fun getTheStudentCheckInInfoForTheClass(studentId: Long, courseId: Long): List<CheckOn>
+    fun getTheStudentCheckInInfoForTheClass(studentId: Long, classId: Long): List<CheckOn>
 
     /**
      * 获取这名学生所有课的签到纪录

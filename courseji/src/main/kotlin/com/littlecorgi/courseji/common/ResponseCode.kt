@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.common
 
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.ATTENDANCE_ERROR_CODE
+import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.CLASS_ERROR_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.COURSE_ERROR_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.FAILURE_CODE
 import com.littlecorgi.courseji.common.constants.ResponseCodeConstants.LEAVE_ERROR_CODE
@@ -98,4 +99,11 @@ enum class ResponseCode(val code: Int, val msg: String) {
 
     // 请假信息存在问题
     LEAVE_INFO_INVALID(LEAVE_ERROR_CODE + 2, "请假信息错误!"),
+
+    /**********************
+     * 班级相关
+     **********************/
+
+    // 班级不存在
+    NO_CLASS(CLASS_ERROR_CODE, "班级不存在！")
 }

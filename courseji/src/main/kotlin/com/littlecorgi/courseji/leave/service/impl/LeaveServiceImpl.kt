@@ -1,15 +1,11 @@
 package com.littlecorgi.courseji.leave.service.impl
 
-import com.littlecorgi.courseji.course.exception.CourseNotFoundException
-import com.littlecorgi.courseji.course.repository.CourseRepository
-import com.littlecorgi.courseji.leave.exception.LeaveAlreadyExistException
+import com.littlecorgi.courseji.`class`.ClassRepository
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.leave.repository.LeaveRepository
 import com.littlecorgi.courseji.leave.service.LeaveService
-import com.littlecorgi.courseji.schedule.exception.ScheduleNotFoundException
-import com.littlecorgi.courseji.schedule.repository.ScheduleRepository
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import lombok.extern.slf4j.Slf4j
@@ -33,24 +29,18 @@ class LeaveServiceImpl : LeaveService {
     private lateinit var studentRepository: StudentRepository
 
     @Autowired
-    private lateinit var courseRepository: CourseRepository
-
-    @Autowired
-    private lateinit var scheduleRepository: ScheduleRepository
+    private lateinit var classRepository: ClassRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     /****************
      * 继承方法
      ***************/
-    override fun createLeave(studentId: Long, courseId: Long, leave: Leave): Leave {
+    override fun createLeave(studentId: Long, classId: Long, leave: Leave): Leave {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
-        val schedule =
-            scheduleRepository.findByStudentAndCourse(student, course).orElseThrow { ScheduleNotFoundException() }
-        if (leaveRepository.existsBySchedule(schedule)) throw LeaveAlreadyExistException()
+        val theClass = classRepository.findById(classId).orElseThrow { ClassNotFoundException() }
+
         leave.apply {
-            this.schedule = schedule
             this.states = 0
             if (this.title.isEmpty()) {
                 throw LeaveInfoInvalidException("标题不能为空")
@@ -58,10 +48,8 @@ class LeaveServiceImpl : LeaveService {
             if (this.description.isEmpty()) {
                 throw LeaveInfoInvalidException("描述不能为空")
             }
-            if (week !in course.startWeek..course.endWeek) {
-                throw LeaveInfoInvalidException("请假的周数不在课程上课周数内")
-            }
-            if (day != schedule.course.day) throw LeaveInfoInvalidException("请假这天此节课并没有上课")
+            this.student = student
+            this.classDetail = theClass
         }
         return leaveRepository.save(leave)
     }

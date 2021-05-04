@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint
 data class CheckOn(
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "签到定位纬度信息，不为空，0为未签，1为已签，2为请假，3为定位超出范围", example = "0")
+    @ApiModelProperty(value = "签到状态，不为空，0为未签，1为已签，2为请假，3为定位超出范围", example = "0")
     var checkOnStates: Int = 0,
 
     @Column(nullable = true)

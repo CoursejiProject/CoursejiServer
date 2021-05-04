@@ -1,6 +1,5 @@
 package com.littlecorgi.courseji.leave.service
 
-import com.littlecorgi.courseji.course.exception.CourseNotFoundException
 import com.littlecorgi.courseji.leave.exception.LeaveAlreadyExistException
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
@@ -18,15 +17,15 @@ interface LeaveService {
      * 创建新的请假
      *
      * @param studentId [com.littlecorgi.courseji.student.model.Student.id] 学生id
-     * @param courseId [com.littlecorgi.courseji.course.model.Course.id] 需要请假课程id
+     * @param classId [com.littlecorgi.courseji.`class`.model.Class.id] 班级id
      * @param leave [com.littlecorgi.courseji.leave.model.Leave] 请假信息
      * @return 添加后的Leave信息 [com.littlecorgi.courseji.leave.model.Leave]a
      * @throws StudentNotFoundException 根据studentId找不到数据时抛出此异常
-     * @throws CourseNotFoundException 根据courseId找不到数据时抛出此异常
+     * @throws ClassNotFoundException 根据classId找不到数据时抛出此异常
      * @throws LeaveAlreadyExistException 根据Student和Course查询请假信息发现已经存在则抛出此异常
      * @throws LeaveInfoInvalidException Leave信息不合法则抛出此异常
      */
-    fun createLeave(studentId: Long, courseId: Long, leave: Leave): Leave
+    fun createLeave(studentId: Long, classId: Long, leave: Leave): Leave
 
     /**
      * 删除对应的请假

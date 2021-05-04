@@ -2,7 +2,6 @@ package com.littlecorgi.courseji.leave.controller
 
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
-import com.littlecorgi.courseji.course.exception.CourseNotFoundException
 import com.littlecorgi.courseji.leave.dto.ApprovalStateAndDescriptionDTO
 import com.littlecorgi.courseji.leave.exception.LeaveAlreadyExistException
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
@@ -45,14 +44,14 @@ class LeaveController {
     @PostMapping(path = ["/createLeave"])
     fun createLeave(
         @ApiParam(value = "学生id", required = true, example = "0") @RequestParam studentId: Long,
-        @ApiParam(value = "课程id", required = true, example = "0") @RequestParam courseId: Long,
+        @ApiParam(value = "班级id", required = true, example = "0") @RequestParam classId: Long,
         @ApiParam(value = "请假信息", required = true) @RequestBody leave: Leave
     ): ServerResponse<Leave> =
         try {
-            ServerResponse.createBySuccess(leaveService.createLeave(studentId, courseId, leave))
+            ServerResponse.createBySuccess(leaveService.createLeave(studentId, classId, leave))
         } catch (e: StudentNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = e.message)
-        } catch (e: CourseNotFoundException) {
+        } catch (e: ClassNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_COURSE, errorMsg = e.message)
         } catch (e: ScheduleNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_SCHEDULE, errorMsg = e.message)

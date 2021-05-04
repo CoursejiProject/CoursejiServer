@@ -2,8 +2,10 @@ package com.littlecorgi.courseji.student.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.checkon.model.CheckOn
+import com.littlecorgi.courseji.classandstudent.ClassAndStudent
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
+import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.schedule.model.Schedule
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
@@ -75,7 +77,31 @@ data class Student(
     @ApiModelProperty(value = "学生参加的签到，和Attendance绑定，可为空，创建对象时不添加，参加签到时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="student"中的student是CheckOn中的student属性
-    var checkOnList: List<CheckOn>? = null
+    var checkOnList: List<CheckOn>? = null,
+
+    @JsonIgnore
+    @Column(nullable = true)
+    @OneToMany(
+        mappedBy = "student",
+        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
+        fetch = FetchType.LAZY // 延迟加载
+    )
+    @ApiModelProperty(value = "学生加入的班级，和Class绑定，可为空，创建对象时不添加，参加签到时添加")
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="student"中的student是ClassAndStudent中的student属性
+    var classAndStudentList: List<ClassAndStudent>? = null,
+
+    @JsonIgnore
+    @Column(nullable = true)
+    @OneToMany(
+        mappedBy = "student",
+        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
+        fetch = FetchType.LAZY // 延迟加载
+    )
+    @ApiModelProperty(value = "学生加入的班级，和Class绑定，可为空，创建对象时不添加，参加签到时添加")
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="student"中的student是Leave中的student属性
+    var leaveList: List<Leave>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L

@@ -14,4 +14,5 @@ object ResponseCodeConstants {
     const val SCHEDULE_ERROR_CODE = 1200
     const val ATTENDANCE_ERROR_CODE = 1300
     const val LEAVE_ERROR_CODE = 1400
+    const val CLASS_ERROR_CODE = 1400
 }

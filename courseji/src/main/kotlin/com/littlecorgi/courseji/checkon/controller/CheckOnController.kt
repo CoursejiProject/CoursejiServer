@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.checkon.controller
 
-import com.littlecorgi.courseji.checkon.dto.StudentAndCourseDTO
+import com.littlecorgi.courseji.checkon.dto.StudentAndClassDTO
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.service.CheckOnService
 import com.littlecorgi.courseji.common.ResponseCode
@@ -55,24 +55,24 @@ class CheckOnController {
         }
 
     /**
-     * 获取这名学生这门课的签到纪录
+     * 获取这名学生这个班级的签到纪录
      *
-     * @param studentAndCourseDTO 学生id和课程id数据类 [com.littlecorgi.courseji.checkon.dto.StudentAndCourseDTO]
+     * @param studentAndClassDTO 学生id和班级id数据类 [com.littlecorgi.courseji.checkon.dto.StudentAndClassDTO]
      */
-    @ApiOperation(value = "获取这名学生这门课的签到纪录")
+    @ApiOperation(value = "获取这名学生这个班级的签到纪录")
     @PostMapping(path = ["/getTheStudentCheckInInfoForTheClass"])
     fun getTheStudentCheckInInfoForTheClass(
-        @ApiParam(value = "学生id和课程id", required = true) @RequestBody studentAndCourseDTO: StudentAndCourseDTO
+        @ApiParam(value = "学生id和班级id", required = true) @RequestBody studentAndClassDTO: StudentAndClassDTO
     ): ServerResponse<List<CheckOn>> =
         try {
             ServerResponse.createBySuccess(
                 checkOnService.getTheStudentCheckInInfoForTheClass(
-                    studentAndCourseDTO.studentId,
-                    studentAndCourseDTO.courseId
+                    studentAndClassDTO.studentId,
+                    studentAndClassDTO.classId
                 )
             )
         } catch (e: Exception) {
-            logger.info("{获取这名学生这门课的签到纪录:catch}", e)
+            logger.info("{获取这名学生这个班级的签到纪录:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 

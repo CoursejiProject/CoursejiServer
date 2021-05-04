@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.teacher.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.littlecorgi.courseji.`class`.Class
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course
@@ -55,7 +56,19 @@ data class Teacher(
     @ApiModelProperty(value = "教师参加的课程，和Course绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="teacher"中的teacher是Course中的teacher属性
-    var teachCourseList: List<Course>? = null
+    var teachCourseList: List<Course>? = null,
+
+    @JsonIgnore
+    @Column(nullable = true)
+    @OneToMany(
+        mappedBy = "teacher",
+        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
+        fetch = FetchType.LAZY // 延迟加载
+    )
+    @ApiModelProperty(value = "教师参加的班级，和Class绑定，可为空，创建对象时不添加，导入课程时添加")
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="teacher"中的teacher是Class中的teacher属性
+    var classList: List<Class>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237750L

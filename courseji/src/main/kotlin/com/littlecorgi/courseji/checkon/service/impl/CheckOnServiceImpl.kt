@@ -1,14 +1,14 @@
 package com.littlecorgi.courseji.checkon.service.impl
 
+import com.littlecorgi.courseji.`class`.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceNotFoundException
-import com.littlecorgi.courseji.attendance.exception.CourseNoAttendanceException
+import com.littlecorgi.courseji.attendance.exception.ClassNoAttendanceException
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.checkon.exception.CheckOnNotFoundException
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
 import com.littlecorgi.courseji.checkon.service.CheckOnService
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
-import com.littlecorgi.courseji.course.repository.CourseRepository
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.repository.StudentRepository
 import lombok.extern.slf4j.Slf4j
@@ -36,7 +36,7 @@ class CheckOnServiceImpl : CheckOnService {
     private lateinit var attendanceRepository: AttendanceRepository
 
     @Autowired
-    private lateinit var courseRepository: CourseRepository
+    private lateinit var classRepository: ClassRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -58,12 +58,12 @@ class CheckOnServiceImpl : CheckOnService {
         return checkOnRepository.save(checkOn)
     }
 
-    override fun getTheStudentCheckInInfoForTheClass(studentId: Long, courseId: Long): List<CheckOn> {
-        val course = courseRepository.findById(courseId).orElseThrow { CourseNotFoundException() }
+    override fun getTheStudentCheckInInfoForTheClass(studentId: Long, classId: Long): List<CheckOn> {
+        val theClass = classRepository.findById(classId).orElseThrow { CourseNotFoundException() }
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        val attendanceList = course.attendanceList
+        val attendanceList = theClass.attendanceList
         if (attendanceList!!.isEmpty()) {
-            throw CourseNoAttendanceException()
+            throw ClassNoAttendanceException()
         }
         val checkOnList = ArrayList<CheckOn>()
         for (attendance in attendanceList) {
