@@ -70,7 +70,7 @@ class LeaveController {
     @ApiOperation(value = "删除请假")
     @PostMapping(path = ["/deleteLeave"])
     fun deleteLeave(
-        @ApiParam(value = "请假id", required = true, example = "0") @RequestBody leaveId: Long
+        @ApiParam(value = "请假id", required = true, example = "0") @RequestParam leaveId: Long
     ): ServerResponse<String> =
         try {
             ServerResponse.createBySuccess(leaveService.deleteLeave(leaveId))
@@ -87,7 +87,7 @@ class LeaveController {
     @ApiOperation(value = "获取请假信息")
     @PostMapping(path = ["/getLeave"])
     fun getLeave(
-        @ApiParam(value = "请假id", required = true, example = "0") @RequestBody leaveId: Long
+        @ApiParam(value = "请假id", required = true, example = "0") @RequestParam leaveId: Long
     ): ServerResponse<Leave> =
         try {
             ServerResponse.createBySuccess(leaveService.getLeave(leaveId))
