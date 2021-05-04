@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.classandstudent
 
 import com.littlecorgi.courseji.`class`.Class
+import com.littlecorgi.courseji.`class`.ClassNotFoundException
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
@@ -45,6 +46,7 @@ class ClassAndStudentController {
         } catch (e: ClassNotFoundException) {
             ServerResponse.createByFailure(ResponseCode.NO_CLASS)
         } catch (e: Exception) {
+            e.printStackTrace()
             logger.info("加入班级: {}", e.message)
             ServerResponse.createByFailure(ResponseCode.FAILURE)
         }
