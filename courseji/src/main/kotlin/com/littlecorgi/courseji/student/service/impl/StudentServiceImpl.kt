@@ -76,7 +76,7 @@ class StudentServiceImpl : StudentService {
             )
         }
         val userTemp = studentRepository.save(user)
-        val createPersonResponse = TencentCloudUtil.createPerson(user)
+        val createPersonResponse = TencentCloudUtil.createPerson(userTemp)
         // 有id则人脸已存在
         if (createPersonResponse.similarPersonId.isNotEmpty()) {
             // 因为刚刚取出来，所以此处绝不为空
