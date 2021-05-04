@@ -1,6 +1,5 @@
 package com.littlecorgi.courseji.course.service.impl
 
-import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.course.exception.CourseAlreadyExistException
 import com.littlecorgi.courseji.course.exception.CourseInfoInvalidException
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
@@ -33,9 +32,6 @@ class CourseServiceImpl : CourseService {
 
     @Autowired
     private lateinit var scheduleRepository: ScheduleRepository
-
-    @Autowired
-    private lateinit var attendanceRepository: AttendanceRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -78,10 +74,6 @@ class CourseServiceImpl : CourseService {
         // 先移除所有的schedule，再进行删除
         course.scheduleList?.forEach {
             scheduleRepository.deleteById(it.id!!)
-        }
-        // 先移除所有的attendance，再进行删除
-        course.attendanceList?.forEach {
-            attendanceRepository.deleteById(it.id!!)
         }
         courseRepository.deleteById(id)
         return "删除成功。"

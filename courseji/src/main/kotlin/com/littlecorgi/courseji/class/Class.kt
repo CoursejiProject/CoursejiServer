@@ -5,6 +5,7 @@ import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.classandstudent.ClassAndStudent
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
+import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.teacher.model.Teacher
 import io.swagger.annotations.ApiModelProperty
 import javax.persistence.CascadeType
@@ -57,5 +58,17 @@ data class Class(
     @ApiModelProperty(value = "学生加入的班级，和Student绑定，可为空，创建对象时不添加，参加签到时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="student"中的classDetail是Attendance中的classDetail属性
-    var attendanceList: List<Attendance>? = null
+    var attendanceList: List<Attendance>? = null,
+
+    @JsonIgnore
+    @Column(nullable = true)
+    @OneToMany(
+        mappedBy = "classDetail",
+        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除用户，会级联删除该用户的所有课程
+        fetch = FetchType.LAZY // 延迟加载
+    )
+    @ApiModelProperty(value = "此班级的所有请假，和Leave绑定，可为空，创建对象时不添加，参加签到时添加")
+    // 拥有mappedBy注解的实体类为关系被维护端
+    // mappedBy="student"中的classDetail是Attendance中的classDetail属性
+    var leaveList: List<Leave>? = null
 ) : BaseModel()

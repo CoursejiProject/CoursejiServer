@@ -1,7 +1,6 @@
 package com.littlecorgi.courseji.course.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.utils.twoArrayIntersect
 import com.littlecorgi.courseji.schedule.model.Schedule
@@ -88,18 +87,7 @@ data class Course(
     @ApiModelProperty(value = "参与课程的学生对应的表，和Schedule绑定，可为空，创建对象时不添加，导入课程时添加")
     // 拥有mappedBy注解的实体类为关系被维护端
     // mappedBy="course"中的course是Schedule中的course属性
-    var scheduleList: List<Schedule>? = null,
-
-    @JsonIgnore
-    @OneToMany(
-        mappedBy = "course",
-        cascade = [CascadeType.ALL], // 级联新建、级联删除、级联刷新、级联更新。当删除课程，会级联删除该课程对应的所有签到
-        fetch = FetchType.LAZY // 延迟加载
-    )
-    @ApiModelProperty(value = "该课程的签到，和Attendance绑定，可为空，创建对象时不添加，添加签到时添加")
-    // 拥有mappedBy注解的实体类为关系被维护端
-    // mappedBy="course"中的course是Attendance中的course属性
-    var attendanceList: List<Attendance>? = null
+    var scheduleList: List<Schedule>? = null
 ) : BaseModel() {
     companion object {
         private const val serialVersionUID = 5990939387657237751L
