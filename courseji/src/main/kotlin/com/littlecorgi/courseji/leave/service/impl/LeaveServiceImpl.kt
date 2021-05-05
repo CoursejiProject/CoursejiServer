@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji.leave.service.impl
 
 import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
@@ -35,6 +36,9 @@ class LeaveServiceImpl : LeaveService {
 
     @Autowired
     private lateinit var teacherRepository: TeacherRepository
+
+    @Autowired
+    private lateinit var checkOnRepository: CheckOnRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -77,7 +81,23 @@ class LeaveServiceImpl : LeaveService {
             states = approvalState
             opinion = approval
         }
-        return leaveRepository.save(leave)
+        val leaveInfo = leaveRepository.save(leave)
+        if (leaveInfo.states == 1) {
+            // 如果教师批准请假，则还需要从学生的签到列表里面看看有没有时间有交集的签到，如果有，将状态改为请假
+            if (leave.student.checkOnList != null) {
+                for (checkOn in leave.student.checkOnList!!) {
+                    val leaveTime = leave.startTime..leave.endTime
+                    val attendanceTime = checkOn.attendance.startTime..checkOn.attendance.endTime
+                    if (leaveTime.intersect(attendanceTime).isNotEmpty()) {
+                        if (checkOn.checkOnStates == 0) {
+                            checkOn.checkOnStates = 2
+                            checkOnRepository.save(checkOn)
+                        }
+                    }
+                }
+            }
+        }
+        return leaveInfo
     }
 
     override fun getLeaveFromStudent(studentId: Long): List<Leave> {

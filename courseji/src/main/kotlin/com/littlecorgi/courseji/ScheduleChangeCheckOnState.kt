@@ -1,6 +1,7 @@
 package com.littlecorgi.courseji
 
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
+import com.littlecorgi.courseji.leave.repository.LeaveRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
@@ -17,6 +18,9 @@ class ScheduleChangeCheckOnState {
 
     @Autowired
     private lateinit var checkOnRepository: CheckOnRepository
+
+    @Autowired
+    private lateinit var leaveRepository: LeaveRepository
 
     @Scheduled(fixedDelay = 5 * 60 * 1000)
     fun changeCheckOnState() {

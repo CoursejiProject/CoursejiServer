@@ -61,5 +61,5 @@ data class CheckOn(
     // 可选属性optional=false,表示course不能为空。删除管理信息，不影响课程
     @JoinColumn(name = "attendance_id") // 设置在course表中的关联字段(外键)
     @ApiModelProperty(value = "签到主键ID")
-    var attendance: Attendance? = null
+    var attendance: Attendance = Attendance()
 ) : BaseModel()

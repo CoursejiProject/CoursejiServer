@@ -37,6 +37,7 @@ class AttendanceServiceImpl : AttendanceService {
             // 都直接使用默认参数
             val checkOn = CheckOn()
             checkOn.student = classAndStudent.student
+            checkOn.checkOnStates = 0
             checkOn.attendance = attendance
             checkOnRepository.save(checkOn)
         }

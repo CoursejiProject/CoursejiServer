@@ -1,9 +1,9 @@
 package com.littlecorgi.courseji.common.utils
 
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 /**
  * [com.littlecorgi.courseji.common.utils.CollectionsKtTest] 的单元测试
@@ -29,5 +29,20 @@ internal class CollectionsKtTest {
         bStart = 7
         bStep = 5
         assertFalse(twoArrayIntersect(aStart, aStep, bStart, bStep))
+
+        var isLeave = false
+        var leaveTime = 1..2
+        var attendanceTime = 3..4
+        if (leaveTime.intersect(attendanceTime).isNotEmpty()) {
+            isLeave = true
+        }
+        assertFalse(isLeave)
+
+        leaveTime = 1..5
+        attendanceTime = 5..6
+        if (leaveTime.intersect(attendanceTime).isNotEmpty()) {
+            isLeave = true
+        }
+        assertTrue(isLeave)
     }
 }
