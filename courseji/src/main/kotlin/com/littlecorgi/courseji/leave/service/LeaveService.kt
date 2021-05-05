@@ -5,6 +5,7 @@ import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 
 /**
  *
@@ -59,4 +60,18 @@ interface LeaveService {
      * @throws LeaveInfoInvalidException Leave信息不合法则抛出此异常
      */
     fun approvalTheLeave(leaveId: Long, approvalState: Int, approval: String): Leave
+
+    /**
+     * 获取该学生所有的请假列表
+     *
+     * @throws StudentNotFoundException 根据studentId找不到数据时抛出此异常
+     */
+    fun getLeaveFromStudent(studentId: Long): List<Leave>
+
+    /**
+     * 获取教师所有审批的请假
+     *
+     * @throws TeacherNotFoundException 根据teacherId找不到数据时抛出此异常
+     */
+    fun getLeaveFromTeacher(teacherId: Long): List<Leave>
 }

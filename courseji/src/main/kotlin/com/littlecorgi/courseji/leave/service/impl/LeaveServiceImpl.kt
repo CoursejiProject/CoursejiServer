@@ -8,6 +8,8 @@ import com.littlecorgi.courseji.leave.repository.LeaveRepository
 import com.littlecorgi.courseji.leave.service.LeaveService
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.repository.StudentRepository
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
+import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,6 +32,9 @@ class LeaveServiceImpl : LeaveService {
 
     @Autowired
     private lateinit var classRepository: ClassRepository
+
+    @Autowired
+    private lateinit var teacherRepository: TeacherRepository
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -73,5 +78,22 @@ class LeaveServiceImpl : LeaveService {
             opinion = approval
         }
         return leaveRepository.save(leave)
+    }
+
+    override fun getLeaveFromStudent(studentId: Long): List<Leave> {
+        val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
+        return leaveRepository.findAllByStudent(student)
+    }
+
+    override fun getLeaveFromTeacher(teacherId: Long): List<Leave> {
+        val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
+        if (teacher.classList == null) {
+            return emptyList()
+        }
+        val allLeaveList = ArrayList<Leave>()
+        for (theClass in teacher.classList!!) {
+            theClass.leaveList?.let { allLeaveList.addAll(it) }
+        }
+        return allLeaveList
     }
 }

@@ -10,6 +10,7 @@ import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.leave.service.LeaveService
 import com.littlecorgi.courseji.schedule.exception.ScheduleNotFoundException
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -125,6 +126,40 @@ class LeaveController {
             ServerResponse.createByFailure(ResponseCode.LEAVE_INFO_INVALID, errorMsg = e.message)
         } catch (e: Exception) {
             logger.info("{教师审批请假:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+
+    /**
+     * 获取该学生所有的请假信息
+     */
+    @ApiOperation(value = "获取该学生所有的请假信息")
+    @PostMapping(path = ["/getLeaveFromStudent"])
+    fun getLeaveFromStudent(
+        @ApiParam(value = "学生id", required = true, example = "0") @RequestParam studentId: Long
+    ): ServerResponse<List<Leave>> =
+        try {
+            ServerResponse.createBySuccess(leaveService.getLeaveFromStudent(studentId))
+        } catch (e: StudentNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
+        } catch (e: Exception) {
+            logger.info("{获取请假信息:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+
+    /**
+     * 获取教师所有审批的请假
+     */
+    @ApiOperation(value = "获取教师所有审批的请假")
+    @PostMapping(path = ["/getLeaveFromTeacher"])
+    fun getLeaveFromTeacher(
+        @ApiParam(value = "教师id", required = true, example = "0") @RequestParam teacherId: Long
+    ): ServerResponse<List<Leave>> =
+        try {
+            ServerResponse.createBySuccess(leaveService.getLeaveFromTeacher(teacherId))
+        } catch (e: TeacherNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
+        } catch (e: Exception) {
+            logger.info("{获取请假信息:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 }
