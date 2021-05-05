@@ -44,11 +44,11 @@ data class Attendance(
 
     @Column(nullable = true)
     @ApiModelProperty(value = "签到定位纬度信息，可为空", example = "1.1")
-    var latitude: Float = 0.0F,
+    var latitude: Double = 0.0,
 
     @Column(nullable = true)
     @ApiModelProperty(value = "签到定位经度信息，可为空", example = "1.1")
-    var longitude: Float = 0.0F,
+    var longitude: Double = 0.0,
 
     @ManyToOne(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新

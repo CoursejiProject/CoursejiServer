@@ -84,7 +84,7 @@ class CheckOnServiceImpl : CheckOnService {
         return checkOn.lastModifiedTime
     }
 
-    override fun getCheckInLocation(checkOnId: Long): Pair<Float, Float> {
+    override fun getCheckInLocation(checkOnId: Long): Pair<Double, Double> {
         val checkOn = checkOnRepository.findById(checkOnId).orElseThrow { CheckOnNotFoundException() }
         return Pair(checkOn.longitude, checkOn.latitude)
     }

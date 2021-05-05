@@ -65,5 +65,5 @@ interface CheckOnService {
      * @return 经纬度信息，[com.littlecorgi.courseji.checkon.model.CheckOn.longitude] [com.littlecorgi.courseji.checkon.model.CheckOn.latitude]
      * @throws CheckOnNotFoundException 当根据Student和Attendance找不到CheckOn数据时抛出此异常
      */
-    fun getCheckInLocation(checkOnId: Long): Pair<Float, Float>
+    fun getCheckInLocation(checkOnId: Long): Pair<Double, Double>
 }

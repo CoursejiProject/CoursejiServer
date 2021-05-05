@@ -119,7 +119,7 @@ class CheckOnController {
     @PostMapping(path = ["/getCheckInLocation"])
     fun getCheckInLocation(
         @ApiParam(value = "签到id", required = true, example = "1") @RequestParam checkOnId: Long
-    ): ServerResponse<Pair<Float, Float>> =
+    ): ServerResponse<Pair<Double, Double>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInLocation(checkOnId))
         } catch (e: Exception) {
