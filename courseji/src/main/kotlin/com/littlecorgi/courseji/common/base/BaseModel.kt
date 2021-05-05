@@ -1,6 +1,5 @@
 package com.littlecorgi.courseji.common.base
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -29,14 +28,12 @@ open class BaseModel(
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
     @Column(name = "create_time", nullable = false)
     @ApiModelProperty(value = "账号创建时间，为时间戳，自动创建，不为空", example = "1")
     var createdTime: Long = 0L,
 
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
     @Column(name = "last_modified_Time", nullable = false)
     @ApiModelProperty(value = "用户信息最近修改时间，为时间戳，自动创建，不为空", example = "1")
     var lastModifiedTime: Long = 0L
