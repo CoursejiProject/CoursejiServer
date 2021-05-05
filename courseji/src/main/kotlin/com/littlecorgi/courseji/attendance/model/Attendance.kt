@@ -50,6 +50,10 @@ data class Attendance(
     @ApiModelProperty(value = "签到定位经度信息，可为空", example = "1.1")
     var longitude: Double = 0.0,
 
+    @Column(nullable = false)
+    @ApiModelProperty(value = "签到半径，不为空", example = "1")
+    var radius: Int = 0,
+
     @ManyToOne(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新
         optional = false
