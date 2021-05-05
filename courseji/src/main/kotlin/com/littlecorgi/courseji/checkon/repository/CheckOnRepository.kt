@@ -20,4 +20,12 @@ interface CheckOnRepository : JpaRepository<CheckOn, Long> {
      * @param attendance Attendance对象
      */
     fun findByStudentAndAttendance(student: Student, attendance: Attendance): Optional<CheckOn>
+
+    /**
+     * 找到结束时间在attendance_endTime之前并且是未签到的CheckOn
+     *
+     * @param checkOnStates 签到状态
+     * @param attendance_endTime 签到的结束时间
+     */
+    fun findAllByCheckOnStatesIsAndAttendance_EndTimeBefore(checkOnStates: Int, attendance_endTime: Long): List<CheckOn>
 }
