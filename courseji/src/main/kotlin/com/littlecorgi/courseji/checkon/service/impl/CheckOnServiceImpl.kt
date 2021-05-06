@@ -52,7 +52,7 @@ class CheckOnServiceImpl : CheckOnService {
     override fun checkIn(studentId: Long, attendanceId: Long, checkOnInfo: CheckOn): CheckOn {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
         val attendance = attendanceRepository.findById(attendanceId).orElseThrow { AttendanceNotFoundException() }
-        val checkOn = checkOnRepository.findByStudentAndAttendance(student, attendance)
+        var checkOn = checkOnRepository.findByStudentAndAttendance(student, attendance)
             .orElseThrow { CheckOnNotFoundException() }.also {
                 it.checkOnStates = 1
                 with(checkOnInfo) {
@@ -60,7 +60,11 @@ class CheckOnServiceImpl : CheckOnService {
                     it.longitude = longitude
                 }
             }
-        return checkOnRepository.save(checkOn)
+
+        checkOn = checkOnRepository.save(checkOn)
+        attendance.checkInNum++;
+        attendanceRepository.save(attendance);
+        return checkOn
     }
 
     override fun getTheStudentCheckInInfoForTheClass(studentId: Long, classId: Long): List<CheckOn> {
