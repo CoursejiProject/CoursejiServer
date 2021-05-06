@@ -108,4 +108,9 @@ class CheckOnServiceImpl : CheckOnService {
         }
         return checkOnList
     }
+
+    override fun getCheckOnFromAttendance(attendanceId: Long): List<CheckOn> {
+        val attendance = attendanceRepository.findById(attendanceId).orElseThrow { AttendanceNotFoundException() }
+        return checkOnRepository.findAllByAttendance(attendance)
+    }
 }

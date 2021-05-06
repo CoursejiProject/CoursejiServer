@@ -28,6 +28,10 @@ data class Class(
     @ApiModelProperty(value = "班级姓名，不许空", required = true)
     var name: String = "", // 班级姓名，不许空
 
+    @Column(nullable = false)
+    @ApiModelProperty(value = "学生数，不许空", required = true)
+    var studentNum: Int = 0, // 学生数，不许空
+
     @ManyToOne(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新
         optional = false

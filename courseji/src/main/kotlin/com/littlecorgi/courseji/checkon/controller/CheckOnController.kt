@@ -1,5 +1,6 @@
 package com.littlecorgi.courseji.checkon.controller
 
+import com.littlecorgi.courseji.attendance.exception.AttendanceNotFoundException
 import com.littlecorgi.courseji.checkon.dto.StudentAndClassDTO
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.service.CheckOnService
@@ -136,6 +137,20 @@ class CheckOnController {
     ): ServerResponse<Pair<Double, Double>> =
         try {
             ServerResponse.createBySuccess(checkOnService.getCheckInLocation(checkOnId))
+        } catch (e: Exception) {
+            logger.info("{获取签到地点:catch}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+
+    @ApiOperation("根据考勤获取对应的签到纪录")
+    @PostMapping("/getCheckOnFromAttendance")
+    fun getCheckOnFromAttendance(
+        @ApiParam(value = "考勤id", required = true, example = "1") @RequestParam attendanceId: Long
+    ): ServerResponse<List<CheckOn>> =
+        try {
+            ServerResponse.createBySuccess(checkOnService.getCheckOnFromAttendance(attendanceId))
+        } catch (e: AttendanceNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_ATTENDANCE)
         } catch (e: Exception) {
             logger.info("{获取签到地点:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)

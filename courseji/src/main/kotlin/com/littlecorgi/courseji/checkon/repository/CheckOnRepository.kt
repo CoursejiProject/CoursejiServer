@@ -34,4 +34,9 @@ interface CheckOnRepository : JpaRepository<CheckOn, Long> {
      * 根据class找到所有的签到
      */
     fun findAllByAttendance_ClassDetail(attendance_classDetail: Class): List<CheckOn>
+
+    /**
+     * 根据attendance获取所有CheckOn
+     */
+    fun findAllByAttendance(attendance: Attendance): List<CheckOn>
 }

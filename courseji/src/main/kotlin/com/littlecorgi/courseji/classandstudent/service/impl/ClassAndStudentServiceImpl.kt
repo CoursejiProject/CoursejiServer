@@ -36,7 +36,11 @@ class ClassAndStudentServiceImpl : ClassAndStudentService {
             this.student = student
             this.classDetail = theClass
         }
-        return classAndStudentRepository.save(classAndStudent).id!!
+        val savedClassAndStudent = classAndStudentRepository.save(classAndStudent)
+        theClass.studentNum++
+        classRepository.save(theClass)
+        // 因为能走到这步数据肯定保存了，所以直接强制不为null返回出去
+        return savedClassAndStudent.id!!
     }
 
     override fun getAllStudentInTheClass(classId: Long): List<Student> {
