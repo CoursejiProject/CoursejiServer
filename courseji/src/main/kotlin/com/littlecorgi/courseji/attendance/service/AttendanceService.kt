@@ -34,4 +34,12 @@ interface AttendanceService {
      * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      */
     fun updateAttendanceInfo(attendanceId: Long, attendance: Attendance): Attendance
+
+    /**
+     * 根据教师获取所有考勤
+     *
+     * @param teacherId 教师id
+     * @throws TeacherNotFoundException 根据teacherId查询不到课程信息时抛出此异常
+     */
+    abstract fun getAllAttendanceFromTeacher(teacherId: Long): List<Attendance>
 }

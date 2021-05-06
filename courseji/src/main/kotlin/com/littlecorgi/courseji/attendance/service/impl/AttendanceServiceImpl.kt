@@ -1,12 +1,14 @@
 package com.littlecorgi.courseji.attendance.service.impl
 
-import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
+import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -26,6 +28,9 @@ class AttendanceServiceImpl : AttendanceService {
 
     @Autowired
     private lateinit var classRepository: ClassRepository
+
+    @Autowired
+    private lateinit var teacherRepository: TeacherRepository
 
     override fun createNewAttendance(classId: Long, attendanceInfo: Attendance): Attendance {
         verifyInfoValid(attendanceInfo)
@@ -48,6 +53,20 @@ class AttendanceServiceImpl : AttendanceService {
         verifyInfoValid(attendance)
         attendance.id = attendanceId
         return attendanceRepository.save(attendance)
+    }
+
+    override fun getAllAttendanceFromTeacher(teacherId: Long): List<Attendance> {
+        val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
+        if (teacher.classList == null) {
+            return emptyList()
+        }
+        val list = ArrayList<Attendance>()
+        for (a in teacher.classList!!) {
+            if (a.attendanceList != null) {
+                list.addAll(a.attendanceList!!)
+            }
+        }
+        return list
     }
 
     /*********************

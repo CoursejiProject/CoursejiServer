@@ -6,6 +6,7 @@ import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.course.exception.CourseNotFoundException
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -63,6 +64,22 @@ class AttendanceController {
             ServerResponse.createBySuccess(attendanceService.updateAttendanceInfo(attendanceId, attendance))
         } catch (e: AttendanceInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.ATTENDANCE_INFO_INVALID, errorMsg = e.msg)
+        } catch (e: Exception) {
+            ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+        }
+
+    /**
+     * 修改签到
+     */
+    @ApiOperation(value = "根据教师获取所有签到纪录")
+    @PostMapping(path = ["/getAllAttendanceFromTeacher"])
+    fun getAllAttendanceFromTeacher(
+        @ApiParam(value = "签到的班级id", required = true, example = "1") @RequestParam teacherId: Long
+    ): ServerResponse<List<Attendance>> =
+        try {
+            ServerResponse.createBySuccess(attendanceService.getAllAttendanceFromTeacher(teacherId))
+        } catch (e: TeacherNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER)
         } catch (e: Exception) {
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
