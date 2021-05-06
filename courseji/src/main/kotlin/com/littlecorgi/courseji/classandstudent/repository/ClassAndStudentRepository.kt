@@ -1,6 +1,7 @@
-package com.littlecorgi.courseji.classandstudent
+package com.littlecorgi.courseji.classandstudent.repository
 
 import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classandstudent.model.ClassAndStudent
 import com.littlecorgi.courseji.student.model.Student
 import org.springframework.data.jpa.repository.JpaRepository
 

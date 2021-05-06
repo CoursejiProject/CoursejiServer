@@ -2,7 +2,7 @@ package com.littlecorgi.courseji.classDetail.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.attendance.model.Attendance
-import com.littlecorgi.courseji.classandstudent.ClassAndStudent
+import com.littlecorgi.courseji.classandstudent.model.ClassAndStudent
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.leave.model.Leave

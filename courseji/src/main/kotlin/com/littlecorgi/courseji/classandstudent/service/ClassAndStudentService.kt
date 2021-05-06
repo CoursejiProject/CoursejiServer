@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.classandstudent
+package com.littlecorgi.courseji.classandstudent.service
 
 import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.student.model.Student

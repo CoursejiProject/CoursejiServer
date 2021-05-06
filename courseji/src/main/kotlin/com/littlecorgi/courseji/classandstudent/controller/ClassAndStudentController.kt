@@ -1,7 +1,8 @@
-package com.littlecorgi.courseji.classandstudent
+package com.littlecorgi.courseji.classandstudent.controller
 
-import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.classDetail.exception.ClassNotFoundException
+import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classandstudent.service.ClassAndStudentService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
