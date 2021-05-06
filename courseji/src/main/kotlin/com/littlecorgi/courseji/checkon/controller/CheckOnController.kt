@@ -5,6 +5,7 @@ import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.service.CheckOnService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
@@ -75,6 +76,19 @@ class CheckOnController {
             logger.info("{获取这名学生这个班级的签到纪录:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
+
+    @ApiOperation(value = "根据教师获取所有考勤记录")
+    @PostMapping("/getAllCheckOnFromTeacher")
+    fun getAllCheckOnFromTeacher(
+        @ApiParam(value = "教师id", example = "0") @RequestParam teacherId: Long
+    ): ServerResponse<List<CheckOn>> = try {
+        ServerResponse.createBySuccess(checkOnService.getAllCheckOnFromTeacher(teacherId))
+    } catch (e: TeacherNotFoundException) {
+        ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "没有此教师")
+    } catch (e: Exception) {
+        logger.info("{获取这名学生这个班级的签到纪录:catch}", e)
+        ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
+    }
 
     /**
      * 获取这名学生所有课的签到纪录

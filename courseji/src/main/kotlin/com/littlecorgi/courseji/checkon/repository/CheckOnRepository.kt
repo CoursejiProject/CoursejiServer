@@ -2,6 +2,7 @@ package com.littlecorgi.courseji.checkon.repository
 
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.checkon.model.CheckOn
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.student.model.Student
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
@@ -28,4 +29,9 @@ interface CheckOnRepository : JpaRepository<CheckOn, Long> {
      * @param attendance_endTime 签到的结束时间
      */
     fun findAllByCheckOnStatesIsAndAttendance_EndTimeBefore(checkOnStates: Int, attendance_endTime: Long): List<CheckOn>
+
+    /**
+     * 根据class找到所有的签到
+     */
+    fun findAllByAttendance_ClassDetail(attendance_classDetail: Class): List<CheckOn>
 }
