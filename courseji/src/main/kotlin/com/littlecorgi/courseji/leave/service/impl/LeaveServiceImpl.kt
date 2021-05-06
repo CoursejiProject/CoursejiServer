@@ -82,21 +82,24 @@ class LeaveServiceImpl : LeaveService {
             opinion = approval
         }
         val leaveInfo = leaveRepository.save(leave)
-        if (leaveInfo.states == 1) {
-            // 如果教师批准请假，则还需要从学生的签到列表里面看看有没有时间有交集的签到，如果有，将状态改为请假
-            if (leave.student.checkOnList != null) {
-                for (checkOn in leave.student.checkOnList!!) {
-                    val leaveTime = leave.startTime..leave.endTime
-                    val attendanceTime = checkOn.attendance.startTime..checkOn.attendance.endTime
-                    if (leaveTime.intersect(attendanceTime).isNotEmpty()) {
-                        if (checkOn.checkOnStates == 0) {
-                            checkOn.checkOnStates = 2
-                            checkOnRepository.save(checkOn)
-                        }
-                    }
-                }
-            }
-        }
+        // todo 完善 教师批准请假自动将签到转为请假状态 （目前的逻辑会StackOverflow或者OutOfMemory，进而程序崩溃）
+        // if (leaveInfo.states == 1) {
+        //     // 如果教师批准请假，则还需要从学生的签到列表里面看看有没有时间有交集的签到，如果有，将状态改为请假
+        //     if (leave.student.checkOnList != null) {
+        //         for (checkOn in leave.student.checkOnList!!) {
+        //             if (checkOn.attendance.classDetail == leave.classDetail) {
+        //                 val leaveTime = leave.startTime..leave.endTime
+        //                 val attendanceTime = checkOn.attendance.startTime..checkOn.attendance.endTime
+        //                 if (leaveTime.intersect(attendanceTime).isNotEmpty()) {
+        //                     if (checkOn.checkOnStates == 0) {
+        //                         checkOn.checkOnStates = 2
+        //                         checkOnRepository.save(checkOn)
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         return leaveInfo
     }
 
