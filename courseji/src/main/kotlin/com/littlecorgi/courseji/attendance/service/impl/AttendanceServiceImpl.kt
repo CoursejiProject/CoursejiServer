@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.attendance.service.impl
 
-import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository

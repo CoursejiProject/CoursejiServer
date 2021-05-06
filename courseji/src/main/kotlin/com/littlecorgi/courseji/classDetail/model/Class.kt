@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.attendance.model.Attendance

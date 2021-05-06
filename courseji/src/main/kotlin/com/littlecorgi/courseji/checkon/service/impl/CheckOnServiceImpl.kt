@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.checkon.service.impl
 
-import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceNotFoundException
 import com.littlecorgi.courseji.attendance.exception.ClassNoAttendanceException
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository

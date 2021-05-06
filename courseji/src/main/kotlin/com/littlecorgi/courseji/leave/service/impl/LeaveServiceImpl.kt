@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.leave.service.impl
 
-import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException

@@ -1,4 +1,4 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.exception
 
 /**
  *

@@ -1,5 +1,6 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.controller
 
+import com.littlecorgi.courseji.classDetail.service.ClassService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException

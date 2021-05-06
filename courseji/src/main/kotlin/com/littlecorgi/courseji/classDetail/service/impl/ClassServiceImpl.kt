@@ -1,5 +1,8 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.service.impl
 
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
+import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classDetail.service.ClassService
 import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
 import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import org.springframework.beans.factory.annotation.Autowired

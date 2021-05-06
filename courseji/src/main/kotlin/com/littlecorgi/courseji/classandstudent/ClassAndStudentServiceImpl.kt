@@ -1,8 +1,8 @@
 package com.littlecorgi.courseji.classandstudent
 
-import com.littlecorgi.courseji.`class`.Class
-import com.littlecorgi.courseji.`class`.ClassNotFoundException
-import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classDetail.exception.ClassNotFoundException
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository

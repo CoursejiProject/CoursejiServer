@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.attendance.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.littlecorgi.courseji.`class`.Class
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.common.base.BaseModel
 import io.swagger.annotations.ApiModel
