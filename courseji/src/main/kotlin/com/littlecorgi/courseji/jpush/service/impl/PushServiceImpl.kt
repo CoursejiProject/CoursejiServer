@@ -72,7 +72,7 @@ class PushServiceImpl : PushService {
             return PushPayload.newBuilder()
                 .setPlatform(Platform.android())
                 .setAudience(Audience.alias(alias))
-                .setNotification(Notification.android(alert, title, null))
+                .setNotification(Notification.android(alert, title, mapOf("alert_type" to "-1")))
                 .setOptions(
                     Options.newBuilder().setThirdPartyChannelV2(
                         mapOf("xiaomi" to JsonObject().apply { addProperty("distribution", "secondary_push") })
@@ -90,11 +90,6 @@ class PushServiceImpl : PushService {
                 .setPlatform(Platform.android())
                 .setAudience(Audience.alias(alias))
                 .setMessage(message)
-                .setOptions(
-                    Options.newBuilder().setThirdPartyChannelV2(
-                        mapOf("xiaomi" to JsonObject().apply { addProperty("distribution", "secondary_push") })
-                    ).build()
-                )
                 .build()
         }
     }
