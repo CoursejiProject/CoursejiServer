@@ -1,7 +1,8 @@
 package com.littlecorgi.courseji.leave.service.impl
 
-import com.littlecorgi.courseji.classDetail.repository.ClassRepository
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
+import com.littlecorgi.courseji.common.utils.JPushUtil
 import com.littlecorgi.courseji.leave.exception.LeaveInfoInvalidException
 import com.littlecorgi.courseji.leave.exception.LeaveNotFoundException
 import com.littlecorgi.courseji.leave.model.Leave
@@ -60,6 +61,9 @@ class LeaveServiceImpl : LeaveService {
             this.student = student
             this.classDetail = theClass
         }
+
+        // 当创建请假时通知对应教师
+        JPushUtil.sendTeacherPush("教师${theClass.teacher.id}", "学生：${student.name} 发起了一个请假，请及时审批", "有新的请假申请")
         return leaveRepository.save(leave)
     }
 
@@ -100,6 +104,9 @@ class LeaveServiceImpl : LeaveService {
         //         }
         //     }
         // }
+
+        // 教师审批完请假后通知学生
+        JPushUtil.sendStudentPush("学生${leave.student.id}", "请假：\"${leave.title}\" 审批状态更新啦，请查看", "请假审批状态更新啦")
         return leaveInfo
     }
 

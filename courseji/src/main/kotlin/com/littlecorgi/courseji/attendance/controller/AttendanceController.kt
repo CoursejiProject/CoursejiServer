@@ -1,5 +1,7 @@
 package com.littlecorgi.courseji.attendance.controller
 
+import cn.jiguang.common.resp.APIConnectionException
+import cn.jiguang.common.resp.APIRequestException
 import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.service.AttendanceService
@@ -11,6 +13,7 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import lombok.extern.slf4j.Slf4j
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,6 +35,8 @@ class AttendanceController {
     @Autowired
     private lateinit var attendanceService: AttendanceService
 
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     /**
      * 新建签到
      */
@@ -47,7 +52,17 @@ class AttendanceController {
             ServerResponse.createByFailure(ResponseCode.NO_COURSE, errorMsg = e.message)
         } catch (e: AttendanceInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.ATTENDANCE_INFO_INVALID, errorMsg = e.msg)
+        } catch (e: APIConnectionException) {
+            logger.info("创建签到，极光推送连接异常：{}", e)
+            ServerResponse.createByFailure(ResponseCode.JPUSH_CONNECT_EXCEPTION)
+        } catch (e: APIRequestException) {
+            logger.info("创建签到，极光推送请求异常：{}", e)
+            ServerResponse.createByFailure(
+                ResponseCode.JPUSH_REQUEST_EXCEPTION,
+                errorMsg = "${e.errorCode} ${e.errorMessage}"
+            )
         } catch (e: Exception) {
+            logger.info("创建签到：{}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
         }
 
