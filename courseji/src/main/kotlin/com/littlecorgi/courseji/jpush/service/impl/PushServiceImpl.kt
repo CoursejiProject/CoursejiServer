@@ -4,10 +4,12 @@ import cn.jiguang.common.ClientConfig
 import cn.jpush.api.JPushClient
 import cn.jpush.api.push.PushResult
 import cn.jpush.api.push.model.Message
+import cn.jpush.api.push.model.Options
 import cn.jpush.api.push.model.Platform
 import cn.jpush.api.push.model.PushPayload
 import cn.jpush.api.push.model.audience.Audience
 import cn.jpush.api.push.model.notification.Notification
+import com.google.gson.JsonObject
 import com.littlecorgi.courseji.jpush.service.PushService
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.repository.StudentRepository
@@ -66,12 +68,18 @@ class PushServiceImpl : PushService {
     }
 
     companion object {
-        private fun buildPushObject(alias: String, alert: String, title: String): PushPayload =
-            PushPayload.newBuilder()
+        private fun buildPushObject(alias: String, alert: String, title: String): PushPayload {
+            return PushPayload.newBuilder()
                 .setPlatform(Platform.android())
                 .setAudience(Audience.alias(alias))
                 .setNotification(Notification.android(alert, title, null))
+                .setOptions(
+                    Options.newBuilder().setThirdPartyChannelV2(
+                        mapOf("xiaomi" to JsonObject().apply { addProperty("distribution", "secondary_push") })
+                    ).build()
+                )
                 .build()
+        }
 
         private fun buildCustomPushObject(alias: String, msgContent: String, title: String): PushPayload {
             val message = Message.Builder()
@@ -82,6 +90,11 @@ class PushServiceImpl : PushService {
                 .setPlatform(Platform.android())
                 .setAudience(Audience.alias(alias))
                 .setMessage(message)
+                .setOptions(
+                    Options.newBuilder().setThirdPartyChannelV2(
+                        mapOf("xiaomi" to JsonObject().apply { addProperty("distribution", "secondary_push") })
+                    ).build()
+                )
                 .build()
         }
     }
