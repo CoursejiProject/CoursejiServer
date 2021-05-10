@@ -1,8 +1,8 @@
 package com.littlecorgi.courseji.attendance.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.littlecorgi.courseji.`class`.Class
 import com.littlecorgi.courseji.checkon.model.CheckOn
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.common.base.BaseModel
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
@@ -53,6 +53,10 @@ data class Attendance(
     @Column(nullable = false)
     @ApiModelProperty(value = "签到半径，不为空", example = "1")
     var radius: Int = 0,
+
+    @Column(nullable = false)
+    @ApiModelProperty(value = "已签人数，不为空", example = "0")
+    var checkInNum: Int = 0,
 
     @ManyToOne(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新

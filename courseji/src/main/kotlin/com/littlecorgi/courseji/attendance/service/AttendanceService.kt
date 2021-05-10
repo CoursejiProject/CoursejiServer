@@ -19,6 +19,8 @@ interface AttendanceService {
      * @return 创建好的attendance [com.littlecorgi.courseji.attendance.model.Attendance]
      * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      * @throws CourseNotFoundException 根据courseId查询不到课程信息时抛出此异常
+     * @throws [cn.jiguang.common.resp.APIConnectionException] 极光推送连接异常，可以稍后重试
+     * @throws [cn.jiguang.common.resp.APIRequestException] 极光推送返回的异常信息，具体信息可以查看极光推送官方文档
      */
     fun createNewAttendance(
         classId: Long,
@@ -34,4 +36,12 @@ interface AttendanceService {
      * @throws AttendanceInfoInvalidException 考勤信息不合法时抛出此异常
      */
     fun updateAttendanceInfo(attendanceId: Long, attendance: Attendance): Attendance
+
+    /**
+     * 根据教师获取所有考勤
+     *
+     * @param teacherId 教师id
+     * @throws TeacherNotFoundException 根据teacherId查询不到课程信息时抛出此异常
+     */
+    abstract fun getAllAttendanceFromTeacher(teacherId: Long): List<Attendance>
 }

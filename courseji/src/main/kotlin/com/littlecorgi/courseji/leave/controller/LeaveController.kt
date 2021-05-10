@@ -1,5 +1,7 @@
 package com.littlecorgi.courseji.leave.controller
 
+import cn.jiguang.common.resp.APIConnectionException
+import cn.jiguang.common.resp.APIRequestException
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.leave.dto.ApprovalStateAndDescriptionDTO
@@ -60,6 +62,15 @@ class LeaveController {
             ServerResponse.createByFailure(ResponseCode.LEAVE_HAS_EXIST, errorMsg = e.message)
         } catch (e: LeaveInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.LEAVE_INFO_INVALID, errorMsg = e.msg)
+        } catch (e: APIConnectionException) {
+            logger.info("创建新的请假，极光推送连接异常：{}", e)
+            ServerResponse.createByFailure(ResponseCode.JPUSH_CONNECT_EXCEPTION)
+        } catch (e: APIRequestException) {
+            logger.info("创建新的请假，极光推送请求异常：{}", e)
+            ServerResponse.createByFailure(
+                ResponseCode.JPUSH_REQUEST_EXCEPTION,
+                errorMsg = "${e.errorCode} ${e.errorMessage}"
+            )
         } catch (e: Exception) {
             logger.info("{创建新的请假:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)
@@ -124,6 +135,15 @@ class LeaveController {
             ServerResponse.createByFailure(ResponseCode.NO_LEAVE, errorMsg = e.message)
         } catch (e: LeaveInfoInvalidException) {
             ServerResponse.createByFailure(ResponseCode.LEAVE_INFO_INVALID, errorMsg = e.message)
+        } catch (e: APIConnectionException) {
+            logger.info("教师审批请假，极光推送连接异常：{}", e)
+            ServerResponse.createByFailure(ResponseCode.JPUSH_CONNECT_EXCEPTION)
+        } catch (e: APIRequestException) {
+            logger.info("教师审批请假，极光推送请求异常：{}", e)
+            ServerResponse.createByFailure(
+                ResponseCode.JPUSH_REQUEST_EXCEPTION,
+                errorMsg = "${e.errorCode} ${e.errorMessage}"
+            )
         } catch (e: Exception) {
             logger.info("{教师审批请假:catch}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE, errorMsg = e.message)

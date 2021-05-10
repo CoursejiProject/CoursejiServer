@@ -1,5 +1,7 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.controller
 
+import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classDetail.service.ClassService
 import com.littlecorgi.courseji.common.ResponseCode
 import com.littlecorgi.courseji.common.ServerResponse
 import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
@@ -41,6 +43,23 @@ class ClassController {
             ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "没有此教师")
         } catch (e: Exception) {
             logger.info("加入班级: {}", e.message)
+            ServerResponse.createByFailure(ResponseCode.FAILURE)
+        }
+
+    @ApiOperation(value = "获取该老师的所有班级")
+    @GetMapping("/getAllClassFromTeacher")
+    fun getAllClassFromTeacher(
+        @ApiParam(
+            value = "教师id",
+            example = "0"
+        ) @RequestParam teacherId: Long
+    ): ServerResponse<List<Class>> =
+        try {
+            ServerResponse.createBySuccess(classService.getAllClassFromTeacher(teacherId))
+        } catch (e: TeacherNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "没有此教师")
+        } catch (e: Exception) {
+            logger.info("获取该老师的所有班级: {}", e.message)
             ServerResponse.createByFailure(ResponseCode.FAILURE)
         }
 }

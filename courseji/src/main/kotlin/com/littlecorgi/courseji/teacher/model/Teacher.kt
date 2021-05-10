@@ -1,7 +1,7 @@
 package com.littlecorgi.courseji.teacher.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.littlecorgi.courseji.`class`.Class
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.course.model.Course

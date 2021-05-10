@@ -25,6 +25,8 @@ interface LeaveService {
      * @throws ClassNotFoundException 根据classId找不到数据时抛出此异常
      * @throws LeaveAlreadyExistException 根据Student和Course查询请假信息发现已经存在则抛出此异常
      * @throws LeaveInfoInvalidException Leave信息不合法则抛出此异常
+     * @throws [cn.jiguang.common.resp.APIConnectionException] 极光推送连接异常，可以稍后重试
+     * @throws [cn.jiguang.common.resp.APIRequestException] 极光推送返回的异常信息，具体信息可以查看极光推送官方文档
      */
     fun createLeave(studentId: Long, classId: Long, leave: Leave): Leave
 
@@ -58,6 +60,8 @@ interface LeaveService {
      * @param approval 审批意见
      * @throws LeaveNotFoundException 根据leaveId查询不到数据时抛出此异常
      * @throws LeaveInfoInvalidException Leave信息不合法则抛出此异常
+     * @throws [cn.jiguang.common.resp.APIConnectionException] 极光推送连接异常，可以稍后重试
+     * @throws [cn.jiguang.common.resp.APIRequestException] 极光推送返回的异常信息，具体信息可以查看极光推送官方文档
      */
     fun approvalTheLeave(leaveId: Long, approvalState: Int, approval: String): Leave
 

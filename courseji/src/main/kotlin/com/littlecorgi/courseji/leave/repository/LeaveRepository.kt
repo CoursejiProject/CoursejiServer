@@ -1,6 +1,6 @@
 package com.littlecorgi.courseji.leave.repository
 
-import com.littlecorgi.courseji.`class`.Class
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.leave.model.Leave
 import com.littlecorgi.courseji.student.model.Student
 import org.springframework.data.jpa.repository.JpaRepository

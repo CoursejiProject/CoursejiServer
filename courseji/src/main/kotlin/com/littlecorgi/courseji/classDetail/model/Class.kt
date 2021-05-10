@@ -1,8 +1,8 @@
-package com.littlecorgi.courseji.`class`
+package com.littlecorgi.courseji.classDetail.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.littlecorgi.courseji.attendance.model.Attendance
-import com.littlecorgi.courseji.classandstudent.ClassAndStudent
+import com.littlecorgi.courseji.classandstudent.model.ClassAndStudent
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.common.constants.UserDataConstants
 import com.littlecorgi.courseji.leave.model.Leave
@@ -27,6 +27,10 @@ data class Class(
     @Column(nullable = false, length = UserDataConstants.NAME_MAX_LENGTH)
     @ApiModelProperty(value = "班级姓名，不许空", required = true)
     var name: String = "", // 班级姓名，不许空
+
+    @Column(nullable = false)
+    @ApiModelProperty(value = "学生数，不许空", required = true)
+    var studentNum: Int = 0, // 学生数，不许空
 
     @ManyToOne(
         cascade = [CascadeType.MERGE, CascadeType.REFRESH], // 级联更新、级联刷新

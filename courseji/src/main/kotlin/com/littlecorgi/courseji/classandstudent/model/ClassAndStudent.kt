@@ -1,6 +1,6 @@
-package com.littlecorgi.courseji.classandstudent
+package com.littlecorgi.courseji.classandstudent.model
 
-import com.littlecorgi.courseji.`class`.Class
+import com.littlecorgi.courseji.classDetail.model.Class
 import com.littlecorgi.courseji.common.base.BaseModel
 import com.littlecorgi.courseji.student.model.Student
 import io.swagger.annotations.ApiModelProperty

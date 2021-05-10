@@ -35,6 +35,12 @@ enum class ResponseCode(val code: Int, val msg: String) {
     // 活体检测失败
     DETECT_LIVE_FACE_FAILURE(FAILURE_CODE + 4, "活体检测失败"),
 
+    // 极光推送连接失败
+    JPUSH_CONNECT_EXCEPTION(FAILURE_CODE + 5, "极光推送连接失败"),
+
+    // 极光推送请求异常
+    JPUSH_REQUEST_EXCEPTION(FAILURE_CODE + 6, "极光推送请求异常"),
+
     /***********************
      * 用户相关
      **********************/

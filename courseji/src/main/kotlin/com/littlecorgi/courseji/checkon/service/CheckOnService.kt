@@ -66,4 +66,20 @@ interface CheckOnService {
      * @throws CheckOnNotFoundException 当根据Student和Attendance找不到CheckOn数据时抛出此异常
      */
     fun getCheckInLocation(checkOnId: Long): Pair<Double, Double>
+
+    /**
+     * 根据教师获取所有考勤记录
+     *
+     * @param teacherId 教师id
+     * @throws [com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException] 找不到教师时抛出此异常
+     */
+    fun getAllCheckOnFromTeacher(teacherId: Long): List<CheckOn>
+
+    /**
+     * 根据考勤获取对应的签到纪录
+     *
+     * @param attendanceId 考勤id [com.littlecorgi.courseji.attendance.model.Attendance.id]
+     * @throws AttendanceNotFoundException 当根据attendanceId找不到数据时抛出此异常
+     */
+    fun getCheckOnFromAttendance(attendanceId: Long): List<CheckOn>
 }

@@ -1,12 +1,15 @@
 package com.littlecorgi.courseji.attendance.service.impl
 
-import com.littlecorgi.courseji.`class`.ClassRepository
 import com.littlecorgi.courseji.attendance.exception.AttendanceInfoInvalidException
 import com.littlecorgi.courseji.attendance.model.Attendance
 import com.littlecorgi.courseji.attendance.repository.AttendanceRepository
 import com.littlecorgi.courseji.attendance.service.AttendanceService
 import com.littlecorgi.courseji.checkon.model.CheckOn
 import com.littlecorgi.courseji.checkon.repository.CheckOnRepository
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
+import com.littlecorgi.courseji.common.utils.JPushUtil
+import com.littlecorgi.courseji.teacher.exception.TeacherNotFoundException
+import com.littlecorgi.courseji.teacher.repository.TeacherRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -27,6 +30,9 @@ class AttendanceServiceImpl : AttendanceService {
     @Autowired
     private lateinit var classRepository: ClassRepository
 
+    @Autowired
+    private lateinit var teacherRepository: TeacherRepository
+
     override fun createNewAttendance(classId: Long, attendanceInfo: Attendance): Attendance {
         verifyInfoValid(attendanceInfo)
         val theClass = classRepository.findById(classId).orElseThrow { ClassNotFoundException() }
@@ -40,6 +46,10 @@ class AttendanceServiceImpl : AttendanceService {
             checkOn.checkOnStates = 0
             checkOn.attendance = attendance
             checkOnRepository.save(checkOn)
+
+            // 当发起签到时通知每一个学生
+            JPushUtil.sendStudentPush("学生${checkOn.student.id}", "课程《${theClass.name}》发起一个签到，请及时签到", "有签到啦")
+            JPushUtil.sendStudentCustomMessage("学生${checkOn.student.id}", "课程《${theClass.name}》发起一个签到，请及时签到", "有签到啦")
         }
         return attendance
     }
@@ -48,6 +58,20 @@ class AttendanceServiceImpl : AttendanceService {
         verifyInfoValid(attendance)
         attendance.id = attendanceId
         return attendanceRepository.save(attendance)
+    }
+
+    override fun getAllAttendanceFromTeacher(teacherId: Long): List<Attendance> {
+        val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
+        if (teacher.classList == null) {
+            return emptyList()
+        }
+        val list = ArrayList<Attendance>()
+        for (a in teacher.classList!!) {
+            if (a.attendanceList != null) {
+                list.addAll(a.attendanceList!!)
+            }
+        }
+        return list
     }
 
     /*********************

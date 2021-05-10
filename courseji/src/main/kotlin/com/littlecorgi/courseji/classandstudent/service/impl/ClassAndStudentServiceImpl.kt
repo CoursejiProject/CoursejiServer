@@ -1,8 +1,11 @@
-package com.littlecorgi.courseji.classandstudent
+package com.littlecorgi.courseji.classandstudent.service.impl
 
-import com.littlecorgi.courseji.`class`.Class
-import com.littlecorgi.courseji.`class`.ClassNotFoundException
-import com.littlecorgi.courseji.`class`.ClassRepository
+import com.littlecorgi.courseji.classDetail.exception.ClassNotFoundException
+import com.littlecorgi.courseji.classDetail.model.Class
+import com.littlecorgi.courseji.classDetail.repository.ClassRepository
+import com.littlecorgi.courseji.classandstudent.model.ClassAndStudent
+import com.littlecorgi.courseji.classandstudent.repository.ClassAndStudentRepository
+import com.littlecorgi.courseji.classandstudent.service.ClassAndStudentService
 import com.littlecorgi.courseji.student.exception.StudentNotFoundException
 import com.littlecorgi.courseji.student.model.Student
 import com.littlecorgi.courseji.student.repository.StudentRepository
@@ -33,7 +36,11 @@ class ClassAndStudentServiceImpl : ClassAndStudentService {
             this.student = student
             this.classDetail = theClass
         }
-        return classAndStudentRepository.save(classAndStudent).id!!
+        val savedClassAndStudent = classAndStudentRepository.save(classAndStudent)
+        theClass.studentNum++
+        classRepository.save(theClass)
+        // 因为能走到这步数据肯定保存了，所以直接强制不为null返回出去
+        return savedClassAndStudent.id!!
     }
 
     override fun getAllStudentInTheClass(classId: Long): List<Student> {
