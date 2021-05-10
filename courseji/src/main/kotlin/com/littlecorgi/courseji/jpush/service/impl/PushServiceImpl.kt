@@ -3,6 +3,7 @@ package com.littlecorgi.courseji.jpush.service.impl
 import cn.jiguang.common.ClientConfig
 import cn.jpush.api.JPushClient
 import cn.jpush.api.push.PushResult
+import cn.jpush.api.push.model.Message
 import cn.jpush.api.push.model.Platform
 import cn.jpush.api.push.model.PushPayload
 import cn.jpush.api.push.model.audience.Audience
@@ -47,6 +48,23 @@ class PushServiceImpl : PushService {
         return if (isTeacher) jpushTeacherClient.sendPush(payload) else jpushStudentClient.sendPush(payload)
     }
 
+    override fun pushAndroidCustomMessage(
+        isTeacher: Boolean,
+        userId: Long,
+        msgContent: String,
+        title: String
+    ): PushResult {
+        val alias = if (isTeacher) {
+            val teacher = teacherRepository.findById(userId).orElseThrow { TeacherNotFoundException() }
+            "教师$userId"
+        } else {
+            val student = studentRepository.findById(userId).orElseThrow { StudentNotFoundException() }
+            "学生$userId"
+        }
+        val payload = buildCustomPushObject(alias, msgContent, title)
+        return if (isTeacher) jpushTeacherClient.sendPush(payload) else jpushStudentClient.sendPush(payload)
+    }
+
     companion object {
         private fun buildPushObject(alias: String, alert: String, title: String): PushPayload =
             PushPayload.newBuilder()
@@ -54,5 +72,17 @@ class PushServiceImpl : PushService {
                 .setAudience(Audience.alias(alias))
                 .setNotification(Notification.android(alert, title, null))
                 .build()
+
+        private fun buildCustomPushObject(alias: String, msgContent: String, title: String): PushPayload {
+            val message = Message.Builder()
+                .setTitle(title)
+                .setMsgContent(msgContent)
+                .build()
+            return PushPayload.newBuilder()
+                .setPlatform(Platform.android())
+                .setAudience(Audience.alias(alias))
+                .setMessage(message)
+                .build()
+        }
     }
 }

@@ -63,4 +63,32 @@ class PushController {
             logger.info("发送Android平台推送：{}", e)
             ServerResponse.createByFailure(ResponseCode.FAILURE)
         }
+
+    @ApiOperation("发送Android平台自定义消息")
+    @GetMapping("/pushAndroidCustomMessage")
+    fun pushAndroidCustomMessage(
+        @ApiParam("true教师，false学生", example = "1") @RequestParam isTeacher: Boolean,
+        @ApiParam("学生id", example = "1") @RequestParam userId: Long,
+        @ApiParam("内容") @RequestParam msgContent: String,
+        @ApiParam("标题") @RequestParam title: String
+    ): ServerResponse<PushResult> =
+        try {
+            ServerResponse.createBySuccess(pushService.pushAndroidCustomMessage(isTeacher, userId, msgContent, title))
+        } catch (e: APIConnectionException) {
+            logger.info("发送Android平台自定义消息，极光推送连接异常：{}", e)
+            ServerResponse.createByFailure(ResponseCode.JPUSH_CONNECT_EXCEPTION)
+        } catch (e: APIRequestException) {
+            logger.info("发送Android平台自定义消息，极光推送请求异常：{}", e)
+            ServerResponse.createByFailure(
+                ResponseCode.JPUSH_REQUEST_EXCEPTION,
+                errorMsg = "${e.errorCode} ${e.errorMessage}"
+            )
+        } catch (e: StudentNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "教师用户不存在")
+        } catch (e: TeacherNotFoundException) {
+            ServerResponse.createByFailure(ResponseCode.NO_USER, errorMsg = "教师用户不存在")
+        } catch (e: Exception) {
+            logger.info("发送Android平台自定义消息：{}", e)
+            ServerResponse.createByFailure(ResponseCode.FAILURE)
+        }
 }
