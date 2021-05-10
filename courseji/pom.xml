@@ -121,6 +121,12 @@
             <artifactId>tencentcloud-sdk-java</artifactId>
             <version>3.1.254</version>
         </dependency>
+        <!--极光推送-->
+        <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jpush-client</artifactId>
+            <version>3.4.8</version>
+        </dependency>
     </dependencies>
 
     <build>
