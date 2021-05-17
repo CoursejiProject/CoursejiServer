@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 /**
+ * 组件初始化类，会在Application启动时自动初始化init()中的代码
  *
  * @author littlecorgi
  * @date 2021/4/25

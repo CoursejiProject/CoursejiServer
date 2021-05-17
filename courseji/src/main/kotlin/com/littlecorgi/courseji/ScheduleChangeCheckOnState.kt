@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 /**
+ * 自动化任务，每隔5分钟会找到所有的未签到并且过期的签到更改状态为已过期
  *
  * @author littlecorgi
  * @date 2021/5/5
