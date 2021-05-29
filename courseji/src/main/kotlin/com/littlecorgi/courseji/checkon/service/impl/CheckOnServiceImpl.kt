@@ -62,8 +62,8 @@ class CheckOnServiceImpl : CheckOnService {
             }
 
         checkOn = checkOnRepository.save(checkOn)
-        attendance.checkInNum++;
-        attendanceRepository.save(attendance);
+        attendance.checkInNum++
+        attendanceRepository.save(attendance)
         return checkOn
     }
 
@@ -80,12 +80,12 @@ class CheckOnServiceImpl : CheckOnService {
         }
         return checkOnList.filter {
             it.student == student
-        }
+        }.sortedByDescending { it.createdTime }
     }
 
     override fun getTheStudentAllCheckInInfo(studentId: Long): List<CheckOn> {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        return student.checkOnList!!
+        return student.checkOnList!!.sortedByDescending { it.createdTime }
     }
 
     override fun getCheckInTime(checkOnId: Long): Long {
@@ -106,7 +106,7 @@ class CheckOnServiceImpl : CheckOnService {
                 checkOnList.addAll(checkOnRepository.findAllByAttendance_ClassDetail(theClass))
             }
         }
-        return checkOnList
+        return checkOnList.sortedByDescending { it.createdTime }
     }
 
     override fun getCheckOnFromAttendance(attendanceId: Long): List<CheckOn> {

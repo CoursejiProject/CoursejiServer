@@ -33,6 +33,6 @@ class ClassServiceImpl : ClassService {
 
     override fun getAllClassFromTeacher(teacherId: Long): List<Class> {
         val teacher = teacherRepository.findById(teacherId).orElseThrow { TeacherNotFoundException() }
-        return classRepository.findAllByTeacher(teacher)
+        return classRepository.findAllByTeacherOrderById(teacher)
     }
 }
