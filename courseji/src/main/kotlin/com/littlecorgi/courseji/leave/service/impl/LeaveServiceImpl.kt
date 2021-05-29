@@ -112,7 +112,7 @@ class LeaveServiceImpl : LeaveService {
 
     override fun getLeaveFromStudent(studentId: Long): List<Leave> {
         val student = studentRepository.findById(studentId).orElseThrow { StudentNotFoundException() }
-        return leaveRepository.findAllByStudent(student)
+        return leaveRepository.findAllByStudentOrderByCreatedTimeDesc(student)
     }
 
     override fun getLeaveFromTeacher(teacherId: Long): List<Leave> {
@@ -124,6 +124,6 @@ class LeaveServiceImpl : LeaveService {
         for (theClass in teacher.classList!!) {
             theClass.leaveList?.let { allLeaveList.addAll(it) }
         }
-        return allLeaveList
+        return allLeaveList.sortedByDescending { it.createdTime }
     }
 }

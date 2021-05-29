@@ -11,10 +11,9 @@
         <module name="courseji" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8">
       <module name="accessing-data-mysql" target="1.8" />
       <module name="courseji" target="1.8" />
-      <module name="springtest" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

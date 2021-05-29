@@ -71,7 +71,7 @@ class AttendanceServiceImpl : AttendanceService {
                 list.addAll(a.attendanceList!!)
             }
         }
-        return list
+        return list.sortedByDescending { it.createdTime }
     }
 
     /*********************

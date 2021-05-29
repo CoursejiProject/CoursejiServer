@@ -14,5 +14,5 @@ interface ClassRepository : JpaRepository<Class, Long> {
     /**
      * 根据teacher找到所有的班级
      */
-    fun findAllByTeacher(teacher: Teacher): List<Class>
+    fun findAllByTeacherOrderById(teacher: Teacher): List<Class>
 }

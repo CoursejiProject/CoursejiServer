@@ -47,7 +47,7 @@ class ClassAndStudentServiceImpl : ClassAndStudentService {
         val theClass = classRepository.findById(classId).orElseThrow { ClassNotFoundException() }
         return classAndStudentRepository.findAllByClassDetail(theClass).map {
             it.student
-        }
+        }.sortedByDescending { it.name }
     }
 
     override fun getAllClassFromTheStudent(studentId: Long): List<Class> {
